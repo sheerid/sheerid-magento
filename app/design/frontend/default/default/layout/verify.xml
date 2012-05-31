@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<checkout_onepage_index>
+		<reference name="checkout.onepage">
+			<block type="sheerid/onepage_verify" name="checkout.onepage.verify" as="verify" after="checkout.onepage.shipping" template="verify/opcheckout-verify.phtml"/>
+		</reference>
+	</checkout_onepage_index>
+	<default>
+		<reference name="footer">
+			<block type="sheerid/script" name="verify.scripts" as="scripts" />
+		</reference>
+	</default>
+</layout>

@@ -1,0 +1,53 @@
+<script type="text/javascript">
+addSheerIDEventListeners = function() {
+	$$('form.verify-form-ajax').each(function(el) {
+		Event.observe(el, 'submit', function(event) {
+			var validator = typeof Validation == 'function' ? new Validation(el) : (function(){return{validate:function(){return true;}}}());
+			if (validator.validate()) {
+				$$('.verify-messages')[0].update('');
+				var loader = $('verify-please-wait');
+				loader.show();
+				this.request({
+					evalJSON : 'force',
+					parameters: {
+						'ajax' : true
+					},
+			        onFailure: function() {
+						loader.hide();
+					},
+			        onSuccess: function(t) {
+						loader.hide();
+			            var resp = t.responseJSON;
+						if (resp.result) {
+							$$('.verify-messages')[0].removeClassName('error').update(resp.message || 'Success!');
+							el.hide();
+						} else {
+							$$('.verify-messages')[0].addClassName('error').update(resp.errors.join('<br/>'))
+						}
+					
+						if (resp.refresh) {
+							window.location.reload();
+						}
+			        }
+				});
+			}
+		    Event.stop(event);
+		});
+	});
+	
+	SheerIDOrganizationFields = $$('.sheerid-orgs');
+	if (SheerIDOrganizationFields.length) {
+		var type = null;
+		if (SheerIDOrganizationFields.length == 1) {
+			var m = SheerIDOrganizationFields[0].className.match(/sheerid-orgs-(\w+)/);
+			if (m) {
+				type = m[1];
+			}
+		}
+		var scr = document.createElement('script');
+		scr.setAttribute('src', '/SheerID/verify/organizationField' + (type?'?type='+type:''));
+		document.body.appendChild(scr);
+	}
+}
+addSheerIDEventListeners();
+</script>

@@ -1,0 +1,3 @@
+[submodule "app/code/SheerID/Verify/lib/SheerID"]
+	path = app/code/SheerID/Verify/lib/SheerID
+	url = https://github.com/sheerid/sheerid-php.git

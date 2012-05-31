@@ -1,0 +1,110 @@
+<?php
+
+$helper = Mage::helper('sheerid_verify');
+
+// defaults
+if ($this->getCollectName() !== false) {
+	$this->setCollectName(true);
+}
+if ($this->getUseAjax() !== false) {
+	$this->setUseAjax(true);
+}
+
+$flavor = false !== strpos($this->getAffiliationTypes(), "ACTIVE_DUTY") ? 'military' : 'university';
+
+$organization_label = $flavor == 'military' ? 'Branch' : 'School';
+
+?>
+
+<div id="sheerid_verify">
+	<p class="verify-messages"></p>
+	<form id="co-verify-form" class="verify-form <?php echo $this->getUseAjax()?"verify-form-ajax":"";?>" action="/SheerID/verify/verify" method="POST">
+		<fieldset>
+		<ul class="form-list" style="list-style: none; padding-left: 0;">
+		<?php if ($this->getCollectName() === true) { ?>
+			<li class="wide">
+				<label for="verify:firstName" class="required"><em>*</em><?php echo $this->__('First Name') ?></label>
+				<div class="input-box">
+					<input type="text" title="<?php echo $this->__('First Name') ?>" name="verify[firstName]" id="verify:firstName" value="" class="input-text required-entry local-validation"/>
+				</div>
+			</li>
+			<li class="wide">
+				<label for="verify:lastName" class="required"><em>*</em><?php echo $this->__('Last Name') ?></label>
+				<div class="input-box">
+					<input type="text" title="<?php echo $this->__('Last Name') ?>" name="verify[lastName]" id="verify:lastName" value="" class="input-text required-entry local-validation"/>
+				</div>
+			</li>
+		<?php } ?>
+		<li class="wide">
+			<label for="verify:school" class="required"><em>*</em><?php echo $this->__($organization_label) ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo $this->__($organization_label) ?>" name="verify[school]" id="verify:school" value="" class="input-text required-entry local-validation sheerid-orgs sheerid-orgs-<?php echo $flavor; ?>"/>
+			</div>
+		</li>
+		<li class="wide">
+			<label for="verify:birth_month" class="required"><em>*</em><?php echo $this->__('Birth Date') ?></label>
+			<div class="input-box">
+				<div id="verify_birth_date">
+					<select id="verify:birth_month" name="verify[birth_month]" style="width: 60px;" class="required-entry local-validation">
+						<option value="">--</option>
+						<option value="01">Jan</option>
+						<option value="02">Feb</option>
+						<option value="03">Mar</option>
+						<option value="04">Apr</option>
+						<option value="05">May</option>
+						<option value="06">Jun</option>
+						<option value="07">Jul</option>
+						<option value="08">Aug</option>
+						<option value="09">Sep</option>
+						<option value="10">Oct</option>
+						<option value="11">Nov</option>
+						<option value="12">Dec</option>
+					</select>
+
+					<select id="verify:birth_day" name="verify[birth_day]" style="width: 45px;" class="required-entry local-validation">
+						<option value="">--</option>
+						<?php
+						for ($i=1; $i<=31; $i++) {
+							$v = $i;
+							if ($v < 10) { $v = "0$i"; }
+							echo "\n<option value=\"$v\">$i</option>";
+						}
+						?>
+					</select>
+
+					<select id="verify:birth_year" name="verify[birth_year]" style="width: 60px;" class="required-entry local-validation">
+						<option value="">--</option>
+						<?php
+						$d = date("Y")/1;
+						for ($i=0; $i<100; $i++) {
+							$v = $d - $i;
+							echo "\n<option>$v</option>";
+						}
+						?>
+					</select>
+				</div>
+				<div>
+					<div id="advice-verify:birth_month" style="display: none;"></div>
+					<div id="advice-verify:birth_day" style="display: none;"></div>
+					<div id="advice-verify:birth_year" style="display: none;"></div>
+					<div class="validation-advice" id="advice-verify_birth_date" style="display: none;">All birth date fields are required.</div>
+				</div>
+			</div>
+		</li>
+		</ul>
+		</fieldset>
+		<?php if ($this->getAffiliationTypes()) { ?>
+			<input type="hidden" name="verify[affiliation_types]" value="<?php echo $this->getAffiliationTypes(); ?>" />
+		<?php } ?>
+		<?php if ($this->getOnCartPage()) { ?>
+			<input type="hidden" name="on_cart_page" value="1" />
+		<?php } ?>
+		<?php if ($this->getSubmit() !== false) { ?>
+			<p>
+				<button type="submit" class="button"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+				<span id="verify-please-wait" style="display: none;">
+					<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif'); ?>" alt="<?php echo $this->__("Verifying...");?>" title="<?php echo $this->__("Verifying...");?>" class="v-middle"><?php echo $this->__("Verifying...");?></span>
+			</p>
+		<?php } ?>
+	</form>
+</div>

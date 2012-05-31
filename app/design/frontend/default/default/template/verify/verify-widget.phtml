@@ -1,0 +1,35 @@
+<script type="text/javascript">
+function sheerIdVerify(afftypes) {
+	new Ajax.Updater('verify-form', '/SheerID/verify', {
+		method: 'get',
+		parameters: {
+			affiliation_types: afftypes,
+			in_cart: <?php echo $this->isOnCartPage(); ?>
+		},
+		onComplete: function(e) {
+			addSheerIDEventListeners();
+		}
+	});
+}
+</script>
+<style type="text/css">
+.block-verify .block-content {
+	padding: 6px;
+}
+.block-verify .input-box {
+	width: 100% !important;
+}
+.block-verify .form-list li.wide select, .block-verify .form-list li.wide input {
+	width: 95%;
+}
+</style>
+<div class="block block-verify">
+	<div class="block-title">
+		<strong><span><?php echo $this->getTitle(); ?></span></strong>
+	</div>
+	<div class="block-content">
+		<div id="verify-form">
+			<p>Interested in a student discount? <a href="javascript:sheerIdVerify('<?php echo $this->getAffiliationTypes(); ?>');">Click Here!</a></p>
+		</div>
+	</div>
+</div>
