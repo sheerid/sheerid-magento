@@ -1,3 +1,4 @@
+<script type="text/javascript" src="https://www.sheerid.com/jsapi/js/SheerID.js"></script>
 <script type="text/javascript">
 addSheerIDEventListeners = function() {
 	$$('form.verify-form-ajax').each(function(el) {
@@ -37,16 +38,24 @@ addSheerIDEventListeners = function() {
 	
 	SheerIDOrganizationFields = $$('.sheerid-orgs');
 	if (SheerIDOrganizationFields.length) {
-		var type = null;
 		if (SheerIDOrganizationFields.length == 1) {
+			var type = null;
 			var m = SheerIDOrganizationFields[0].className.match(/sheerid-orgs-(\w+)/);
 			if (m) {
 				type = m[1];
 			}
+			SheerID.load('combobox', '1.0', {
+				baseUrl: 'https://sheerid.local/jsapi',
+				config: {
+					baseUrl: 'https://sheerid.local',
+					allowName: true,
+					input: SheerIDOrganizationFields[0],
+					params: {
+						type: type ? type : 'university'
+					}
+				}
+			});
 		}
-		var scr = document.createElement('script');
-		scr.setAttribute('src', '/SheerID/verify/organizationField' + (type?'?type='+type:''));
-		document.body.appendChild(scr);
 	}
 }
 addSheerIDEventListeners();

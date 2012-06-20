@@ -47,6 +47,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 
 			$this->saveResponseToQuote($quote, $resp);
+			$this->saveResponseToCustomer($resp);
 
 			return $result;
         }
@@ -65,6 +66,28 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$quote->setSheeridResult($resp->result);
 			$quote->setSheeridAffiliations(implode(",", $affs));
 			$quote->save();
+		}
+	}
+	
+	public function saveResponseToCustomer($resp) {
+		echo "saving";
+		if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+			$cust = Mage::getSingleton('customer/session')->getCustomer();
+			if ($cust) {
+				$affs = explode(",", $cust->getSheeridAffiliations());
+				$reqs = explode(",", $cust->getSheeridRequestIds());
+				if ($resp->affiliations) {
+					foreach ($resp->affiliations as $aff) {
+						$affs[] = $aff->type;
+					}
+				}
+				$reqs[] = $resp->requestId;
+				$cust->setSheeridAffiliations(implode(",", array_unique($affs)));
+				$cust->setSheeridRequestIds(implode(",", array_unique($reqs)));
+				$cust->save();
+				
+				echo $cust->getSheeridAffiliations();
+			}
 		}
 	}
 	
