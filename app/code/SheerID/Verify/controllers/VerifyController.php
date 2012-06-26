@@ -23,7 +23,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		$quote = Mage::getSingleton('checkout/session')->getQuote();
 		$verify_result = $helper->handleVerifyPost($this->getRequest(), $this->getResponse(), $quote);
 		if (!$verify_result["result"]) {
-			$errors =  array($this->__("Unable to verify.  Please check that your information is correct."));
+			$errors =  array($this->__("Unable to verify. Please check that your information is correct."));
 			$resp = array("result" => false, "errors" => $errors);
 		} else {
 			$session = Mage::getSingleton('checkout/session');
@@ -36,7 +36,12 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			if ($this->getRequest()->getParam("on_cart_page") == 1){
 				$resp['refresh'] = true;
 			} else {
-				$resp['message'] = $this->__('<p><strong>Success!</strong> Click <a href="%s">here</a> to continue shopping.</p>', Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB));
+				$msg = '<p><strong>';
+				$msg .= $this->__('Success!');
+				$msg .= '</strong> ';
+				$msg .= $this->__('Click <a href="%s">here</a> to continue shopping.', Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB));
+				$msg .= '</p>'
+				$resp['message'] = $msg;
 			}
 		}
 		if ($this->getRequest()->getParam("ajax")) {
@@ -54,43 +59,4 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		echo json_encode(Mage::helper('sheerid_verify/rest')->getService()->listOrganizations($type, $name));
 	}
 	
-	public function organizationFieldAction() {
-		$type = $this->getRequest()->getParam("type");
-		$orgs = Mage::helper('sheerid_verify/rest')->getService()->listOrganizations($type);
-		?>
-		var data = <?php echo json_encode($orgs); ?>;
-		if (SheerIDOrganizationFields) {
-			for (var i=0; i<SheerIDOrganizationFields.length; i++) {
-				var el = SheerIDOrganizationFields[i];
-				var m = el.className.match(/sheerid-orgs-(\w+)/);
-				var type = null;
-				if (m) {
-					type = m[1];
-				}
-				  el.type = 'hidden';
-				  var html = '<select>';
-				  html += '<option value="">-- Select one --</option>';
-				  for (var i=0; i<data.length; i++) {
-				    var o = data[i];
-					if (!type || o.type == type.toUpperCase()) {
-				    	html += '<option value="' + o.id + '">'+o.name+'</option>';
-					}
-				  }
-				  html += '</select>';
-				  var sp = document.createElement('span');
-				  sp.innerHTML = html;
-				  var sel = sp.children[0];
-
-				  var copy_attrs = ['id','name','class'];
-				  for (var i=0; i<copy_attrs.length; i++) {
-				    var v = el.getAttribute(copy_attrs[i]);
-				    if (v && v != 'null') {
-				      sel.setAttribute(copy_attrs[i], v);
-				    }
-				  }
-				  el.parentNode.replaceChild(sel, el);
-			}
-		}
-		<?php
-	}
 }

@@ -94,7 +94,7 @@ SheerIDVerify.prototype = {
             }
 
 			<?php if (Mage::getStoreConfig('sheerid_options/settings/allow_uploads') == "1") { ?>
-			msgs.push('<a href="javascript:sheerid_verify.upload()">Upload proof of enrollment</a>');
+			msgs.push('<a href="javascript:sheerid_verify.upload()"><?php echo Mage::helper('sheerid_verify')->__("Upload proof of affiliation"); ?></a>');
 			<?php } ?>
 
 			$('co-verify-form').insert({before:'<p class="verify-messages error">'+msgs.join('<br/>')+'</p>'});
@@ -144,7 +144,7 @@ SheerIDVerify.prototype = {
 							$$('.verify-messages').each(function(i){ i.remove() });
 							$('verify-buttons-container').hide();
 							$('co-verify-form').hide();
-							$('checkout-step-verify').insert('<p><a href="javascript:sheerid_verify.skip();" id="verify-skip"><small>Skip this step</small></a></p>');
+							$('checkout-step-verify').insert('<p><a href="javascript:sheerid_verify.skip();" id="verify-skip"><small><?php echo Mage::helper('sheerid_verify')->__("Skip this step"); ?></small></a></p>');
 						}
 			        } else {
 						checkout.ajaxFailure(transport);

@@ -131,7 +131,27 @@
 				</verify>
 			</updates>
 		</layout>
+		<translate>
+            <modules>
+                <SheerID_Verify>
+                    <files>
+                        <default>SheerID_Verify.csv</default>
+                    </files>
+                </SheerID_Verify>
+            </modules>
+        </translate>
 	</frontend>
+	<adminhtml>
+		<translate>
+            <modules>
+                <SheerID_Verify>
+                    <files>
+                        <default>SheerID_Verify.csv</default>
+                    </files>
+                </SheerID_Verify>
+            </modules>
+        </translate>
+	</adminhtml>
 	<default>
 		<sheerid_options>
 			<settings>

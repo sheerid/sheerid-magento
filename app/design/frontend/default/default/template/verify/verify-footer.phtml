@@ -25,7 +25,7 @@ addSheerIDEventListeners = function() {
 						loader.hide();
 			            var resp = t.responseJSON;
 						if (resp.result) {
-							$$('.verify-messages')[0].removeClassName('error').update(resp.message || 'Success!');
+							$$('.verify-messages')[0].removeClassName('error').update(resp.message || '<?php echo Mage::helper('sheerid_verify')->__("Success!"); ?>');
 							el.hide();
 						} else {
 							$$('.verify-messages')[0].addClassName('error').update(resp.errors.join('<br/>'))

@@ -4,7 +4,7 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
 		parent::loadAttributeOptions();
 		$options = $this->getAttributeOption();
 		
-		$options['sheerid'] = Mage::helper('salesrule')->__('SheerID Verified Affiliation Status');
+		$options['sheerid'] = Mage::helper('sheerid_verify')->__('SheerID Verified Affiliation Status');
 		
 		$this->setAttributeOption($options);
         return $this;
@@ -32,14 +32,26 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
 			$rest_helper = Mage::helper('sheerid_verify/rest');
 			$types = $rest_helper->getService()->listAffiliationTypes();
 			foreach ($types as $typeStr) {
-				$opts[] = array('value' => $typeStr, 'label' => Mage::helper('salesrule')->__($typeStr));
+				$opts[] = array('value' => $typeStr, 'label' => Mage::helper('sheerid_verify')->__($typeStr));
 			}
+			
+			usort($opts, array($this, "compare"));
 			
 			$this->setData('value_select_options', $opts);
 			return $this->getData('value_select_options');
 		}
 		return parent::getValueSelectOptions();
     }
+
+	function compare($a, $b) {
+	    if ($a['label'] > $b['label']) {
+			return 1;
+		} else if ($a['label'] < $b['label']) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
 
     public function validate(Varien_Object $object)
     {
