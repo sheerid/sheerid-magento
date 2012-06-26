@@ -1,4 +1,9 @@
-<script type="text/javascript" src="https://www.sheerid.com/jsapi/js/SheerID.js"></script>
+<?php
+	$rest_helper = Mage::helper('sheerid_verify/rest');
+	$SheerID = $rest_helper->getService();
+?>
+
+<script type="text/javascript" src="https://www.sheerid.com/jsapi/SheerID.js"></script>
 <script type="text/javascript">
 addSheerIDEventListeners = function() {
 	$$('form.verify-form-ajax').each(function(el) {
@@ -45,9 +50,8 @@ addSheerIDEventListeners = function() {
 				type = m[1];
 			}
 			SheerID.load('combobox', '1.0', {
-				baseUrl: 'https://sheerid.local/jsapi',
 				config: {
-					baseUrl: 'https://sheerid.local',
+					baseUrl: '<?php echo $SheerID->baseUrl; ?>',
 					allowName: true,
 					input: SheerIDOrganizationFields[0],
 					params: {
