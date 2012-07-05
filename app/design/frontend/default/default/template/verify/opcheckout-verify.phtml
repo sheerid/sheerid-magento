@@ -158,7 +158,11 @@ SheerIDVerify.prototype = {
 	},
 
 	skip : function() {
-		checkout.setStepResponse({goto_section:'shipping_method'});
+		try {
+			checkout.setStepResponse({goto_section:'shipping_method'});
+		} catch (e) {
+			checkout.setStepResponse({goto_section:'payment'});
+		}
 	}
 }
 
