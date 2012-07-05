@@ -1,13 +1,10 @@
 <?php
 class SheerID_Verify_Block_Admin_Order_Custom extends Mage_Core_Block_Template
 {
-	var $order;
-	
-	public function setOrder($order) {
-		$this->order = $order;
-	}
-	
     protected function _toHtml() {
+	$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+	$response = $SheerID->inquire($this->order->getSheeridRequestId());
+
         $str = '<script type="text/javascript">';
         $str .= 'var mystr = "';
         $str .= '<tr><td class=\"label\"><label>';
@@ -15,13 +12,20 @@ class SheerID_Verify_Block_Admin_Order_Custom extends Mage_Core_Block_Template
         $str .= ':</label></td><td class=\"value\"><strong>';
 		
 		$affiliations = array();
-		foreach (explode(",", $this->order->getSheeridAffiliations()) as $a) {
-			$affiliations[] = Mage::helper('sheerid_verify')->__($a);
+		foreach ($response->affiliations as $a) {
+			$aff = Mage::helper('sheerid_verify')->__($a->type);
+			if ($a->organizationName) {
+				$aff .= " (" . $a->organizationName . ")";
+			}
+			$affiliations[] = $aff;
 		}
 		
-		$affs = implode(", ", $affiliations);
-		$info = $this->order->getSheeridResult() ? Mage::helper('sheerid_verify')->__("Verified")." ($affs)" : Mage::helper('sheerid_verify')->__("Not Verified");
-	 	$str .= $info . ":<br/>" . $this->order->getSheeridRequestId(); //TODO: link somewhere!
+		$info = $response->result ? Mage::helper('sheerid_verify')->__("Verified") : Mage::helper('sheerid_verify')->__("Not Verified");
+		$color = $response->result ? "green" : "red";
+
+		$str .= "<span style='color: $color'>$info</span><br/>";
+		$str .= implode("<br/>", $affiliations)."<br/>";
+		$str .= "Request ID: ".$this->order->getSheeridRequestId()."<br/>";
 
         $str .= '</strong></td></tr>";';
         $str .= "$$('table.form-list')[0].insert({bottom: mystr});</script>";
