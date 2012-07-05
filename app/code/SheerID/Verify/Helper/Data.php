@@ -6,7 +6,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$post_data = $request->getPost();
 			$verify = $post_data['verify'];
 
-			$organizationId = $verify['school'];
+			$organizationId = $verify['organizationId'];
 			$dob = $verify['birth_year']."-".$verify['birth_month']."-".$verify['birth_day'];
 
 			$ba = $quote->getBillingAddress();
@@ -30,8 +30,9 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$data["BIRTH_DATE"] = $dob;
 
 			if ($verify['postalCode']) {
-				// TODO: allow using order zip code
 				$data["POSTAL_CODE"] = $verify['postalCode'];
+			} else {
+				$data['POSTAL_CODE'] = $postalCode;
 			}
 			
 			if ($verify['affiliation_types']) {
@@ -109,6 +110,15 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$val = $_COOKIE[$cookie_name];
 			return !!$val;
 		}
+	}
+
+	public function getFieldLabel($key) {
+		$lbl = strtolower(str_replace("_", " ", $key));
+		return preg_replace_callback("/\b([a-z])/", array($this, 'titleCaseReplace'), $lbl);
+	}
+
+	private function titleCaseReplace($m) {
+		return strtoupper($m[1]);
 	}
 	
 	public function getSetting($key) {
