@@ -53,8 +53,13 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 				$name = $f;
 			}
 			$label = $helper->getFieldLabel($f);
+			if ("POSTAL_CODE" == $f) {
+				$className = "narrow";
+			} else {
+				$className = "wide";
+			}
 		?>
-			<li class="wide">
+			<li class="<?php echo $className; ?>">
 				<label for="verify:<?php echo $name; ?>" class="required"><em>*</em><?php echo $this->__($label) ?></label>
 				<div class="input-box">
 					<?php if ("BIRTH_DATE" == $f) { ?>
