@@ -8,7 +8,10 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		$block = $this->getLayout()->createBlock('sheerid/verify', 'SheerID_Verify');
 		
 		if ($this->getRequest()->getParam('affiliation_types')) {
-			$config['affiliation_types'] = $this->getRequest()->getParam('affiliation_types');
+			$block->setAffiliationTypes($this->getRequest()->getParam('affiliation_types'));
+		}
+		if ($this->getRequest()->getParam('organization_id')) {
+			$block->setOrganizationId($this->getRequest()->getParam('organization_id'));
 		}
 		
 		if ($this->getRequest()->getParam('in_cart') == 1) {

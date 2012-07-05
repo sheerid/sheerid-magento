@@ -1,11 +1,19 @@
+<?php
+$config = array();
+if ($this->getAffiliationTypes()) {
+  $config['affiliation_types'] = $this->getAffiliationTypes();
+}
+if ($this->getOrganizationId()) {
+  $config['organization_id'] = $this->getOrganizationId();
+}
+?>
 <script type="text/javascript">
-function sheerIdVerify(afftypes) {
+function sheerIdVerify() {
+        var cfg = <?php echo json_encode($config); ?>;
+	cfg.in_cart = <?php echo $this->isOnCartPage(); ?>;
 	new Ajax.Updater('verify-form', '/SheerID/verify', {
 		method: 'get',
-		parameters: {
-			affiliation_types: afftypes,
-			in_cart: <?php echo $this->isOnCartPage(); ?>
-		},
+		parameters: cfg,
 		onComplete: function(e) {
 			addSheerIDEventListeners();
 		}
@@ -30,7 +38,7 @@ function sheerIdVerify(afftypes) {
 	<div class="block-content">
 		<div id="verify-form">
 			<p><?php echo $this->getDescription(); ?></p>
-			<p><a href="javascript:sheerIdVerify('<?php echo $this->getAffiliationTypes(); ?>');"><?php echo Mage::helper('sheerid_verify')->__("Click here to verify"); ?></a></p>
+			<p><a href="javascript:sheerIdVerify();"><?php echo Mage::helper('sheerid_verify')->__("Click here to verify"); ?></a></p>
 		</div>
 	</div>
 </div>
