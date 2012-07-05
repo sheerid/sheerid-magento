@@ -40,7 +40,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 				$msg .= $this->__('Success!');
 				$msg .= '</strong> ';
 				$msg .= $this->__('Click <a href="%s">here</a> to continue shopping.', Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB));
-				$msg .= '</p>'
+				$msg .= '</p>';
 				$resp['message'] = $msg;
 			}
 		}
