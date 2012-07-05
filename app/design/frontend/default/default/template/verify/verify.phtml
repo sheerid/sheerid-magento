@@ -15,7 +15,7 @@ $prompt = $this->getPrompt();
 if ($this->getFields()) {
   $fields = explode(",", $this->getFields());
 } else {
-  $fields = array("FIRST_NAME", "LAST_NAME", "BIRTH_DATE");
+  $fields = $helper->getFields($this->getAffiliationTypes(), $this->getOrganizationId());
 }
 
 if ($this->getUseQuoteInformation()) {

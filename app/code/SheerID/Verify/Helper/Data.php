@@ -124,4 +124,20 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getSetting($key) {
 		return Mage::getStoreConfig("sheerid_options/settings/$key");
 	}
+
+	// TODO: fetch this from the service!
+	public function getFields($affiliation_types=null, $org_id=0) {
+		$fields = array('FIRST_NAME', 'LAST_NAME');
+		if ($affiliation_types && is_string($affiliation_types)) {
+			$affiliation_types = explode(',', $affiliation_types);
+		}
+		if (array_search('STUDENT_FULL_TIME', $affiliation_types) !== FALSE || array_search('STUDENT_PART_TIME', $affiliation_types) !== FALSE) {
+			$fields[] = 'BIRTH_DATE';
+		}
+		if (array_search('ACTIVE_DUTY', $affiliation_types) !== FALSE) {
+			$fields[] = 'ID_NUMBER';
+		}
+
+		return $fields;
+	}
 }
