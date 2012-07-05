@@ -13,6 +13,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			if ($ba) {
 				$firstName = $ba->getFirstname();
 				$lastName = $ba->getLastname();
+				$postalCode = $ba->getPostcode();
 			}
 			
 			$ALLOW_NAME = true;
@@ -22,11 +23,16 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			if ($ALLOW_NAME && $verify['lastName']) {
 				$lastName = $verify['lastName'];
 			}
-			
+
 			$data = array();
 			$data["FIRST_NAME"] = $firstName;
 			$data["LAST_NAME"] = $lastName;
 			$data["BIRTH_DATE"] = $dob;
+
+			if ($verify['postalCode']) {
+				// TODO: allow using order zip code
+				$data["POSTAL_CODE"] = $verify['postalCode'];
+			}
 			
 			if ($verify['affiliation_types']) {
 				//TODO: use config object

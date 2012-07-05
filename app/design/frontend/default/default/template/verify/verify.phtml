@@ -12,6 +12,8 @@ if ($this->getUseAjax() !== false) {
 
 $prompt = $this->getPrompt();
 
+$fields = explode(",", $this->getFields());
+
 $flavor = false !== strpos($this->getAffiliationTypes(), "ACTIVE_DUTY") ? 'military' : 'university';
 
 $organization_label = $flavor == 'military' ? 'Branch' : 'School';
@@ -98,6 +100,14 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 				</div>
 			</div>
 		</li>
+		<?php if (array_search($fields, "POSTAL_CODE") !== FALSE) { ?>
+		<li>
+			<label for="verify:postal_code" class="required"><em>*</em><?php echo $this->__('Postal Code') ?></label>
+			<div class="input-box">
+				<input type="text" title="<?php echo $this->__('Postal Code') ?>" name="verify[postalCode]" id="verify:postalCode" value="" class="input-text required-entry local-validation"/>
+			</div>
+		</li>
+		<?php } ?>
 		</ul>
 		</fieldset>
 		<?php if ($this->getAffiliationTypes()) { ?>
