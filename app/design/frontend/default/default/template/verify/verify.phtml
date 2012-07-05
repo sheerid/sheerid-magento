@@ -10,6 +10,8 @@ if ($this->getUseAjax() !== false) {
 	$this->setUseAjax(true);
 }
 
+$prompt = $this->getPrompt();
+
 $flavor = false !== strpos($this->getAffiliationTypes(), "ACTIVE_DUTY") ? 'military' : 'university';
 
 $organization_label = $flavor == 'military' ? 'Branch' : 'School';
@@ -17,6 +19,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 ?>
 
 <div id="sheerid_verify">
+	<p><?php echo $prompt ? $prompt : $this->__('Please supply the following information so we can verify your affiliation.'); ?></p>
 	<p class="verify-messages"></p>
 	<form id="co-verify-form" class="verify-form <?php echo $this->getUseAjax()?"verify-form-ajax":"";?>" action="/SheerID/verify/verify" method="POST">
 		<fieldset>
