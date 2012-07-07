@@ -4,6 +4,12 @@
 	
 	$block = $this->getLayout()->createBlock('sheerid/verify', 'SheerID_Verify');
 
+       // TODO: rm (AARP)
+       $block->setOrganizationId(4101);
+       $block->setPrompt("Please enter your birth date in order to verify your AARP membership.");
+       $affiliation_types = "MEMBER";
+       // TODO: rm (AARP)
+
 	$block->setAffiliationTypes($affiliation_types);
 	$block->setSubmit(false);
 	$block->setUseAjax(false);

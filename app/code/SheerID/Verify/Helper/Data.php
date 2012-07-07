@@ -138,6 +138,12 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$fields[] = 'ID_NUMBER';
 		}
 
+		// TODO: rm
+		if (4101 == $org_id) {
+			$fields[] = 'BIRTH_DATE';
+			$fields[] = 'POSTAL_CODE';
+		}
+
 		return $fields;
 	}
 }
