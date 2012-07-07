@@ -17,11 +17,11 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 			
 			$ALLOW_NAME = true;
-			if ($ALLOW_NAME && $verify['firstName']) {
-				$firstName = $verify['firstName'];
+			if ($ALLOW_NAME && $verify['FIRST_NAME']) {
+				$firstName = $verify['FIRST_NAME'];
 			}
-			if ($ALLOW_NAME && $verify['lastName']) {
-				$lastName = $verify['lastName'];
+			if ($ALLOW_NAME && $verify['LAST_NAME']) {
+				$lastName = $verify['LAST_NAME'];
 			}
 
 			$data = array();
@@ -29,8 +29,8 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$data["LAST_NAME"] = $lastName;
 			$data["BIRTH_DATE"] = $dob;
 
-			if ($verify['postalCode']) {
-				$data["POSTAL_CODE"] = $verify['postalCode'];
+			if ($verify['POSTAL_CODE']) {
+				$data["POSTAL_CODE"] = $verify['POSTAL_CODE'];
 			} else {
 				$data['POSTAL_CODE'] = $postalCode;
 			}
