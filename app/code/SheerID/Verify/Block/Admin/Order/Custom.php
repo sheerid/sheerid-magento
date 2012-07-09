@@ -3,13 +3,19 @@ class SheerID_Verify_Block_Admin_Order_Custom extends Mage_Core_Block_Template
 {
     protected function _toHtml() {
 	$SheerID = Mage::helper('sheerid_verify/rest')->getService();
-	$response = $SheerID->inquire($this->order->getSheeridRequestId());
 
-        $str = '<script type="text/javascript">';
-        $str .= 'var mystr = "';
-        $str .= '<tr><td class=\"label\"><label>';
-        $str .= Mage::helper('sheerid_verify')->__("SheerID Verification");
-        $str .= ':</label></td><td class=\"value\"><strong>';
+	try {
+		$response = $SheerID->inquire($this->order->getSheeridRequestId());
+	} catch (Exception $e) {
+		$response = null;
+	}
+
+	if ($response) {
+		$str = '<script type="text/javascript">';
+		$str .= 'var mystr = "';
+		$str .= '<tr><td class=\"label\"><label>';
+		$str .= Mage::helper('sheerid_verify')->__("SheerID Verification");
+		$str .= ':</label></td><td class=\"value\"><strong>';
 		
 		$affiliations = array();
 		foreach ($response->affiliations as $a) {
@@ -27,8 +33,11 @@ class SheerID_Verify_Block_Admin_Order_Custom extends Mage_Core_Block_Template
 		$str .= implode("<br/>", $affiliations)."<br/>";
 		$str .= "Request ID: ".$this->order->getSheeridRequestId()."<br/>";
 
-        $str .= '</strong></td></tr>";';
-        $str .= "$$('table.form-list')[0].insert({bottom: mystr});</script>";
-        return $str;
+		$str .= '</strong></td></tr>";';
+		$str .= "$$('table.form-list')[0].insert({bottom: mystr});</script>";
+		return $str;
+	} else {
+		return "";
 	}
+    }
 }
