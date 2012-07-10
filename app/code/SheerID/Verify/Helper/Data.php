@@ -27,7 +27,10 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$data = array();
 			$data["FIRST_NAME"] = $firstName;
 			$data["LAST_NAME"] = $lastName;
-			$data["BIRTH_DATE"] = $dob;
+			if (strlen($dob) == 10) {
+				$data["BIRTH_DATE"] = $dob;
+			}
+			$data["ID_NUMBER"] = $verify['ID_NUMBER'];
 
 			if ($verify['POSTAL_CODE']) {
 				$data["POSTAL_CODE"] = $verify['POSTAL_CODE'];
