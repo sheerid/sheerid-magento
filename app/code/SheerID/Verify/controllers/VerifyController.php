@@ -55,6 +55,25 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			exit;
 		}
 	}
+
+	public function couponAction() {
+		$code = $this->getRequest()->getParam("coupon");
+		$affiliations = array();
+		if ($code) {
+			$coupon = Mage::getModel('salesrule/coupon')->load($code, 'code');
+			$rule = Mage::getModel('salesrule/rule')->load($coupon->getRuleId());
+			if ($rule->getId()) {
+				$conds = $rule->getConditions();
+				foreach ($conds->getConditions() as $c) {
+					$clazz = get_class($c);
+					if ("SheerID_Verify_Model_Rule_Condition_Verified" == $clazz) {
+						$affiliations[] = $c->getValue();
+					}
+				}
+			}
+		}
+		echo json_encode(array_unique($affiliations));
+	}
 	
 	public function organizationsAction() {
 		$name = $this->getRequest()->getParam("q");
