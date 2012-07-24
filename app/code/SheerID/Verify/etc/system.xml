@@ -49,7 +49,6 @@
 								 Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.
 							]]></comment>                  
 				        </sandbox>
-						<!--
 						<allow_uploads translate="label">
 				            <label>Allow Uploads?</label>
 				            <frontend_type>select</frontend_type>
@@ -58,9 +57,8 @@
 				            <show_in_default>1</show_in_default>
 				            <show_in_website>1</show_in_website>
 				            <show_in_store>1</show_in_store>    
-				            <comment></comment>              
+				            <comment><![CDATA[ Allow customer to upload proof of affiliation if automated verification fails. ]]></comment>              
 				        </allow_uploads>
-						-->
 						<show_in_checkout translate="label">
 				            <label>Verify in Checkout?</label>
 				            <frontend_type>select</frontend_type>
