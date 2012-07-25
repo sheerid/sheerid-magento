@@ -29,7 +29,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 ?>
 
 <div id="sheerid_verify">
-	<p><?php echo $prompt ? $prompt : $this->__('Please supply the following information so we can verify your affiliation.'); ?></p>
+	<p class="verify-prompt"><?php echo $prompt ? $prompt : $this->__('Please supply the following information so we can verify your affiliation.'); ?></p>
 	<p class="verify-messages"></p>
 	<form id="co-verify-form" class="verify-form <?php echo $this->getUseAjax()?"verify-form-ajax":"";?>" action="/SheerID/verify/verify" method="POST">
 		<fieldset>
@@ -121,6 +121,9 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 		<?php } ?>
 		<?php if ($this->getOnCartPage()) { ?>
 			<input type="hidden" name="on_cart_page" value="1" />
+		<?php } ?>
+		<?php if ($this->getPromoCode()) { ?>
+			<input type="hidden" name="promo_code" value="1" />
 		<?php } ?>
 		<?php if ($this->getSubmit() !== false) { ?>
 			<p>
