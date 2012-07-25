@@ -44,11 +44,12 @@ SheerIDVerify.prototype = {
 
         var validator = new Validation(this.form, {onFormValidate:function(form){
 			var dob_failure = $$('#verify_birth_date select.validation-failed').length > 0;
-			
-			if (dob_failure) {
-				new Effect.Appear($('advice-verify_birth_date'), {duration : 1 });
-			} else {
-				new Effect.Fade($('advice-verify_birth_date'), {duration : 1 });
+
+			var advice = $('advice-verify_birth_date');			
+			if (advice && dob_failure) {
+				new Effect.Appear(advice, {duration : 1 });
+			} else if (advice) {
+				new Effect.Fade(advice, {duration : 1 });
 			}
 		}});
         if (validator.validate()) {
