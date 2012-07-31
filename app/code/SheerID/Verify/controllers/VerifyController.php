@@ -17,6 +17,9 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		if ($this->getRequest()->getParam('in_cart') == 1) {
 			$block->setOnCartPage(true);
 		}
+		if ($this->getRequest()->getParam('promo_code')) {
+			$block->setPromoCode(true);
+		}
 		
 		echo $block->toHtml();
 	}
@@ -38,6 +41,9 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			
 			if ($this->getRequest()->getParam("on_cart_page") == 1){
 				$resp['refresh'] = true;
+			} else if ($this->getRequest()->getParam("promo_code") == 1){
+				$resp['discountSubmit'] = true;
+				$resp['message'] = "The coupon code will now be applied to your cart.";
 			} else {
 				$msg = '<p><strong>';
 				$msg .= $this->__('Success!');
@@ -54,6 +60,29 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			Mage::app()->getResponse()->sendResponse();
 			exit;
 		}
+	}
+
+	public function couponAction() {
+		$code = $this->getRequest()->getParam("coupon");
+		$affiliations = array();
+		if ($code) {
+			$coupon = Mage::getModel('salesrule/coupon')->load($code, 'code');
+			$rule = Mage::getModel('salesrule/rule')->load($coupon->getRuleId());
+			if ($rule->getId()) {
+				$conds = $rule->getConditions();
+				foreach ($conds->getConditions() as $c) {
+					$clazz = get_class($c);
+					if ("SheerID_Verify_Model_Rule_Condition_Verified" == $clazz) {
+						$affiliations[] = $c->getValue();
+					}
+				}
+			}
+		}
+
+		$this->getResponse()
+			->clearHeaders()
+			->setHeader('Content-Type', 'application/json')
+			->setBody(json_encode(array_unique($affiliations)));
 	}
 	
 	public function organizationsAction() {

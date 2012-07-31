@@ -140,6 +140,9 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		if (array_search('ACTIVE_DUTY', $affiliation_types) !== FALSE) {
 			$fields[] = 'ID_NUMBER';
 		}
+		if (array_search('FACULTY', $affiliation_types) !== FALSE) {
+			$fields[] = 'ID_NUMBER';
+		}
 
 		return $fields;
 	}
