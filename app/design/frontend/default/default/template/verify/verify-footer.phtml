@@ -71,7 +71,10 @@ addSheerIDEventListeners = function() {
 	
 	// promo code form
 	if (typeof discountForm !== 'undefined') {
-		discountForm.form.select('.buttons-set')[0].insert('<span id="discount-form-loading" style="display: none;"><img src="http://demo.sheerid.com/skin/frontend/default/default/images/opc-ajax-loader.gif" alt="Loading..." title="Loading..." class="v-middle"/>Loading...</span>');
+		if (typeof discountForm.loader == 'undefined') {
+			discountForm.form.select('.buttons-set')[0].insert('<span id="discount-form-loading" style="display: none;"><img src="http://demo.sheerid.com/skin/frontend/default/default/images/opc-ajax-loader.gif" alt="Loading..." title="Loading..." class="v-middle"/> Loading...</span>');
+		}
+		discountForm.loader = $('discount-form-loading');
 		var _discountSubmit = function(isRemove) {
 			if (isRemove) {
 				$('coupon_code').removeClassName('required-entry');
@@ -90,7 +93,7 @@ addSheerIDEventListeners = function() {
 			} else {
 				var val = discountForm.form.elements['coupon_code'].value;
 				if (!val) { return false; }
-				$('discount-form-loading').show();
+				discountForm.loader.show();
 				new Ajax.Request('/SheerID/verify/coupon?coupon=' + val, {
 					asynchronous: false,
 					onSuccess: function(r){
@@ -106,7 +109,7 @@ addSheerIDEventListeners = function() {
 									var el = openLight();
 									el.insert('<h2>Verify</h2>' + r.responseText);
 									addSheerIDEventListeners();
-									$('discount-form-loading').hide();
+									discountForm.loader.hide();
 								}
 							});
 						} else {
