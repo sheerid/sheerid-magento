@@ -37,8 +37,8 @@
 								]]>
 							</comment>
 				        </access_token>
-						<sandbox translate="label">
-				            <label>Sandbox Mode?</label>
+						<coupon_code_entry translate="label">
+				            <label>Verify on Coupon Code Entry</label>
 				            <frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
 				            <sort_order>2</sort_order>
@@ -46,9 +46,9 @@
 				            <show_in_website>1</show_in_website>
 				            <show_in_store>1</show_in_store>  
 				            <comment><![CDATA[
-								 Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.
-							]]></comment>                  
-				        </sandbox>
+								 If this setting is enabled, users inputting a coupon code will be prompted to verify if the price rule is conditional upon a SheerID-verified affiliation.
+							]]></comment>
+				        </coupon_code_entry>
 						<allow_uploads translate="label">
 				            <label>Allow Uploads?</label>
 				            <frontend_type>select</frontend_type>
@@ -59,6 +59,18 @@
 				            <show_in_store>1</show_in_store>    
 				            <comment><![CDATA[ Allow customer to upload proof of affiliation if automated verification fails. ]]></comment>              
 				        </allow_uploads>
+						<sandbox translate="label">
+				            <label>Sandbox Mode?</label>
+				            <frontend_type>select</frontend_type>
+							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
+				            <sort_order>5</sort_order>
+				            <show_in_default>1</show_in_default>
+				            <show_in_website>1</show_in_website>
+				            <show_in_store>1</show_in_store>  
+				            <comment><![CDATA[
+								 Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.
+							]]></comment>                  
+				        </sandbox>
 						<show_in_checkout translate="label">
 				            <label>Verify in Checkout?</label>
 				            <frontend_type>select</frontend_type>

@@ -127,6 +127,11 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getSetting($key) {
 		return Mage::getStoreConfig("sheerid_options/settings/$key");
 	}
+	
+	public function getBooleanSetting($key) {
+		$val = $this->getSetting($key);
+		return $val === 'true' || $val === 1 || $val === '1' || $val === true;
+	}
 
 	// TODO: fetch this from the service!
 	public function getFields($affiliation_types=null, $org_id=0) {
