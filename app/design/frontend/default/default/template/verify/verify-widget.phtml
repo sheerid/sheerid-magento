@@ -1,4 +1,5 @@
 <?php
+$helper = Mage::helper('sheerid_verify');
 $config = array();
 if ($this->getAffiliationTypes()) {
   $config['affiliation_types'] = $this->getAffiliationTypes();
@@ -6,6 +7,12 @@ if ($this->getAffiliationTypes()) {
 if ($this->getOrganizationId()) {
   $config['organization_id'] = $this->getOrganizationId();
 }
+if ($this->getBlockPrefix()) {
+	$prefix = $this->getBlockPrefix() . "_";
+} else {
+	$prefix = '';
+}
+
 ?>
 <script type="text/javascript">
 function sheerIdVerify() {
@@ -36,9 +43,11 @@ function sheerIdVerify() {
 		<strong><span><?php echo $this->getTitle(); ?></span></strong>
 	</div>
 	<div class="block-content">
+		<?php $helper->conditionallyRenderBlock("${prefix}sheerid_widget_header"); ?>
 		<div id="verify-form">
-			<p><?php echo $this->getDescription(); ?></p>
-			<p><a href="javascript:sheerIdVerify();"><?php echo Mage::helper('sheerid_verify')->__("Click here to verify"); ?></a></p>
-		</div>
+			<?php $helper->conditionallyRenderBlock("${prefix}sheerid_widget_body", '<p>'.$this->getDescription().'</p>'); ?>
+			<p><a href="javascript:sheerIdVerify();"><?php $link = $this->getLinkMarkup(); echo $link ? $link : Mage::helper('sheerid_verify')->__("Click here to verify"); ?></a></p>
+		</div>	
+		<?php $helper->conditionallyRenderBlock("${prefix}sheerid_widget_footer"); ?>
 	</div>
 </div>

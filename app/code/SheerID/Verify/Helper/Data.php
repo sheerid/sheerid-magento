@@ -132,6 +132,15 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		$val = $this->getSetting($key);
 		return $val === 'true' || $val === 1 || $val === '1' || $val === true;
 	}
+	
+	public function conditionallyRenderBlock($block_id, $alternate_content=null) {
+		$block = Mage::getModel('cms/block')->load($block_id);
+		if ($block && $block->getIsActive()) {
+			echo $block->getContent();
+		} else if ($alternate_content) {
+			echo $alternate_content;
+		}
+	}
 
 	// TODO: fetch this from the service!
 	public function getFields($affiliation_types=null, $org_id=0) {
