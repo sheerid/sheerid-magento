@@ -69,11 +69,14 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			$coupon = Mage::getModel('salesrule/coupon')->load($code, 'code');
 			$rule = Mage::getModel('salesrule/rule')->load($coupon->getRuleId());
 			if ($rule->getId()) {
-				$conds = $rule->getConditions();
-				foreach ($conds->getConditions() as $c) {
-					$clazz = get_class($c);
-					if ("SheerID_Verify_Model_Rule_Condition_Verified" == $clazz) {
-						$affiliations[] = $c->getValue();
+				$cart = Mage::getSingleton('checkout/cart');
+				if (!$rule->validate($cart)) {
+					$conds = $rule->getConditions();
+					foreach ($conds->getConditions() as $c) {
+						$clazz = get_class($c);
+						if ("SheerID_Verify_Model_Rule_Condition_Verified" == $clazz) {
+							$affiliations[] = $c->getValue();
+						}
 					}
 				}
 			}
