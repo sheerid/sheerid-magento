@@ -14,7 +14,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			$block->setOrganizationId($this->getRequest()->getParam('organization_id'));
 		}
 		
-		if ($this->getRequest()->getParam('in_cart') == 1) {
+		if ($this->getRequest()->getParam('in_cart') == 'true') {
 			$block->setOnCartPage(true);
 		}
 		if ($this->getRequest()->getParam('promo_code')) {

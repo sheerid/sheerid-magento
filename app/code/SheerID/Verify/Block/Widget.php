@@ -25,6 +25,30 @@ class SheerID_Verify_Block_Widget extends Mage_Core_Block_Template
 		return ($module == 'checkout' && $controller == 'cart' && $action == 'index');
 	}
 	
+	protected function widgetJavaScript($container='verify-form') {
+		$config = array();
+		if ($this->getAffiliationTypes()) {
+			$config['affiliation_types'] = $this->getAffiliationTypes();
+		}
+		if ($this->getOrganizationId()) {
+			$config['organization_id'] = $this->getOrganizationId();
+		}
+		$config['in_cart'] = $this->isOnCartPage();
+?>
+		<script type="text/javascript">
+		function sheerIdVerify() {
+			new Ajax.Updater('<?php echo $container; ?>', '/SheerID/verify', {
+				method: 'get',
+				parameters: <?php echo json_encode($config); ?>,
+				onComplete: function(e) {
+					addSheerIDEventListeners();
+				}
+			});
+		}
+		</script>
+<?php
+	}
+	
 	protected function _toHtml() {
 		$quote = Mage::getSingleton('checkout/session')->getQuote();
 		if ("true" != $this->getIsConditional() || $quote->getSheeridResult() != 1) {

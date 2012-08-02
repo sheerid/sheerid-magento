@@ -64,7 +64,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 				<div class="input-box">
 					<?php if ("BIRTH_DATE" == $f) { ?>
 						<div id="verify_birth_date">
-							<select id="verify:birth_month" name="verify[birth_month]" style="width: 60px;" class="required-entry local-validation">
+							<select id="verify:birth_month" name="verify[birth_month]" style="width: 60px; margin-right: 0.5em;" class="required-entry local-validation">
 								<option value="">--</option>
 								<option value="01">Jan</option>
 								<option value="02">Feb</option>
@@ -80,7 +80,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 								<option value="12">Dec</option>
 							</select>
 		
-							<select id="verify:birth_day" name="verify[birth_day]" style="width: 45px;" class="required-entry local-validation">
+							<select id="verify:birth_day" name="verify[birth_day]" style="width: 45px; margin-right: 0.5em;" class="required-entry local-validation">
 								<option value="">--</option>
 								<?php
 								for ($i=1; $i<=31; $i++) {
@@ -91,7 +91,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 								?>
 							</select>
 		
-							<select id="verify:birth_year" name="verify[birth_year]" style="width: 60px;" class="required-entry local-validation">
+							<select id="verify:birth_year" name="verify[birth_year]" style="width: 60px; margin-right: 0.5em;" class="required-entry local-validation">
 								<option value="">--</option>
 								<?php
 								$d = date("Y")/1;
@@ -127,7 +127,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 		<?php } ?>
 		<?php if ($this->getSubmit() !== false) { ?>
 			<p>
-				<button type="submit" class="button"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+				<button type="submit" class="button verify-submit"><span><span><?php echo $this->__('Submit') ?></span></span></button>
 				<span id="verify-please-wait" style="display: none;">
 					<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif'); ?>" alt="<?php echo $this->__("Verifying...");?>" title="<?php echo $this->__("Verifying...");?>" class="v-middle"><?php echo $this->__("Verifying...");?></span>
 			</p>

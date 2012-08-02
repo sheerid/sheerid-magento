@@ -1,25 +1,3 @@
-<?php
-$config = array();
-if ($this->getAffiliationTypes()) {
-  $config['affiliation_types'] = $this->getAffiliationTypes();
-}
-if ($this->getOrganizationId()) {
-  $config['organization_id'] = $this->getOrganizationId();
-}
-?>
-<script type="text/javascript">
-function sheerIdVerify() {
-        var cfg = <?php echo json_encode($config); ?>;
-	cfg.in_cart = <?php echo $this->isOnCartPage(); ?>;
-	new Ajax.Updater('verify-form', '/SheerID/verify', {
-		method: 'get',
-		parameters: cfg,
-		onComplete: function(e) {
-			addSheerIDEventListeners();
-		}
-	});
-}
-</script>
 <style type="text/css">
 .block-verify .block-content {
 	padding: 6px;
@@ -42,3 +20,4 @@ function sheerIdVerify() {
 		</div>
 	</div>
 </div>
+<?php $this->widgetJavaScript(); ?>
