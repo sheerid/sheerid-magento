@@ -54,11 +54,15 @@ addSheerIDEventListeners = function() {
 			if (m) {
 				type = m[1];
 			}
+			var field = SheerIDOrganizationFields[0];
+			var isFixed = false;
+			field.ancestors().each(function(el){ var pos = el.getStyle('position'); if (pos == 'fixed'){ isFixed = true; return false; } });
 			SheerID.load('combobox', '1.0', {
 				config: {
 					baseUrl: '<?php echo $SheerID->baseUrl; ?>',
 					allowName: true,
-					input: SheerIDOrganizationFields[0],
+					input: field,
+					fixedPosition: isFixed,
 					params: {
 						type: type ? type : 'university'
 					}
@@ -72,7 +76,10 @@ addSheerIDEventListeners = function() {
 	// promo code form
 	if (typeof discountForm !== 'undefined') {
 		if (typeof discountForm.loader == 'undefined') {
-			discountForm.form.select('.buttons-set')[0].insert('<span id="discount-form-loading" style="display: none;"><img src="http://demo.sheerid.com/skin/frontend/default/default/images/opc-ajax-loader.gif" alt="Loading..." title="Loading..." class="v-middle"/> Loading...</span>');
+			var buttons = discountForm.form.select('.button');
+			if (buttons.length) {
+				buttons[buttons.length-1].insert({'after':'<span id="discount-form-loading" style="display: none;"><img src="http://demo.sheerid.com/skin/frontend/default/default/images/opc-ajax-loader.gif" alt="Loading..." title="Loading..." class="v-middle"/> Loading...</span>'});
+			}
 		}
 		discountForm.loader = $('discount-form-loading');
 		var _discountSubmit = function(isRemove) {
@@ -140,7 +147,7 @@ addSheerIDEventListeners();
 <?php if ($helper->getBooleanSetting("coupon_code_entry")) { ?>
 <style type="text/css">
 #overlay{width:100%;height:100%;background:#000; opacity:0.8; position:fixed;top:0;z-index:1000;}
-#lightbox{width:50%;position:absolute;top:25%;left:25%;padding:2em;background-color:white;z-index:1001;text-align:left;}
+#lightbox{width:50%;position:fixed;top:25%;left:25%;padding:2em;background-color:white;z-index:1001;text-align:left;}
 #lightbox a.close{cursor:pointer;color:black; position:relative; display:block;float:right;}
 </style>
 <?php } ?>
