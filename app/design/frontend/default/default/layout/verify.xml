@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="addCss"><stylesheet>sheerid_verify/css/verify.css</stylesheet></action>
+		</reference>
+	</default>
 	<checkout_onepage_index>
 		<reference name="checkout.onepage">
 			<block type="sheerid/onepage_verify" name="checkout.onepage.verify" as="verify" after="checkout.onepage.shipping" template="verify/opcheckout-verify.phtml"/>

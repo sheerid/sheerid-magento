@@ -33,3 +33,5 @@ cp -R app/design/frontend/default/default/template/verify $THEME_DIR/template/.
 for x in $(ls locale); do
   cp locale/$x/* $MAGENTO_HOME/app/locale/$x/.
 done
+
+echo "** Don't forget to install skin folder: skin/frontend/default/default/sheerid_verify"
