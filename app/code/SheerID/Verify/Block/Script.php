@@ -15,9 +15,9 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 		<script type="text/javascript" src="https://www.sheerid.com/jsapi/SheerID.js"></script>
 		<script type="text/javascript">
 		addSheerIDEventListeners = function() {
-			$$('form.verify-form-ajax').each(function(el) {
-				Event.observe(el, 'submit', function(event) {
-					var validator = typeof Validation == 'function' ? new Validation(el) : (function(){return{validate:function(){return true;}}}());
+			$$('form.verify-form-ajax').each(function(form) {
+				Event.observe(form, 'submit', function(event) {
+					var validator = typeof Validation == 'function' ? new Validation(form) : (function(){return{validate:function(){return true;}}}());
 					if (validator.validate()) {
 						$$('.verify-messages')[0].update('');
 						var loader = $('verify-please-wait');
@@ -35,10 +35,62 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 								var resp = t.responseJSON;
 								if (resp.result) {
 									$$('.verify-messages')[0].removeClassName('error').update(resp.message || '<?php echo Mage::helper('sheerid_verify')->__("Success!"); ?>');
-									el.hide();
+									form.hide();
 									$$('.verify-prompt').invoke('hide');
 								} else {
-									$$('.verify-messages')[0].addClassName('error').update(resp.errors.join('<br/>'))
+									if (resp.allow_upload) {
+										resp.errors.push('<a href="javascript:;" class="link-upload"><?php echo Mage::helper("sheerid_verify")->__("Upload proof of affiliation"); ?></a>');
+									}
+									$$('.verify-messages')[0].addClassName('error').update(resp.errors.join('<br/>'));
+									
+									var uploadLinks = $$('.verify-messages .link-upload');
+									if (uploadLinks.length) {
+										var link = uploadLinks[0];
+										link.onclick = function(){
+											$('co-verify-form').replace('<div id="verify-upload">Loading...</div>');
+											$$('.verify-messages').each(function(msgs){ msgs.update(); });
+
+											var failureMsg = '<?php echo Mage::helper("sheerid_verify")->__("Unable to prepare upload form."); ?>';
+
+											var request = new Ajax.Request('/SheerID/verify/uploadToken', {
+									                method: 'post',
+									                onSuccess: function(transport) {
+														if (transport && transport.responseText){
+															var response;
+															try{
+																response = eval('(' + transport.responseText + ')');
+															} catch (e) {
+																response = {};
+															}
+															if (response.token) {
+																SheerID.load('asset', '1.0', {
+																	config: {
+																		container : 'verify-upload',
+																		maxFiles: 3,
+																		baseUrl : response.baseUrl,
+																		success : '<?php echo Mage::app()->getStore()->getBaseUrl();?>SheerID/verify/verifyUploadSuccess',
+																		failure : '<?php echo Mage::app()->getStore()->getBaseUrl();?>SheerID/verify/verifyUploadFailure',
+																		onSuccess : function() {
+																			var success_msg = '<?php echo $this->__("Your documentation has been uploaded successfully."); ?>';
+																			var keep_shopping = '<?php echo $this->__('Click <a href="%s">here</a> to continue shopping.', Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)); ?>';
+																			$('verify-upload').update('<p>' + success_msg + '</p><p>' + keep_shopping + '</p>');
+																		},
+																		ajax: true,
+																		token: response.token
+																	}
+																});
+															}
+												        } else {
+															$('verify-upload').update(failureMsg);
+														}
+													},
+													onFailure: function(transport) {
+														$('verify-upload').update(failureMsg);
+													},
+									                parameters: {}
+									  			});
+										};
+									}
 								}
 
 								if (resp.refresh) {

@@ -26,17 +26,12 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	
 	public function verifyAction() {
 		$helper = Mage::helper('sheerid_verify');
-		$quote = Mage::getSingleton('checkout/session')->getQuote();
+		$quote = $helper->getCurrentQuote();
 		$verify_result = $helper->handleVerifyPost($this->getRequest(), $this->getResponse(), $quote);
 		if (!$verify_result["result"]) {
 			$errors =  array($this->__("Unable to verify. Please check that your information is correct."));
-			$resp = array("result" => false, "errors" => $errors);
+			$resp = array("result" => false, "errors" => $errors, "allow_upload" => $helper->getBooleanSetting('allow_uploads'));
 		} else {
-			$session = Mage::getSingleton('checkout/session');
-			if (!$session->getQuoteId()) {
-				$session->setQuoteId($quote->getId());
-			}
-			
 			$resp = array("result" => true);
 			
 			if ($this->getRequest()->getParam("on_cart_page") == 1){
@@ -94,4 +89,37 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		echo json_encode(Mage::helper('sheerid_verify/rest')->getService()->listOrganizations($type, $name));
 	}
 	
+	public function uploadTokenAction() {
+		$helper = Mage::helper('sheerid_verify');
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$quote = $helper->getCurrentQuote();
+			$requestId = $quote->getSheeridRequestId();
+			
+			if ($requestId) {
+				$rest_helper = Mage::helper('sheerid_verify/rest');
+				$SheerID = $rest_helper->getService();
+				$token = $SheerID->getAssetToken($requestId);
+			}
+			
+			if ($token) {
+				$result = array();
+				$result['token'] = $token;
+				$result['baseUrl'] = $SheerID->url();
+				$this->getResponse()->setBody(Zend_Json::encode($result));
+			} else {
+				$this->getResponse()->setHttpResponseCode(404);
+			}
+		} else {
+			header('Allow: POST');
+			$this->getResponse()->setHttpResponseCode(405);
+		}
+	}
+	
+	public function verifyUploadSuccessAction(){
+		// empty - 200 response necessary for upload form
+	}
+	
+	public function verifyUploadFailureAction(){
+		// empty - 200 response necessary for upload form
+	}
 }

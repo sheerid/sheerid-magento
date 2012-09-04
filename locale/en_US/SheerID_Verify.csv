@@ -16,12 +16,14 @@ SheerID Verified Affiliations,SheerID Verified Affiliations
 Skip this step,Skip this step
 Submit,Submit
 Success!,Success!
+Unable to prepare upload form.,Unable to prepare upload form.
 Unable to verify. Please check that your information is correct.,Unable to verify. Please check that your information is correct.
 Upload proof of affiliation,Upload proof of affiliation
 Verification,Verification
 Verified,Verified
 Verify,Verify
 Verifying...,Verifying...
+Your documentation has been uploaded successfully.,Your documentation has been uploaded successfully.
 STUDENT_FULL_TIME,Full-time Student
 STUDENT_PART_TIME,Part-time Student
 ALUM,Alum

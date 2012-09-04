@@ -115,6 +115,16 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 	}
 
+	public function getCurrentQuote($create=true) {
+		$quote = Mage::getSingleton('checkout/cart')->getQuote();
+		$session = Mage::getSingleton('checkout/session');
+		if (!$session->getQuoteId() && $create) {
+			$quote->save();
+			$session->setQuoteId($quote->getId());
+		}
+		return $quote;
+	}
+
 	public function getFieldLabel($key) {
 		$lbl = strtolower(str_replace("_", " ", $key));
 		return preg_replace_callback("/\b([a-z])/", array($this, 'titleCaseReplace'), $lbl);
