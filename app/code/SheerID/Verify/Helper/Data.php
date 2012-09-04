@@ -43,10 +43,15 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 				$data["_affiliationTypes"] = $verify['affiliation_types'];
 			}
 
-			$rest_helper = Mage::helper('sheerid_verify/rest');
-			$SheerID = $rest_helper->getService();
-
+			$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+			
 			$result = array();
+			
+			if (!$SheerID) {
+				$result["error"] = true;
+				$result['message'] = "No access token";
+				return $result;
+			}
 
 			try {
 				$resp = $SheerID->verify($data, $organizationId);
@@ -141,6 +146,10 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getBooleanSetting($key) {
 		$val = $this->getSetting($key);
 		return $val === 'true' || $val === 1 || $val === '1' || $val === true;
+	}
+
+	public function isSetUp() {
+		return !!$this->getSetting("access_token");
 	}
 
 	// TODO: fetch this from the service!

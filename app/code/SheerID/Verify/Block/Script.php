@@ -8,8 +8,10 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 
 	protected function _toHtml() {
 		$helper = Mage::helper('sheerid_verify');
-		$rest_helper = Mage::helper('sheerid_verify/rest');
-		$SheerID = $rest_helper->getService();
+		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+		if (!$SheerID) {
+			return;
+		}
 		?>
 
 		<script type="text/javascript" src="https://www.sheerid.com/jsapi/SheerID.js"></script>

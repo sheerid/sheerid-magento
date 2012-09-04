@@ -83,12 +83,6 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			->setBody(json_encode(array_unique($affiliations)));
 	}
 	
-	public function organizationsAction() {
-		$name = $this->getRequest()->getParam("q");
-		$type = $this->getRequest()->getParam("type");
-		echo json_encode(Mage::helper('sheerid_verify/rest')->getService()->listOrganizations($type, $name));
-	}
-	
 	public function uploadTokenAction() {
 		$helper = Mage::helper('sheerid_verify');
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -96,9 +90,10 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			$requestId = $quote->getSheeridRequestId();
 			
 			if ($requestId) {
-				$rest_helper = Mage::helper('sheerid_verify/rest');
-				$SheerID = $rest_helper->getService();
-				$token = $SheerID->getAssetToken($requestId);
+				$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+				if ($SheerID) {
+					$token = $SheerID->getAssetToken($requestId);
+				}
 			}
 			
 			if ($token) {

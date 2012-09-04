@@ -23,10 +23,11 @@ class SheerID_Verify_OnepageController extends Mage_Checkout_OnepageController
 	public function savePaymentAction() {
 		$quote = $this->getOnePage()->getQuote();
 		if ($quote->getSheeridRequestId()) {
-			$rest_helper = Mage::helper('sheerid_verify/rest');
-			$SheerID = $rest_helper->getService();
-			$resp = $SheerID->inquire($quote->getSheeridRequestId());
-			Mage::helper('sheerid_verify')->saveResponseToQuote($quote, $resp);
+			$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+			if ($SheerID) {
+				$resp = $SheerID->inquire($quote->getSheeridRequestId());
+				Mage::helper('sheerid_verify')->saveResponseToQuote($quote, $resp);
+			}
 		}
 		parent::savePaymentAction();
 	}
@@ -45,9 +46,10 @@ class SheerID_Verify_OnepageController extends Mage_Checkout_OnepageController
 			$requestId = $quote->getSheeridRequestId();
 			
 			if ($requestId) {
-				$rest_helper = Mage::helper('sheerid_verify/rest');
-				$SheerID = $rest_helper->getService();
-				$token = $SheerID->getAssetToken($requestId);
+				$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+				if ($SheerID) {
+					$token = $SheerID->getAssetToken($requestId);
+				}
 			}
 			
 			if ($token) {

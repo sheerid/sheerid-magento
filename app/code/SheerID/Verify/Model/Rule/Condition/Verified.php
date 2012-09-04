@@ -29,13 +29,16 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
 		if ('sheerid' == $this->getAttribute()) {
 			$opts = array();
 			
-			$rest_helper = Mage::helper('sheerid_verify/rest');
-			$types = $rest_helper->getService()->listAffiliationTypes();
-			foreach ($types as $typeStr) {
-				$opts[] = array('value' => $typeStr, 'label' => Mage::helper('sheerid_verify')->__($typeStr));
-			}
+			$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 			
-			usort($opts, array($this, "compare"));
+			if ($SheerID) {
+				$types = $SheerID->listAffiliationTypes();
+				foreach ($types as $typeStr) {
+					$opts[] = array('value' => $typeStr, 'label' => Mage::helper('sheerid_verify')->__($typeStr));
+				}
+
+				usort($opts, array($this, "compare"));
+			}
 			
 			$this->setData('value_select_options', $opts);
 			return $this->getData('value_select_options');
