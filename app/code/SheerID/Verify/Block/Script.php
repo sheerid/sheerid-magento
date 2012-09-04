@@ -73,6 +73,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 																		onSuccess : function() {
 																			var success_msg = '<?php echo $this->__("Your documentation has been uploaded successfully."); ?>';
 																			var keep_shopping = '<?php echo $this->__('Click <a href="%s">here</a> to continue shopping.', Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)); ?>';
+																			$$('.verify-prompt').each(function(msgs){ msgs.update(); });
 																			$('verify-upload').update('<p>' + success_msg + '</p><p>' + keep_shopping + '</p>');
 																		},
 																		ajax: true,
