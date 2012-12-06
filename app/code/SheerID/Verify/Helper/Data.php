@@ -7,7 +7,8 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$verify = $post_data['verify'];
 
 			$organizationId = $verify['organizationId'];
-			$dob = $verify['birth_year']."-".$verify['birth_month']."-".$verify['birth_day'];
+			$dob = $this->readDate($verify, 'BIRTH_DATE');
+			$ssd = $this->readDate($verify, 'STATUS_START_DATE');
 
 			$ba = $quote->getBillingAddress();
 			if ($ba) {
@@ -29,6 +30,9 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$data["LAST_NAME"] = $lastName;
 			if (strlen($dob) == 10) {
 				$data["BIRTH_DATE"] = $dob;
+			}
+			if (strlen($ssd) == 10) {
+				$data["STATUS_START_DATE"] = $ssd;
 			}
 			$data["ID_NUMBER"] = $verify['ID_NUMBER'];
 
@@ -64,7 +68,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$this->saveResponseToQuote($quote, $resp);
 
 			return $result;
-        }
+		}
 	}
 
 	public function saveResponseToQuote($quote, $resp) {
@@ -132,7 +136,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function getFieldLabel($key) {
 		$lbl = strtolower(str_replace("_", " ", $key));
-		return preg_replace_callback("/\b([a-z])/", array($this, 'titleCaseReplace'), $lbl);
+		return $this->__(preg_replace_callback("/\b([a-z])/", array($this, 'titleCaseReplace'), $lbl));
 	}
 
 	private function titleCaseReplace($m) {
@@ -158,5 +162,14 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
                 }
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		return $SheerID->getFields($affiliation_types);
+	}
+
+	private function readDate($request, $field) {
+		$m = $request["$field.month"];
+		$d = $request["$field.day"];
+		$y = $request["$field.year"];
+		if ($m && $d && $y) {
+			return "$y-$m-$d";
+		}
 	}
 }

@@ -2,6 +2,8 @@
 
 $helper = Mage::helper('sheerid_verify');
 
+$MONTHS = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+
 // defaults
 if ($this->getCollectName() !== false) {
 	$this->setCollectName(true);
@@ -47,11 +49,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 		<?php } ?>
 
 		<?php foreach ($fields as $f) {
-			if ("BIRTH_DATE" == $f) {
-				$name = "birth_month";
-			} else {
-				$name = $f;
-			}
+			$name = $f;
 			$label = $helper->getFieldLabel($f);
 			if ("POSTAL_CODE" == $f) {
 				$className = "narrow";
@@ -62,51 +60,51 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 			<li class="<?php echo $className; ?>">
 				<label for="verify:<?php echo $name; ?>" class="required"><em>*</em><?php echo $this->__($label) ?></label>
 				<div class="input-box">
-					<?php if ("BIRTH_DATE" == $f) { ?>
-						<div id="verify_birth_date">
-							<select id="verify:birth_month" name="verify[birth_month]" style="width: 60px; margin-right: 0.5em;" class="required-entry local-validation">
+					<?php if (preg_match('/_DATE$/', $f)) { ?>
+						<?php if ('STATUS_START_DATE' == $f) {
+							$monthVal = date('m');
+							$dayVal = date('d');
+							$yearVal = date('Y');
+						} ?>
+						<div id="verify_<?php echo $name; ?>">
+							<select id="verify:<?php echo $name; ?>" name="verify[<?php echo $f; ?>.month]" style="width: 60px; margin-right: 0.5em;" class="required-entry local-validation">
 								<option value="">--</option>
-								<option value="01">Jan</option>
-								<option value="02">Feb</option>
-								<option value="03">Mar</option>
-								<option value="04">Apr</option>
-								<option value="05">May</option>
-								<option value="06">Jun</option>
-								<option value="07">Jul</option>
-								<option value="08">Aug</option>
-								<option value="09">Sep</option>
-								<option value="10">Oct</option>
-								<option value="11">Nov</option>
-								<option value="12">Dec</option>
+								<?php for ($i=1; $i<=count($MONTHS); $i++) { $val = $i < 10 ? "0$i" : $i; ?>
+									<option value="<?php echo $val; ?>"<?php if ($monthVal == $val) echo " selected";?>><?php echo $MONTHS[$i-1]; ?></option>
+								<?php } ?>
 							</select>
 		
-							<select id="verify:birth_day" name="verify[birth_day]" style="width: 45px; margin-right: 0.5em;" class="required-entry local-validation">
+							<select id="verify:<?php echo $name; ?>.day" name="verify[<?php echo $f; ?>.day]" style="width: 45px; margin-right: 0.5em;" class="required-entry local-validation">
 								<option value="">--</option>
 								<?php
 								for ($i=1; $i<=31; $i++) {
 									$v = $i;
 									if ($v < 10) { $v = "0$i"; }
-									echo "\n<option value=\"$v\">$i</option>";
+									echo "\n<option value=\"$v\"".($dayVal == $v?" selected":"").">$i</option>";
 								}
 								?>
 							</select>
 		
-							<select id="verify:birth_year" name="verify[birth_year]" style="width: 60px; margin-right: 0.5em;" class="required-entry local-validation">
+							<select id="verify:<?php echo $name; ?>.year" name="verify[<?php echo $f; ?>.year]" style="width: 60px; margin-right: 0.5em;" class="required-entry local-validation">
 								<option value="">--</option>
 								<?php
 								$d = date("Y")/1;
 								for ($i=0; $i<100; $i++) {
 									$v = $d - $i;
-									echo "\n<option>$v</option>";
+									if ($v == $yearVal) {
+										echo "\n<option selected>$v</option>";
+									} else {
+										echo "\n<option>$v</option>";
+									}
 								}
 								?>
 							</select>
 						</div>
 						<div>
-							<div id="advice-verify:birth_month" style="display: none;"></div>
-							<div id="advice-verify:birth_day" style="display: none;"></div>
-							<div id="advice-verify:birth_year" style="display: none;"></div>
-							<div class="validation-advice" id="advice-verify_birth_date" style="display: none;"><?php echo $this->__("All birth date fields are required.");?></div>
+							<div id="advice-verify:<?php echo $name; ?>" style="display: none;"></div>
+							<div id="advice-verify:<?php echo $name; ?>.day" style="display: none;"></div>
+							<div id="advice-verify:<?php echo $name; ?>.year" style="display: none;"></div>
+							<div class="validation-advice" id="advice-verify_<?php echo $name; ?>" style="display: none;"><?php echo $this->__("All date fields are required.");?></div>
 						</div>
 					<?php } else { ?>
 						<input type="text" title="<?php echo $this->__($label); ?>" name="verify[<?php echo $name; ?>]" id="verify:<?php echo $name; ?>" value="" class="input-text required-entry local-validation"/>
