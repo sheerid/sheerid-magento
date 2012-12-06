@@ -152,22 +152,11 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return !!$this->getSetting("access_token");
 	}
 
-	// TODO: fetch this from the service!
 	public function getFields($affiliation_types=null, $org_id=0) {
-		$fields = array('FIRST_NAME', 'LAST_NAME');
-		if ($affiliation_types && is_string($affiliation_types)) {
-			$affiliation_types = explode(',', $affiliation_types);
-		}
-		if (array_search('STUDENT_FULL_TIME', $affiliation_types) !== FALSE || array_search('STUDENT_PART_TIME', $affiliation_types) !== FALSE) {
-			$fields[] = 'BIRTH_DATE';
-		}
-		if (array_search('ACTIVE_DUTY', $affiliation_types) !== FALSE) {
-			$fields[] = 'BIRTH_DATE';
-		}
-		if (array_search('FACULTY', $affiliation_types) !== FALSE) {
-			$fields[] = 'ID_NUMBER';
-		}
-
-		return array_unique($fields);
+                if ($affiliation_types && is_string($affiliation_types)) {
+                        $affiliation_types = explode(',', $affiliation_types);
+                }
+		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+		return $SheerID->getFields($affiliation_types);
 	}
 }
