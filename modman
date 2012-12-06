@@ -1,0 +1,6 @@
+app/code/SheerID app/code/community/SheerID
+etc/SheerID_All.xml app/etc/modules/
+app/design/frontend/default/default/layout/verify.xml app/design/frontend/base/default/layout/
+app/design/frontend/default/default/template/verify app/design/frontend/base/default/template/verify/
+locale/en_US/SheerID_Verify.csv app/locale/en_US/
+skin/frontend/default/default/sheerid_verify skin/frontend/default/default/sheerid_verify

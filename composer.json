@@ -1,0 +1,45 @@
+{
+	"name": "SheerID/Verify",
+	"type": "magento-module",
+	"license": "Apache-2.0",
+	"description": "",
+	"homepage": "http://SheerID.com",
+	"minimum-stability": "beta",
+	"authors": [{
+		"name": "Alex Boone",
+		"email": "alex@sheerid.com"
+	}],
+	"extras": {
+		"magento_connect": {
+			"channel": "community",
+			"php_min": "5.0.0",
+			"php_max": "6.0.0",
+			"content": [{
+				"type": "magecommunity",
+				"structure": "dir",
+				"path": "SheerID/Verify",
+				"ignore": "*/.git/.*"
+			}, {
+				"type": "mageetc",
+				"structure": "file",
+				"path": "modules/SheerID_All.xml"
+			}, {
+				"type": "magelocale",
+				"structure": "file",
+				"path": "en_US/SheerID_Verify.csv"
+			}, {
+				"type": "magedesign",
+				"structure": "file",
+				"path": "frontend/base/default/layout/verify.xml"
+			}, {
+				"type": "magedesign",
+				"structure": "dir",
+				"path": "frontend/base/default/template/verify"
+			}, {
+				"type": "mageskin",
+				"structure": "dir",
+				"path": "frontend/default/default/sheerid_verify"
+			}]
+		}
+	}
+}
