@@ -21,7 +21,7 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
         if ('sheerid' == $this->getAttribute()) {
 			return 'select';
 		}
-      	return parent::getInputType();
+      	return parent::getValueElementType();
     }
 
 	public function getValueSelectOptions()
