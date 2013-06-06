@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<tabs>
 		<sheeridconfig translate="label" module="sheerid_verify">
@@ -24,80 +24,68 @@
 					<show_in_website>1</show_in_website>
 					<show_in_store>1</show_in_store>
 					<fields>
-				        <access_token translate="label">
-				            <label>SheerID Access Token</label>
-				            <frontend_type>text</frontend_type>
-				            <sort_order>1</sort_order>
-				            <show_in_default>1</show_in_default>
-				            <show_in_website>1</show_in_website>
-				            <show_in_store>1</show_in_store>      
-				            <comment>
-								<![CDATA[
-									The token which allows your system to access the SheerID API. Obtained from the <a href="https://www.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.
-								]]>
-							</comment>
-				        </access_token>
+						<access_token translate="label">
+							<label>SheerID Access Token</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[The token which allows your system to access the SheerID API. Obtained from the <a href="https://www.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
+						</access_token>
 						<coupon_code_entry translate="label">
-				            <label>Verify on Coupon Code Entry</label>
-				            <frontend_type>select</frontend_type>
+							<label>Verify on Coupon Code Entry</label>
+							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-				            <sort_order>2</sort_order>
-				            <show_in_default>1</show_in_default>
-				            <show_in_website>1</show_in_website>
-				            <show_in_store>1</show_in_store>  
-				            <comment><![CDATA[
-								 If this setting is enabled, users inputting a coupon code will be prompted to verify if the price rule is conditional upon a SheerID-verified affiliation.
-							]]></comment>
-				        </coupon_code_entry>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[If this setting is enabled, users inputting a coupon code will be prompted to verify if the price rule is conditional upon a SheerID-verified affiliation.]]></comment>
+						</coupon_code_entry>
 						<allow_uploads translate="label">
-				            <label>Allow Uploads?</label>
-				            <frontend_type>select</frontend_type>
+							<label>Allow Uploads?</label>
+							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-				            <sort_order>3</sort_order>
-				            <show_in_default>1</show_in_default>
-				            <show_in_website>1</show_in_website>
-				            <show_in_store>1</show_in_store>    
-				            <comment><![CDATA[ Allow customer to upload proof of affiliation if automated verification fails. ]]></comment>              
-				        </allow_uploads>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Allow customer to upload proof of affiliation if automated verification fails.]]></comment>
+						</allow_uploads>
 						<sandbox translate="label">
-				            <label>Sandbox Mode?</label>
-				            <frontend_type>select</frontend_type>
+							<label>Sandbox Mode?</label>
+							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-				            <sort_order>5</sort_order>
-				            <show_in_default>1</show_in_default>
-				            <show_in_website>1</show_in_website>
-				            <show_in_store>1</show_in_store>  
-				            <comment><![CDATA[
-								 Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.
-							]]></comment>                  
-				        </sandbox>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.]]></comment>
+						</sandbox>
 						<show_in_checkout translate="label">
-				            <label>Verify in Checkout?</label>
-				            <frontend_type>select</frontend_type>
+							<label>Verify in Checkout?</label>
+							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_VerifyInCheckout</source_model>
-				            <sort_order>10</sort_order>
-				            <show_in_default>1</show_in_default>
-				            <show_in_website>1</show_in_website>
-				            <show_in_store>1</show_in_store>
-				            <comment><![CDATA[
-								  Determine whether to prompt for verification during the checkout process. If a customer has already verified, they won't be prompted to verify again regardless of this setting.
-							]]></comment>
-				        </show_in_checkout>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Determine whether to prompt for verification during the checkout process. If a customer has already verified, they won't be prompted to verify again regardless of this setting.]]></comment>
+						</show_in_checkout>
 						<show_in_checkout_cookie_name translate="label">
-						   <label>Verify Cookie Name</label>
-                           <frontend_type>text</frontend_type>
-                           <sort_order>11</sort_order>
-                           <show_in_default>1</show_in_default>
-                           <show_in_website>1</show_in_website>	
-				           <show_in_store>1</show_in_store>
-                           <depends>
-                               <show_in_checkout>cookie</show_in_checkout>
-                           </depends>
-				           	<comment><![CDATA[
-								  If Verify in Checkout is set to Cookie-Dependent, this is the name of the cookie which can be set to toggle the verification. The value of the cookie should be set to a comma-delimited list of affiliation types which are to be verified.  View the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a> for information about affiliation types.
-							]]></comment>
-                       </show_in_checkout_cookie_name>
-				    </fields>
+							<label>Verify Cookie Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<show_in_checkout>cookie</show_in_checkout>
+							</depends>
+							<comment><![CDATA[If Verify in Checkout is set to Cookie-Dependent, this is the name of the cookie which can be set to toggle the verification. The value of the cookie should be set to a comma-delimited list of affiliation types which are to be verified.  View the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a> for information about affiliation types.]]></comment>
+						</show_in_checkout_cookie_name>
+					</fields>
 				</settings>
 			</groups>
 		</sheerid_options>
