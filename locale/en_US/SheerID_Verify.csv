@@ -37,3 +37,6 @@ ACTIVE_DUTY,Active-Duty Military
 VETERAN,Veteran
 MEMBER,Member
 RESELLER,Reseller
+MILITARY_FAMILY,Military Dependent
+MILITARY_RETIREE,Military Retiree
+RESERVIST,Reservist or Guardsman
