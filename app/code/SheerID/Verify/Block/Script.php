@@ -14,7 +14,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 		}
 		?>
 
-		<script type="text/javascript" src="https://www.sheerid.com/jsapi/SheerID.js"></script>
+		<script type="text/javascript" src="<?php echo $SheerID->baseUrl; ?>/jsapi/SheerID.js"></script>
 		<script type="text/javascript">
 		addSheerIDEventListeners = function() {
 			$$('form.verify-form-ajax').each(function(form) {
@@ -120,6 +120,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 				var isFixed = false;
 				field.ancestors().each(function(el){ var pos = el.getStyle('position'); if (pos == 'fixed'){ isFixed = true; return false; } });
 				SheerID.load('combobox', '1.0', {
+					baseUrl : '<?php echo $SheerID->baseUrl; ?>/jsapi',
 					config: {
 						baseUrl: '<?php echo $SheerID->baseUrl; ?>',
 						allowName: true,
