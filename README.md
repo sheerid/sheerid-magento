@@ -18,6 +18,7 @@ A plugin for [Magento eCommerce Platform](http://www.magentocommerce.com/) which
 
 ## Installation
 
+1. Note: Make sure that you initialize the git submodules or otherwise ensure the SheerID PHP library is present in app/code/SheerID/Verify/lib/SheerID
 1. Move the app/code/SheerID directory into $MAGENTO_HOME/app/code/community
 1. Move etc/SheerID_All.xml into $MAGENTO_HOME/app/etc/modules
 1. Move files from app/design/frontend/default/default into the corresponding location based on your current theme setting.
