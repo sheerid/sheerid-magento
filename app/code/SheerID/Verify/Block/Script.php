@@ -110,28 +110,26 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			});
 
 			SheerIDOrganizationFields = $$('.sheerid-orgs');
-			if (SheerIDOrganizationFields.length) {
-				if (SheerIDOrganizationFields.length == 1) {
-					var type = null;
-					var m = SheerIDOrganizationFields[0].className.match(/sheerid-orgs-(\w+)/);
-					if (m) {
-						type = m[1];
-					}
-					var field = SheerIDOrganizationFields[0];
-					var isFixed = false;
-					field.ancestors().each(function(el){ var pos = el.getStyle('position'); if (pos == 'fixed'){ isFixed = true; return false; } });
-					SheerID.load('combobox', '1.0', {
-						config: {
-							baseUrl: '<?php echo $SheerID->baseUrl; ?>',
-							allowName: true,
-							input: field,
-							fixedPosition: isFixed,
-							params: {
-								type: type ? type : 'university'
-							}
-						}
-					});
+			for (var i=0; i<SheerIDOrganizationFields.length; i++) {
+				var field = SheerIDOrganizationFields[i];
+				var type = null;
+				var m = field.className.match(/sheerid-orgs-(\w+)/);
+				if (m) {
+					type = m[1];
 				}
+				var isFixed = false;
+				field.ancestors().each(function(el){ var pos = el.getStyle('position'); if (pos == 'fixed'){ isFixed = true; return false; } });
+				SheerID.load('combobox', '1.0', {
+					config: {
+						baseUrl: '<?php echo $SheerID->baseUrl; ?>',
+						allowName: true,
+						input: field,
+						fixedPosition: isFixed,
+						params: {
+							type: type ? type : 'university'
+						}
+					}
+				});
 			}
 
 			<?php if ($helper->getBooleanSetting("coupon_code_entry")) { ?>
