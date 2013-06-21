@@ -126,7 +126,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 		<?php if ($this->getSubmit() !== false) { ?>
 			<p>
 				<button type="submit" class="button verify-submit"><span><span><?php echo $this->__('Submit') ?></span></span></button>
-				<span id="verify-please-wait" style="display: none;">
+				<span id="verify-please-wait" class="verify-please-wait" style="display: none;">
 					<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif'); ?>" alt="<?php echo $this->__("Verifying...");?>" title="<?php echo $this->__("Verifying...");?>" class="v-middle"><?php echo $this->__("Verifying...");?></span>
 			</p>
 		<?php } ?>

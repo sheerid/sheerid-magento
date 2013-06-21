@@ -21,8 +21,9 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 				Event.observe(form, 'submit', function(event) {
 					var validator = typeof Validation == 'function' ? new Validation(form) : (function(){return{validate:function(){return true;}}}());
 					if (validator.validate()) {
-						$$('.verify-messages')[0].update('');
-						var loader = $('verify-please-wait');
+						var wrap = form.up('#sheerid_verify')
+						wrap.select('.verify-messages')[0].update('');
+						var loader = form.select('.verify-please-wait')[0];
 						loader.show();
 						this.request({
 							evalJSON : 'force',
@@ -36,21 +37,22 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 								loader.hide();
 								var resp = t.responseJSON;
 								if (resp.result) {
-									$$('.verify-messages')[0].removeClassName('error').update(resp.message || '<?php echo Mage::helper('sheerid_verify')->__("Success!"); ?>');
+									wrap.select('.verify-messages')[0].removeClassName('error').update(resp.message || '<?php echo Mage::helper('sheerid_verify')->__("Success!"); ?>');
 									form.hide();
-									$$('.verify-prompt').invoke('hide');
+									wrap.select('.verify-prompt').invoke('hide');
 								} else {
 									if (resp.allow_upload) {
 										resp.errors.push('<a href="javascript:;" class="link-upload"><?php echo Mage::helper("sheerid_verify")->__("Upload proof of affiliation"); ?></a>');
 									}
-									$$('.verify-messages')[0].addClassName('error').update(resp.errors.join('<br/>'));
+									wrap.select('.verify-messages')[0].addClassName('error').update(resp.errors.join('<br/>'));
 									
-									var uploadLinks = $$('.verify-messages .link-upload');
+									var uploadLinks = wrap.select('.verify-messages .link-upload');
 									if (uploadLinks.length) {
 										var link = uploadLinks[0];
 										link.onclick = function(){
-											$('co-verify-form').replace('<div id="verify-upload">Loading...</div>');
-											$$('.verify-messages').each(function(msgs){ msgs.update(); });
+											var ctUpload = 'verify-upload-' + new Date()/1;
+											form.replace('<div id="' + ctUpload + '">Loading...</div>');
+											wrap.select('.verify-messages').each(function(msgs){ msgs.update(); });
 
 											var failureMsg = '<?php echo Mage::helper("sheerid_verify")->__("Unable to prepare upload form."); ?>';
 
@@ -67,7 +69,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 															if (response.token) {
 																SheerID.load('asset', '1.0', {
 																	config: {
-																		container : 'verify-upload',
+																		container : ctUpload,
 																		maxFiles: 3,
 																		baseUrl : response.baseUrl,
 																		success : '<?php echo Mage::app()->getStore()->getBaseUrl();?>SheerID/verify/verifyUploadSuccess',
@@ -75,8 +77,8 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 																		onSuccess : function() {
 																			var success_msg = '<?php echo $this->__("Your documentation has been uploaded successfully."); ?>';
 																			var keep_shopping = '<?php echo $this->__('Click <a href="%s">here</a> to continue shopping.', Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)); ?>';
-																			$$('.verify-prompt').each(function(msgs){ msgs.update(); });
-																			$('verify-upload').update('<p>' + success_msg + '</p><p>' + keep_shopping + '</p>');
+																			wrap.select('.verify-prompt').each(function(msgs){ msgs.update(); });
+																			$(ctUpload).update('<p>' + success_msg + '</p><p>' + keep_shopping + '</p>');
 																		},
 																		ajax: true,
 																		token: response.token
@@ -84,11 +86,11 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 																});
 															}
 												        } else {
-															$('verify-upload').update(failureMsg);
+															$(ctUpload).update(failureMsg);
 														}
 													},
 													onFailure: function(transport) {
-														$('verify-upload').update(failureMsg);
+														$(ctUpload).update(failureMsg);
 													},
 									                parameters: {}
 									  			});
