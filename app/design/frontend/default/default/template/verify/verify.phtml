@@ -24,9 +24,8 @@ if ($this->getUseQuoteInformation()) {
   $fields = array_diff($fields, array("FIRST_NAME", "LAST_NAME", "POSTAL_CODE"));
 }
 
-$flavor = false !== strpos($this->getAffiliationTypes(), "ACTIVE_DUTY") ? 'military' : 'university';
-
-$organization_label = $flavor == 'military' ? 'Branch' : 'School';
+$orgType = $helper->getOrganizationType(explode(',', $this->getAffiliationTypes()));
+$organization_label = $helper->getOrganizationLabel($orgType);
 
 ?>
 
@@ -43,7 +42,7 @@ $organization_label = $flavor == 'military' ? 'Branch' : 'School';
 		<li class="wide">
 			<label for="verify:organizationId" class="required"><em>*</em><?php echo $this->__($organization_label) ?></label>
 			<div class="input-box">
-				<input type="text" title="<?php echo $this->__($organization_label) ?>" name="verify[organizationId]" id="verify:organizationId" value="" class="input-text required-entry local-validation sheerid-orgs sheerid-orgs-<?php echo $flavor; ?>"/>
+				<input type="text" title="<?php echo $this->__($organization_label) ?>" name="verify[organizationId]" id="verify:organizationId" value="" class="input-text required-entry local-validation sheerid-orgs sheerid-orgs-<?php echo strtolower($orgType); ?>"/>
 			</div>
 		</li>
 		<?php } ?>

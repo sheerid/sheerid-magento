@@ -139,6 +139,19 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return $this->__(preg_replace_callback("/\b([a-z])/", array($this, 'titleCaseReplace'), $lbl));
 	}
 
+	public function getOrganizationType($affiliation_types) {
+		return $SheerID = Mage::helper('sheerid_verify/rest')->getService()->getOrganizationType($affiliation_types);
+	}
+
+	public function getOrganizationLabel($orgType) {
+		if ("UNIVERSITY" == $orgType) {
+			return "School";
+		} else if ('MILITARY' == $orgType) {
+			return "Branch";
+		}
+		return "Organization";
+	}
+
 	private function titleCaseReplace($m) {
 		return strtoupper($m[1]);
 	}
