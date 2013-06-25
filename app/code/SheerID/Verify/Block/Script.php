@@ -114,25 +114,23 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			SheerIDOrganizationFields = $$('.sheerid-orgs');
 			for (var i=0; i<SheerIDOrganizationFields.length; i++) {
 				var field = SheerIDOrganizationFields[i];
-				var type = null;
 				var m = field.className.match(/sheerid-orgs-(\w+)/);
 				if (m) {
-					type = m[1];
-				}
-				var isFixed = false;
-				field.ancestors().each(function(el){ var pos = el.getStyle('position'); if (pos == 'fixed'){ isFixed = true; return false; } });
-				SheerID.load('combobox', '1.0', {
-					baseUrl : '<?php echo $SheerID->baseUrl; ?>/jsapi',
-					config: {
-						baseUrl: '<?php echo $SheerID->baseUrl; ?>',
-						allowName: true,
-						input: field,
-						fixedPosition: isFixed,
-						params: {
-							type: type ? type : 'university'
+					var isFixed = false;
+					field.ancestors().each(function(el){ var pos = el.getStyle('position'); if (pos == 'fixed'){ isFixed = true; return false; } });
+					SheerID.load('combobox', '1.0', {
+						baseUrl : '<?php echo $SheerID->baseUrl; ?>/jsapi',
+						config: {
+							baseUrl: '<?php echo $SheerID->baseUrl; ?>',
+							allowName: true,
+							input: field,
+							fixedPosition: isFixed,
+							params: {
+								type: m[1]
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 
 			<?php if ($helper->getBooleanSetting("coupon_code_entry")) { ?>
