@@ -21,7 +21,7 @@ if ($this->getFields()) {
 }
 
 if ($this->getUseQuoteInformation()) {
-  $fields = array_diff($fields, array("FIRST_NAME", "LAST_NAME", "POSTAL_CODE"));
+  $fields = array_diff($fields, array("FIRST_NAME", "LAST_NAME", "POSTAL_CODE", "EMAIL"));
 }
 
 $orgType = $helper->getOrganizationType(explode(',', $this->getAffiliationTypes()));

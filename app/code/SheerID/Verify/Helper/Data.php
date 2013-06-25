@@ -15,6 +15,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 				$firstName = $ba->getFirstname();
 				$lastName = $ba->getLastname();
 				$postalCode = $ba->getPostcode();
+				$email = $ba->getEmailAddress();
 			}
 			
 			$ALLOW_NAME = true;
@@ -40,6 +41,11 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 				$data["POSTAL_CODE"] = $verify['POSTAL_CODE'];
 			} else {
 				$data['POSTAL_CODE'] = $postalCode;
+			}
+			if ($verify['EMAIL']) {
+				$data['EMAIL'] = $verify['EMAIL'];
+			} else if ($email) {
+				$data['EMAIL'] = $email;
 			}
 			
 			if ($verify['affiliation_types']) {
@@ -174,7 +180,11 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
                         $affiliation_types = explode(',', $affiliation_types);
                 }
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
-		return $SheerID->getFields($affiliation_types);
+		$fields = $SheerID->getFields($affiliation_types);
+		if ($this->getBooleanSetting('allow_uploads') && array_search('EMAIL', $fields) === FALSE) {
+			$fields[] = 'EMAIL';
+		}
+		return $fields;
 	}
 
 	private function readDate($request, $field) {
