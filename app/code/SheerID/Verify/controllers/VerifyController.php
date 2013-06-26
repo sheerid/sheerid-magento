@@ -49,7 +49,8 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			}
 		}
 		if ($this->getRequest()->getParam("ajax")) {
-			echo json_encode($resp);
+			$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($resp))->sendResponse();
+			exit;
 		} else {
 			Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB));
 			Mage::app()->getResponse()->sendResponse();
