@@ -1,6 +1,9 @@
 <?php
 class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 {
+
+	private static $NOTIFIER_TAG = "magento";
+
 	public function handleVerifyPost($request, $response, $quote) {
 		if ($request->isPost()) {
 			$post_data = $request->getPost();
@@ -181,8 +184,50 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return $this->getBooleanSetting('allow_uploads');
 	}
 
+	public function allowSendEmail() {
+		return $this->allowUploads() && $this->getBooleanSetting('send_email');
+	}
+
 	public function getSuccessUrl($requestId) {
 		return Mage::getUrl('SheerID/Verify/claim')."?requestId=$requestId";
+	}
+
+	public function getEmailNotifier() {
+		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+		if ($SheerID) {
+			$notifiers = $SheerID->getJson('/notifier', array('tag' => self::$NOTIFIER_TAG));
+			if (count($notifiers)) {
+				return $notifiers[0];
+			}
+		}
+	}
+
+	public function addEmailNotifier() {
+		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+		if ($SheerID) {
+			$config = array(
+				'type' => 'EMAIL',
+				'emailFromAddress' => 'Verify@SheerID.com',
+				'emailFromName' => $this->getSetting('email_from_name'),
+				'successEmailSubject' => $this->__('Successful Verification'),
+				'successEmail' => $this->__('Use the following URL to claim your offer: %successUrl%'),
+				'failureEmailSubject' => $this->__('Additional Information Required'),
+				'failureEmail' => $this->__('Unable to verify for the following reasons: %errorblock%, please try again.'),
+				'tag' => self::$NOTIFIER_TAG
+			);
+			return json_decode($SheerID->post('/notifier', $config));
+		}
+	}
+
+	public function removeEmailNotifier() {
+		$notifier = $this->getEmailNotifier();
+		if ($notifier) {
+			$notifierId = $notifier->id;
+			$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+			if ($SheerID) {
+				$SheerID->delete("/notifier/$notifierId");
+			}
+		}
 	}
 
 	public function getFields($affiliation_types=null, $org_id=0) {

@@ -53,11 +53,37 @@
 							<show_in_store>1</show_in_store>
 							<comment><![CDATA[Allow customer to upload proof of affiliation if automated verification fails.]]></comment>
 						</allow_uploads>
+						<send_email translate="label">
+							<label>Send Email?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<allow_uploads>1</allow_uploads>
+							</depends>
+							<comment><![CDATA[Should we send an email to your customer letting them know when their uploaded document has been reviewed?]]></comment>
+						</send_email>
+						<email_from_name>
+							<label>Email From Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<allow_uploads>1</allow_uploads>
+								<send_email>1</send_email>
+							</depends>
+							<comment><![CDATA[Specify a name that will be used in the From header of emails sent.]]></comment>
+						</email_from_name>
 						<sandbox translate="label">
 							<label>Sandbox Mode?</label>
 							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>5</sort_order>
+							<sort_order>6</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
