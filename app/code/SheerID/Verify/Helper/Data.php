@@ -15,7 +15,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 				$firstName = $ba->getFirstname();
 				$lastName = $ba->getLastname();
 				$postalCode = $ba->getPostcode();
-				$email = $ba->getEmailAddress();
+				$email = $ba->getEmail();
 			}
 			
 			$ALLOW_NAME = true;
