@@ -53,6 +53,8 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 				$data["_affiliationTypes"] = $verify['affiliation_types'];
 			}
 
+			$data[':ipv4Address'] = $_SERVER['REMOTE_ADDR'];
+
 			$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 			
 			$result = array();
