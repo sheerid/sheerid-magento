@@ -98,7 +98,7 @@ SheerIDVerify.prototype = {
 				}
             }
 
-			<?php if (Mage::getStoreConfig('sheerid_options/settings/allow_uploads') == "1") { ?>
+			<?php if ($helper->allowUploads()) { ?>
 			msgs.push('<a href="javascript:sheerid_verify.upload()"><?php echo Mage::helper('sheerid_verify')->__("Upload proof of affiliation"); ?></a>');
 			<?php } ?>
 

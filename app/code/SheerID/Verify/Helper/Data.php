@@ -177,13 +177,17 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return !!$this->getSetting("access_token");
 	}
 
+	public function allowUploads() {
+		return $this->getBooleanSetting('allow_uploads');
+	}
+
 	public function getFields($affiliation_types=null, $org_id=0) {
                 if ($affiliation_types && is_string($affiliation_types)) {
                         $affiliation_types = explode(',', $affiliation_types);
                 }
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		$fields = $SheerID->getFields($affiliation_types);
-		if ($this->getBooleanSetting('allow_uploads') && array_search('EMAIL', $fields) === FALSE) {
+		if ($this->allowUploads() && array_search('EMAIL', $fields) === FALSE) {
 			$fields[] = 'EMAIL';
 		}
 		return $fields;
