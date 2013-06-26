@@ -40,3 +40,7 @@ RESELLER,Reseller
 MILITARY_FAMILY,Military Dependent
 MILITARY_RETIREE,Military Retiree
 RESERVIST,Reservist or Guardsman
+This offer has already been claimed.,This offer has already been claimed.
+You have been successfully verified for this offer.,You have been successfully verified for this offer.
+We were unable to successfully verify you for this offer.,We were unable to successfully verify you for this offer.
+Verification is still pending. Please try again later.,Verification is still pending. Please try again later.

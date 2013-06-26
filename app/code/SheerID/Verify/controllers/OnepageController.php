@@ -41,6 +41,7 @@ class SheerID_Verify_OnepageController extends Mage_Checkout_OnepageController
 	}
 	
 	public function verifyUploadTokenAction() {
+		$helper = Mage::helper('sheerid_verify');
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$quote = $this->getOnePage()->getQuote();
 			$requestId = $quote->getSheeridRequestId();
@@ -48,6 +49,7 @@ class SheerID_Verify_OnepageController extends Mage_Checkout_OnepageController
 			if ($requestId) {
 				$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 				if ($SheerID) {
+					$SheerID->updateMetadata($requestId, array('successUrl' => $helper->getSuccessUrl($requestId)));
 					$token = $SheerID->getAssetToken($requestId);
 				}
 			}

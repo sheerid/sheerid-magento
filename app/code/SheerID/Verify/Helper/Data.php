@@ -181,6 +181,10 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return $this->getBooleanSetting('allow_uploads');
 	}
 
+	public function getSuccessUrl($requestId) {
+		return Mage::getUrl('SheerID/Verify/claim')."?requestId=$requestId";
+	}
+
 	public function getFields($affiliation_types=null, $org_id=0) {
                 if ($affiliation_types && is_string($affiliation_types)) {
                         $affiliation_types = explode(',', $affiliation_types);
