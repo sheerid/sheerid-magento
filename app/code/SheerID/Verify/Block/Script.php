@@ -56,7 +56,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 
 											var failureMsg = '<?php echo Mage::helper("sheerid_verify")->__("Unable to prepare upload form."); ?>';
 
-											var request = new Ajax.Request('/SheerID/verify/uploadToken', {
+											var request = new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/uploadToken'); ?>", {
 									                method: 'post',
 									                onSuccess: function(transport) {
 														if (transport && transport.responseText){
@@ -163,12 +163,12 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 						var val = discountForm.form.elements['coupon_code'].value;
 						if (!val) { return false; }
 						discountForm.loader.show();
-						new Ajax.Request('/SheerID/verify/coupon?coupon=' + val, {
+						new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/coupon'); ?>?coupon=" + val, {
 							asynchronous: false,
 							onSuccess: function(r){
 								var affs = r.responseJSON;
 								if (affs && affs.length) {
-									new Ajax.Request('/SheerID/verify', {
+									new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify'); ?>", {
 										parameters: {
 											affiliation_types: affs.join(','),
 											promo_code: true

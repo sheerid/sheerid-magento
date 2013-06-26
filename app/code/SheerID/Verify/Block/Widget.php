@@ -37,7 +37,7 @@ class SheerID_Verify_Block_Widget extends Mage_Core_Block_Template
 ?>
 		<script type="text/javascript">
 		function sheerIdVerify() {
-			new Ajax.Updater('<?php echo $container; ?>', '/SheerID/verify', {
+			new Ajax.Updater('<?php echo $container; ?>', "<?php echo Mage::getUrl('SheerID/verify'); ?>", {
 				method: 'get',
 				parameters: <?php echo json_encode($config); ?>,
 				onComplete: function(e) {
