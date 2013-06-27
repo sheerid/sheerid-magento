@@ -71,6 +71,12 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			try {
 				$resp = $SheerID->verify($data, $organizationId);
 				$result["result"] = $resp->result;
+				if (!$resp->result) {
+					$errors = $resp->errors;
+					if (count($errors) == 1 && $errors[0]->code == 39 && $this->allowUploads()) {
+						$result["awaiting_upload"] = true;
+					}
+				}
 			} catch (Exception $e) {
 				$result["error"] = true;
 				$result['message'] = $e->getMessage();

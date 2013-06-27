@@ -29,7 +29,11 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		$quote = $helper->getCurrentQuote();
 		$verify_result = $helper->handleVerifyPost($this->getRequest(), $this->getResponse(), $quote);
 		if (!$verify_result["result"]) {
-			$errors =  array($this->__("Unable to verify. Please check that your information is correct."));
+			if ($verify_result["awaiting_upload"]) {
+				$errors =  array($this->__("Please upload supporting documentation to continue the verification process."));
+			} else {
+				$errors =  array($this->__("Unable to verify. Please check that your information is correct."));
+			}
 			$resp = array("result" => false, "errors" => $errors, "allow_upload" => $helper->allowUploads());
 		} else {
 			$resp = array("result" => true);

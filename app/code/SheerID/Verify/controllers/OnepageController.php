@@ -88,7 +88,12 @@ class SheerID_Verify_OnepageController extends Mage_Checkout_OnepageController
 		} else {
 			$result['goto_section'] = 'verify';
 			$result['error'] = true;
-			$result['message'] = $verify_result && $verify_result['message'] ? $verify_result['message'] : Mage::helper('sheerid_verify')->__("Unable to verify. Please check that your information is correct.");
+			if ($verify_result["awaiting_upload"]) {
+				$errors =  $this->__("Please upload supporting documentation to continue the verification process.");
+			} else {
+				$errors =  $this->__("Unable to verify. Please check that your information is correct.");
+			}
+			$result['message'] = $verify_result && $verify_result['message'] ? $verify_result['message'] : $errors;
 		}
 
 		$this->getResponse()->setBody(Zend_Json::encode($result));
