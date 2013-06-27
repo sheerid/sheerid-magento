@@ -73,6 +73,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 
 			try {
+				$data = $this->filterEmptyFields($data);
 				$resp = $SheerID->verify($data, $organizationId);
 				$result["result"] = $resp->result;
 				if (!$resp->result) {
@@ -259,5 +260,15 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		if ($m && $d && $y) {
 			return "$y-$m-$d";
 		}
+	}
+
+	private function filterEmptyFields($params) {
+		$data = array();
+		foreach ($params as $k => $v) {
+			if ($v) {
+				$data[$k] = $v;
+			}
+		}
+		return $data;
 	}
 }
