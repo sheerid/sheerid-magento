@@ -32,7 +32,7 @@ $organization_label = $helper->getOrganizationLabel($orgType);
 <div id="sheerid_verify">
 	<p class="verify-prompt"><?php echo $prompt ? $prompt : $this->__('Please supply the following information so we can verify your affiliation.'); ?></p>
 	<p class="verify-messages"></p>
-	<form id="co-verify-form" class="verify-form <?php echo $this->getUseAjax()?"verify-form-ajax":"";?>" action="/SheerID/verify/verify" method="POST">
+	<form id="co-verify-form" class="verify-form <?php echo $this->getUseAjax()?"verify-form-ajax":"";?>" action="<?php echo Mage::getUrl('SheerID/verify/verify'); ?>" method="POST">
 		<fieldset>
 		<ul class="form-list" style="list-style: none; padding-left: 0;">
 
