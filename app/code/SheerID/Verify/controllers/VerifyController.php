@@ -32,7 +32,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		if ($this->getRequest()->getParam('use_quote_information') == 'true') {
 			$block->setUseQuoteInformation(true);
 		}
-		echo $block->toHtml();
+		$this->getResponse()->setBody($block->toHtml());
 	}
 	
 	public function verifyAction() {
