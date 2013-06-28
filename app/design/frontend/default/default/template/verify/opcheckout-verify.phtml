@@ -9,6 +9,10 @@
 		$block->setAffiliationTypes($helper->getSetting("show_in_checkout_affiliation_types"));
 	}
 
+	if ($helper->getBooleanSetting('show_in_checkout_choose')) {
+		$block->setChooseAffiliationType(true);
+	}
+
 	$block->setSubmit(false);
 	$block->setUseAjax(false);
 	$block->setUseQuoteInformation(true);
@@ -147,6 +151,7 @@ SheerIDVerify.prototype = {
 								}
 							});
 							$$('.verify-messages').each(function(i){ i.remove() });
+							$$('.verify-status').each(function(i){ i.remove() });
 							$('verify-buttons-container').hide();
 							$('co-verify-form').hide();
 							$('checkout-step-verify').insert('<p><a href="javascript:sheerid_verify.skip();" id="verify-skip"><small><?php echo Mage::helper('sheerid_verify')->__("Skip this step"); ?></small></a></p>');

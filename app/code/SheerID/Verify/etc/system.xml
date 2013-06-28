@@ -112,6 +112,19 @@
 							</depends>
 							<comment><![CDATA[If Verify in Checkout? is enabled, this setting determines which affiliation types are accepted for verification in the checkout process.]]></comment>
 						</show_in_checkout_affiliation_types>
+						<show_in_checkout_choose>
+							<label>Choose Status?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
+							<sort_order>12</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<show_in_checkout>true</show_in_checkout>
+							</depends>
+							<comment><![CDATA[If Verify in Checkout? is enabled, this setting controls whether the user is first prompted to select their affiliation type.  If only one type is enabled, the user will automatically be prompted with the fields for that type.]]></comment>
+						</show_in_checkout_choose>
 						<show_in_checkout_cookie_name translate="label">
 							<label>Verify Cookie Name</label>
 							<frontend_type>text</frontend_type>
