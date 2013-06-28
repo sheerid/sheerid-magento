@@ -40,6 +40,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 									wrap.select('.verify-messages')[0].removeClassName('error').update(resp.message || '<?php echo Mage::helper('sheerid_verify')->__("Success!"); ?>');
 									form.hide();
 									wrap.select('.verify-prompt').invoke('hide');
+									wrap.select('.verify-status').invoke('hide');
 								} else {
 									if (resp.allow_upload) {
 										resp.errors.push('<a href="javascript:;" class="link-upload"><?php echo Mage::helper("sheerid_verify")->__("Upload proof of affiliation"); ?></a>');
@@ -53,6 +54,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 											var ctUpload = 'verify-upload-' + new Date()/1;
 											form.replace('<div id="' + ctUpload + '">Loading...</div>');
 											wrap.select('.verify-messages').each(function(msgs){ msgs.update(); });
+											wrap.select('.verify-status').invoke('hide');
 
 											var failureMsg = '<?php echo Mage::helper("sheerid_verify")->__("Unable to prepare upload form."); ?>';
 
@@ -108,6 +110,41 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 						});
 					}
 				    Event.stop(event);
+				});
+			});
+			$$('form.verify-form').each(function(form) {
+				var wrap = form.up('#sheerid_verify')
+				var buffered;
+				wrap.select('.affiliation-type-choice').each(function(el){
+					if (!$(el).hasClassName('observing')) {
+						$(el).observe('change', function(event) {
+							if (buffered) {
+								window.clearTimeout(buffered);
+							}
+							buffered = window.setTimeout(function(){
+								if (el.value) {
+									var params = {affiliation_types:el.value, form_only: true};
+									if (wrap.up('.opc')) {
+										params.use_ajax = false;
+										params.submit = false;
+										params.use_quote_information = true;
+									}
+									new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify'); ?>", {
+										method: 'get',
+										parameters: params,
+										onComplete: function(response) {
+											form.update(response.responseText);
+											addSheerIDEventListeners();
+										}
+									});
+								} else {
+									form.update('');
+								}
+								delete buffered;
+							}, 50);
+						});
+						$(el).addClassName('observing');
+					}
 				});
 			});
 

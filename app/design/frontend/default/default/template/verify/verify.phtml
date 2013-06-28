@@ -27,12 +27,35 @@ if ($this->getUseQuoteInformation()) {
 $orgType = $helper->getOrganizationType(explode(',', $this->getAffiliationTypes()));
 $organization_label = $helper->getOrganizationLabel($orgType);
 
+$affiliation_types = explode(',', $this->getAffiliationTypes());
+
+// require that a choice be possible before enforcing that user makes one
+if (count($affiliation_types) < 2) {
+  $this->setChooseAffiliationType(false);
+}
+
 ?>
 
+<?php if (!$this->getFormOnly()) {?>
 <div id="sheerid_verify">
 	<p class="verify-prompt"><?php echo $prompt ? $prompt : $this->__('Please supply the following information so we can verify your affiliation.'); ?></p>
 	<p class="verify-messages"></p>
+	<?php if ($this->getChooseAffiliationType()) { ?>
+		<div class="verify-status">
+			<p>
+				<label><strong><?php echo $this->__('Select your status:'); ?></strong></label>
+				<select class="affiliation-type-choice">
+					<option value=""><?php echo $this->__('Select one...'); ?></option>
+				<?php foreach ($affiliation_types as $type) { ?>
+					<option value="<?php echo $type ?>"><?php echo $this->__($type) ?></option>
+				<?php } ?>
+				</select>
+			</p>
+		</div>
+	<?php } ?>
 	<form id="co-verify-form" class="verify-form <?php echo $this->getUseAjax()?"verify-form-ajax":"";?>" action="<?php echo Mage::getUrl('SheerID/verify/verify'); ?>" method="POST">
+<?php } ?>
+<?php if (!$this->getChooseAffiliationType()) { ?>
 		<fieldset>
 		<ul class="form-list" style="list-style: none; padding-left: 0;">
 
@@ -129,5 +152,8 @@ $organization_label = $helper->getOrganizationLabel($orgType);
 					<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif'); ?>" alt="<?php echo $this->__("Verifying...");?>" title="<?php echo $this->__("Verifying...");?>" class="v-middle"><?php echo $this->__("Verifying...");?></span>
 			</p>
 		<?php } ?>
+<?php } ?>
+<?php if (!$this->getFormOnly()) { ?>
 	</form>
 </div>
+<?php } ?>

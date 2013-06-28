@@ -20,7 +20,18 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		if ($this->getRequest()->getParam('promo_code')) {
 			$block->setPromoCode(true);
 		}
-		
+		if ($this->getRequest()->getParam('form_only') == 'true') {
+			$block->setFormOnly(true);
+		}
+		if ($this->getRequest()->getParam('submit') == 'false') {
+			$block->setSubmit(false);
+		}
+		if ($this->getRequest()->getParam('use_ajax') == 'false') {
+			$block->setUseAjax(false);
+		}
+		if ($this->getRequest()->getParam('use_quote_information') == 'true') {
+			$block->setUseQuoteInformation(true);
+		}
 		echo $block->toHtml();
 	}
 	
