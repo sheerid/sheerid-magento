@@ -2,6 +2,7 @@
 	"name": "SheerID/Verify",
 	"type": "magento-module",
 	"license": "Apache-2.0",
+	"license_uri": "http://www.spdx.org/licenses/Apache-2.0",
 	"description": "",
 	"homepage": "http://SheerID.com",
 	"minimum-stability": "beta",

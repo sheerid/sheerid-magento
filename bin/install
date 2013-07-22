@@ -29,9 +29,9 @@ if ! [ -d "$THEME_DIR" ]; then
 fi
 
 cp -R ./app/code/SheerID $MAGENTO_HOME/app/code/community/.
-cp -R ./etc/SheerID_All.xml $MAGENTO_HOME/app/etc/modules/
-cp -R app/design/frontend/default/default/layout/verify.xml $THEME_DIR/layout/.
-cp -R app/design/frontend/default/default/template/verify $THEME_DIR/template/.
+cp -R ./etc/modules/SheerID_All.xml $MAGENTO_HOME/app/etc/modules/
+cp -R app/design/frontend/base/default/layout/verify.xml $THEME_DIR/layout/.
+cp -R app/design/frontend/base/default/template/verify $THEME_DIR/template/.
 for x in $(ls locale); do
   cp locale/$x/* $MAGENTO_HOME/app/locale/$x/.
 done
