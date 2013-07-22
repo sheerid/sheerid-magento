@@ -1,7 +1,10 @@
 #!/usr/bin/php -q
 <?php
 
-$MD5 = "md5";
+$MD5 = getenv('HASH_EXEC');
+if (!$MD5) {
+	$MD5 = 'md5sum';
+}
 
 $argv = $_SERVER['argv'];
 
