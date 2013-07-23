@@ -73,7 +73,9 @@ ensure_dir('build');
 
 $manifest_file = $argv[1];
 $manifest = json_decode(file_get_contents($manifest_file));
-$version = exec('/bin/sh -c "git tag | sort -n | tail -n1"');
+
+$config = simplexml_load_file('app/code/SheerID/Verify/etc/config.xml');
+$version = $config->modules->SheerID_Verify->version;
 
 $mconnect = $manifest->extras->magento_connect;
 
@@ -165,3 +167,12 @@ $dom->loadXML($package->asXML());
 file_put_contents('build/package.xml', $dom->saveXML());
 
 exec("sh -c 'cd build; COPYFILE_DISABLE=1 tar czf ../target/SheerID_Verify-$version.tgz *'");
+
+$tagged_version = exec('/bin/sh -c "git tag | sort -n | tail -n1"');
+$changelog = array();
+exec("git log --oneline $tagged_version..HEAD | tail -r | sed 's/^[^ ]* //'", $changelog);
+
+echo "## Release Notes - Version $version\n";
+foreach ($changelog as $change) {
+	echo "$change\n";
+}
