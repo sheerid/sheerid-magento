@@ -58,6 +58,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 
 			if (!is_numeric($organizationId)) {
 				$data['organizationName'] = $organizationId;
+				$organizationId = null;
 			}
 
 			$data[':ipv4Address'] = $_SERVER['REMOTE_ADDR'];
