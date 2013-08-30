@@ -163,7 +163,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 							input: field,
 							fixedPosition: isFixed,
 							params: {
-								type: m[1]
+								type: m[1].toUpperCase()
 							}
 						}
 					});
