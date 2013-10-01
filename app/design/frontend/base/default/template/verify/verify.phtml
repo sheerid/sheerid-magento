@@ -83,7 +83,9 @@ if (count($affiliation_types) < 2) {
 				<label for="verify:<?php echo $name; ?>" class="required"><em>*</em><?php echo $this->__($label) ?></label>
 				<div class="input-box">
 					<?php if (preg_match('/_DATE$/', $f)) { ?>
-						<?php if ('STATUS_START_DATE' == $f) {
+						<?php
+						$monthVal = $dayVal = $yearVal = 0;
+						if ('STATUS_START_DATE' == $f) {
 							$monthVal = date('m');
 							$dayVal = date('d');
 							$yearVal = date('Y');
