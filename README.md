@@ -76,7 +76,10 @@ At the location in this file represented by the XPath selector: `/layout/checkou
 Next, edit `$MAGENTO_HOME/app/design/frontend/base/default/template/checkout/cart.phtml` (note: actual path may vary depending on your active theme).
 
 Add the following PHP snippet in the location where you would like the Verify Widget to appear:
+
+````
 <?php echo $this->getChildHtml('verifywidget') ?>
+````
 
 Alternatively, the Verify Widget may be included using the template tag syntax shown in the "Verify Block Configuration" section, example:
 
