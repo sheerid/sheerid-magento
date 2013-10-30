@@ -57,3 +57,38 @@ For example, to restrict your offer to verified active-duty military members, yo
 SheerID Verified Affiliation Status is ACTIVE_DUTY
 
 Then, if a customer successfully completes the verification form with an affiliation type of ACTIVE_DUTY, this offer will be applied to the cart.
+
+### Verify Widget Configuration
+
+This plugin also exposes a Verify Widget, which is a component that offers a link to verify, which when clicked renders a verification form.  This was primarily intended to be displayed on the shopping cart page, but could really be placed anywhere in your theme.  The steps below describe how this widget can be added to your cart page.
+
+First, edit `$MAGENTO_HOME/app/design/frontend/base/default/layout/checkout.xml` (note: actual path may vary depending on your active theme).
+
+At the location in this file represented by the XPath selector: `/layout/checkout_cart_index/reference[@name='content']/block[@type='checkout/cart'])`, add:
+
+````
+<block type="sheerid/widget" name="sheerid.verifywidget" as="verifywidget">
+	<action method="setData"><name>title</name><value>Student Discount</value></action>
+	<action method="setData"><name>affiliation_types</name><value>STUDENT_FULL_TIME,STUDENT_PART_TIME</value></action>
+</block>
+````
+
+Next, edit `$MAGENTO_HOME/app/design/frontend/base/default/template/checkout/cart.phtml` (note: actual path may vary depending on your active theme).
+
+Add the following PHP snippet in the location where you would like the Verify Widget to appear:
+<?php echo $this->getChildHtml('verifywidget') ?>
+
+Alternatively, the Verify Widget may be included using the template tag syntax shown in the "Verify Block Configuration" section, example:
+
+````
+{{block type='sheerid/verifywidget' affiliation_types='STUDENT_FULL_TIME,STUDENT_PART_TIME' title='Student Discount'}}
+````
+
+#### Verify Widget Settings
+
+The Verify Widget's behavior and content can be modified by setting block attributes.  Its configuration options include:
+
+ * `is_conditional` - should the widget be hidden once the user has been verified? (default: `true`)
+ * `title` - the title of the widget
+ * `description` - additional text promoting the offer/verification, displayed above the "Click here to verify" link.
+ * `affiliation_types` - a comma-delimited list of affiliations to use for the verification form 
