@@ -68,6 +68,6 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
 				return false;
 			}
 		}
-        return parent::validate($address);
+        return parent::validate($object);
     }
 }
