@@ -52,7 +52,7 @@ class SheerID_Verify_Block_Widget extends Mage_Core_Block_Template
 	protected function _toHtml() {
 		$helper = Mage::helper('sheerid_verify');
 		$quote = $helper->getCurrentQuote();
-		if ("true" != $this->getIsConditional() || $quote->getSheeridResult() != 1) {
+		if ("true" != $this->getIsConditional() || !count($helper->getSheeridAffiliations($quote))) {
 			return parent::_toHtml();
 		}
 	}

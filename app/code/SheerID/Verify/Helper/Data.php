@@ -131,7 +131,21 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			$cust->save();
 		}
 	}
-	
+
+	public function getSheeridAffiliations($quote=null) {
+		if (!$quote) {
+			$quote = $this->getCurrentQuote(false);
+		}
+		$affiliations = array();
+		if ($quote) {
+			$affiliations = array_merge($affiliations, explode(',', $quote->getSheeridAffiliations()));
+			if ($quote->getCustomer() && $quote->getCustomer()->getId()) {
+				$affiliations = array_merge($affiliations, explode(',', $quote->getCustomer()->getSheeridAffiliations()));
+			}
+		}
+		return array_filter(array_unique($affiliations));
+	}
+
 	public function shouldShowInCheckout() {
 		$show_in_checkout = $this->getSetting("show_in_checkout");
 		$cookie_name = $this->getSetting("show_in_checkout_cookie_name");
