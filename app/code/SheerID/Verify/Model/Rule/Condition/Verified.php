@@ -59,14 +59,9 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
     public function validate(Varien_Object $object)
     {
 		if ('sheerid' == $this->getAttribute()) {
-			$quote = $object->getQuote();
-			
-			if ($quote->getSheeridRequestId() && $quote->getSheeridResult()) {
-				$affiliations = explode(",", $quote->getSheeridAffiliations());
-				return false !== array_search($this->getValue(), $affiliations);
-			} else {
-				return false;
-			}
+			$helper = Mage::helper('sheerid_verify');
+			$affiliations = $helper->getSheeridAffiliations($object->getQuote());
+			return false !== array_search($this->getValue(), $affiliations);
 		}
         return parent::validate($object);
     }
