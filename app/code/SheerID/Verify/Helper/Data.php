@@ -151,14 +151,23 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		$cookie_name = $this->getSetting("show_in_checkout_cookie_name");
 		$quote = Mage::getSingleton('checkout/cart')->getQuote();
 
-		if ("false" == $show_in_checkout || $quote->getSheeridResult() == 1) {
+		if ('false' == $show_in_checkout) {
 			return false;
-		} else if ("true" == $show_in_checkout) {
-			return true;
 		} else {
-			$val = $_COOKIE[$cookie_name];
-			return !!$val;
+			$affiliation_types = $this->getCheckoutAffiliationTypes();
+			return count(array_intersect($affiliation_types, $this->getSheeridAffiliations($quote))) == 0;
 		}
+	}
+
+	public function getCheckoutAffiliationTypes() {
+		$affiliation_types_list = '';
+		$show_in_checkout = $this->getSetting("show_in_checkout");
+		if ('cookie' == $show_in_checkout) {
+			$affiliation_types_list = $_COOKIE[$this->getSetting("show_in_checkout_cookie_name")];
+		} else if ('true' == $show_in_checkout) {
+			$affiliation_types_list = $this->getSetting("show_in_checkout_affiliation_types");
+		}
+		return array_filter(explode(',', $affiliation_types_list));
 	}
 
 	public function getCurrentQuote($create=true) {
