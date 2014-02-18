@@ -50,3 +50,7 @@ You have been successfully verified for this offer.,You have been successfully v
 We were unable to successfully verify you for this offer.,We were unable to successfully verify you for this offer.
 Verification is still pending. Please try again later.,Verification is still pending. Please try again later.
 Please upload supporting documentation to continue the verification process.,Please upload supporting documentation to continue the verification process.
+"Successful Verification","Successful Verification"
+"Use the following URL to claim your offer: %successUrl%","Use the following URL to claim your offer: %successUrl%"
+"Additional Information Required","Additional Information Required"
+"Unable to verify for the following reasons: %errorblock%, please try again.","Unable to verify for the following reasons: %errorblock%, please try again."
