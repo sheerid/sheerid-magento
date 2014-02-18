@@ -94,4 +94,24 @@ The Verify Widget's behavior and content can be modified by setting block attrib
  * `is_conditional` - should the widget be hidden once the user has been verified? (default: `true`)
  * `title` - the title of the widget
  * `description` - additional text promoting the offer/verification, displayed above the "Click here to verify" link.
- * `affiliation_types` - a comma-delimited list of affiliations to use for the verification form 
+ * `affiliation_types` - a comma-delimited list of affiliations to use for the verification form
+
+### Email Content
+
+If "Allow Uploads?" and "Send Email?" options are both enabled (=Yes), SheerID will send an email to notify end-users that their uploaded documents have been reviewed and either provide a link to continue in the process (and redeem the discount in your online store), or provide a reason that the documents were rejected.
+
+Customization of this messaging can be performed via standard Magento theme localization features.  The preferred way to do this is by overriding the default messages in a theme-specific `translate.csv` file.
+
+Steps:
+
+1. Find the `translate.csv` file associated with the current **adminhtml** theme (for example: `$MAGENTO_HOME/app/design/adminhtml/default/default/locale/en_US/translate.csv`).
+1. Open this file in Excel or another spreadsheet program, or directly with a text editor if preferred.
+1. Add another row with 2 columns:
+    * In the first column should be the original text **exactly** as it is specified in the [SheerID Verify extension default locale file](locale/en_US/SheerID_Verify.csv).
+    * The second column should be populated with the preferred custom text.  *NOTE:* If you want to retain the variable components such as `%errorblock%` or `%successUrl%`, please be careful to ensure that the variable syntax is copied exactly.
+1. If emails are already enabled, you will need to disable and re-enable them after making the aforementioned changes in order for the settings to take effect:
+    1. Navigate to the SheerID settings panel in your Magento admin (System > Configuration > SheerID Settings > SheerID).
+    1. Change "Send Email?" to "No", click "Save Config".
+    1. Upon page refresh, Change "Send Email?" back to "Yes" and click "Safe Config" once again.
+
+**Note**: Though the default email content is very minimal, the email body is in fact HTML and customizations may contain HTML syntax in order to support more advanced rendering of email content.
