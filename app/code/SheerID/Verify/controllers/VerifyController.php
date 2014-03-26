@@ -107,7 +107,6 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			if ($requestId) {
 				$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 				if ($SheerID) {
-					$SheerID->updateMetadata($requestId, array('successUrl' => $helper->getSuccessUrl($requestId)));
 					$token = $SheerID->getAssetToken($requestId);
 				}
 			}
