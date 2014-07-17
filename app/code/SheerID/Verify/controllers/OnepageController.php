@@ -87,6 +87,7 @@ class SheerID_Verify_OnepageController extends Mage_Checkout_OnepageController
 		} else {
 			$result['goto_section'] = 'verify';
 			$result['error'] = true;
+			$result['allow_upload'] = $helper->allowUploads() && $verify_result['requestId'];
 			if ($verify_result["awaiting_upload"]) {
 				$errors =  $this->__("Please upload supporting documentation to continue the verification process.");
 			} else {

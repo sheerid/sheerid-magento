@@ -45,7 +45,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			} else {
 				$errors =  array($this->__("Unable to verify. Please check that your information is correct."));
 			}
-			$resp = array("result" => false, "errors" => $errors, "allow_upload" => $helper->allowUploads());
+			$resp = array("result" => false, "errors" => $errors, "allow_upload" => $verify_result['requestId'] && $helper->allowUploads());
 		} else {
 			$resp = array("result" => true);
 			

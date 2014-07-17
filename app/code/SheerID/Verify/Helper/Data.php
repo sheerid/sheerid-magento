@@ -77,6 +77,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 				$data = $this->filterEmptyFields($data);
 				$resp = $SheerID->verify($data, $organizationId);
 				$result["result"] = $resp->result;
+				$result["requestId"] = $resp->requestId;
 				if (!$resp->result) {
 					if ($resp->requestId && $this->allowSendEmail()) {
 						// provide a success URL so we know where to send users after asset review success

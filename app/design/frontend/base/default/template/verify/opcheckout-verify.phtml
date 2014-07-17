@@ -103,7 +103,9 @@ SheerIDVerify.prototype = {
             }
 
 			<?php if ($helper->allowUploads()) { ?>
-			msgs.push('<a href="javascript:sheerid_verify.upload()"><?php echo Mage::helper('sheerid_verify')->__("Upload proof of affiliation"); ?></a>');
+			if (response.allow_upload) {
+				msgs.push('<a href="javascript:sheerid_verify.upload()"><?php echo Mage::helper('sheerid_verify')->__("Upload proof of affiliation"); ?></a>');
+			}
 			<?php } ?>
 
 			$('co-verify-form').insert({before:'<p class="verify-messages error">'+msgs.join('<br/>')+'</p>'});
