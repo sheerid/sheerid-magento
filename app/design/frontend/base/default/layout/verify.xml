@@ -11,7 +11,7 @@
 		</reference>
 	</checkout_onepage_index>
 	<default>
-		<reference name="footer">
+		<reference name="before_body_end">
 			<block type="sheerid/script" name="verify.scripts" as="scripts" />
 		</reference>
 	</default>
