@@ -161,6 +161,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 							baseUrl: '<?php echo $SheerID->baseUrl; ?>',
 							allowName: true,
 							input: field,
+							trigger: true,
 							fixedPosition: isFixed,
 							params: {
 								type: m[1].toUpperCase()
