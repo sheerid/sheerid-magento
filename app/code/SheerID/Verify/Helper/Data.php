@@ -50,7 +50,10 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 			} else if ($email) {
 				$data['EMAIL'] = $email;
 			}
-			
+
+			if ($verify['templateId']) {
+				$data['templateId'] = $verify['templateId'];
+			}
 			if ($verify['affiliation_types']) {
 				//TODO: use config object
 				$data["_affiliationTypes"] = $verify['affiliation_types'];

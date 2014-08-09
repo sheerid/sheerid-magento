@@ -14,6 +14,14 @@ if ($this->getUseAjax() !== false) {
 
 $prompt = $this->getPrompt();
 
+if ($this->getTemplateId()) {
+	$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+	$tmpl = $SheerID->getTemplate($this->getTemplateId());
+	if ($tmpl) {
+		$this->setAffiliationTypes(implode(",", $tmpl->config->affiliationTypes));
+	}
+}
+
 if ($this->getFields()) {
   $fields = explode(",", $this->getFields());
 } else {
@@ -138,6 +146,9 @@ if (count($affiliation_types) < 2) {
 		<?php } ?>
 		</ul>
 		</fieldset>
+		<?php if ($this->getTemplateId()) { ?>
+			<input type="hidden" name="verify[templateId]" value="<?php echo $this->getTemplateId(); ?>" />
+		<?php } ?>
 		<?php if ($this->getAffiliationTypes()) { ?>
 			<input type="hidden" name="verify[affiliation_types]" value="<?php echo $this->getAffiliationTypes(); ?>" />
 		<?php } ?>
