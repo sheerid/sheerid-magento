@@ -188,6 +188,12 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return $quote;
 	}
 
+	public function getVerifyUrl($templateId) {
+		$sandbox = Mage::getStoreConfig('sheerid_options/settings/sandbox') == "1";
+		$hostname = $sandbox ? 'verify-demo.sheerid.com' : 'verify.sheerid.com';
+		return "https://$hostname/verify/$templateId/";
+	}
+
 	public function getFieldLabel($key) {
 		$lbl = strtolower(str_replace("_", " ", $key));
 		return $this->__(preg_replace_callback("/\b([a-z])/", array($this, 'titleCaseReplace'), $lbl));

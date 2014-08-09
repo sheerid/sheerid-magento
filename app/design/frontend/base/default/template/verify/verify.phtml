@@ -44,6 +44,10 @@ if (count($affiliation_types) < 2) {
 
 ?>
 
+<?php if ($this->getEmbedded() && $this->getTemplateId()) { ?>
+	<iframe id="sheerid-iframe" src="<?php echo $helper->getVerifyUrl($this->getTemplateId()); ?>"></iframe>
+<?php } else { ?>
+
 <?php if (!$this->getFormOnly()) {?>
 <div id="sheerid_verify">
 	<p class="verify-prompt"><?php echo $prompt ? $prompt : $this->__('Please supply the following information so we can verify your affiliation.'); ?></p>
@@ -170,3 +174,5 @@ if (count($affiliation_types) < 2) {
 	</form>
 </div>
 <?php } ?>
+
+<?php } /* End else $this->getEmbedded() */ ?>
