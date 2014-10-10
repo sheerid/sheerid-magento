@@ -16,6 +16,19 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 
 		<script type="text/javascript" src="<?php echo $SheerID->baseUrl; ?>/jsapi/SheerID.js"></script>
 		<script type="text/javascript">
+		var openLight = function() {
+			$$('body > .wrapper')[0].insert("<div id='overlay'></div>");
+			$$('body > .wrapper')[0].insert("<div id='lightbox'></div>");
+			$$('#lightbox')[0].insert('<a class="close">close</a>');
+			$$('#lightbox > a')[0].observe('click',function(){ $('overlay').remove(); $('lightbox').remove();});
+			return $$('#lightbox')[0];
+		}
+
+		sheerIdVerifyLightbox = function(templateId) {
+			var el = openLight();
+			el.insert('<iframe id="sheerid-iframe" src="<?php echo $SheerID->baseUrl; ?>/verify/' + templateId + '/"></iframe>');
+		}
+
 		addSheerIDEventListeners = function() {
 			$$('form.verify-form-ajax').each(function(form) {
 				Event.observe(form, 'submit', function(event) {
@@ -229,15 +242,6 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 				};
 				discountForm.form.onsubmit = function(){ return discountForm.submit(false); }
 			}
-
-			function openLight() {
-				$$('body > .wrapper')[0].insert("<div id='overlay'></div>");
-				$$('body > .wrapper')[0].insert("<div id='lightbox'></div>");
-				$$('#lightbox')[0].insert('<a class="close">close</a>');
-				$$('#lightbox > a')[0].observe('click',function(){ $('overlay').remove(); $('lightbox').remove();});
-				return $$('#lightbox')[0];
-			}
-
 			<?php } ?>
 
 		}
