@@ -75,6 +75,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	public function couponAction() {
 		$code = $this->getRequest()->getParam("coupon");
 		$affiliations = array();
+		$constraints = array();
 		if ($code) {
 			$coupon = Mage::getModel('salesrule/coupon')->load($code, 'code');
 			$rule = Mage::getModel('salesrule/rule')->load($coupon->getRuleId());
@@ -83,9 +84,16 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 				if (!$rule->validate($cart)) {
 					$conds = $rule->getConditions();
 					foreach ($conds->getConditions() as $c) {
-						$clazz = get_class($c);
-						if ("SheerID_Verify_Model_Rule_Condition_Verified" == $clazz) {
-							$affiliations[] = $c->getValue();
+						$attr = $c->getAttribute();
+						if ('sheerid' == $attr) {
+							if (!array_key_exists('affiliations', $constraints)) {
+								$constraints['affiliations'] = array();
+							}
+							if (!in_array($constraints['affiliations'], $c->getValue())) {
+								$constraints['affiliations'][] = $c->getValue();
+							}
+						} else if ('sheerid_campaign' == $attr) {
+							$constraints['campaign'] = $c->getValue();
 						}
 					}
 				}
@@ -95,7 +103,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		$this->getResponse()
 			->clearHeaders()
 			->setHeader('Content-Type', 'application/json')
-			->setBody(json_encode(array_unique($affiliations)));
+			->setBody(json_encode($constraints));
 	}
 	
 	public function uploadTokenAction() {

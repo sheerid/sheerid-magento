@@ -223,7 +223,8 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 						new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/coupon'); ?>?coupon=" + val, {
 							asynchronous: false,
 							onSuccess: function(r){
-								var affs = r.responseJSON;
+								var constraints = r.responseJSON;
+								var affs = constraints.affiliations;
 								if (affs && affs.length) {
 									new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify'); ?>", {
 										parameters: {
@@ -238,6 +239,10 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 											discountForm.loader.hide();
 										}
 									});
+								} else if (constraints.campaign) {
+									sheerIdVerifyLightbox(constraints.campaign, null, val);
+									discountForm.loader.hide();
+									discountForm.form.elements['coupon_code'].value = '';
 								} else {
 									_discountSubmit(false);
 								}

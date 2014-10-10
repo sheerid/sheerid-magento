@@ -154,6 +154,20 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return array_filter(array_unique($affiliations));
 	}
 
+	public function isEligibleForCampaign($templateId, $quote=null) {
+		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+		$tmpl = $SheerID->getTemplate($templateId);
+		if (!$tmpl) {
+			return false;
+		}
+		foreach ($this->getSheeridAffiliations($quote) as $type) {
+			if (in_array($type, $tmpl->config->affiliationTypes)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function shouldShowInCheckout() {
 		$show_in_checkout = $this->getSetting("show_in_checkout");
 		$cookie_name = $this->getSetting("show_in_checkout_cookie_name");
