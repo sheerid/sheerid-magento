@@ -71,6 +71,24 @@ $core_setup->addAttribute('customer', 'sheerid_affiliations', array(
 	'website'			=> $store->getWebsite()
 ));
 
+$core_setup->addAttribute('catalog_product', 'sheerid_require_verification', array(
+	'type'                    => 'varchar',
+	'group'                   => 'SheerID Settings',
+	'backend'                 => 'eav/entity_attribute_backend_array',
+	'frontend'                => '',
+	'input'                   => 'multiselect',
+	'label'                   => 'SheerID Verified Affiliation Required for Purchase',
+	'class'                   => '',
+	'source'                  => 'SheerID_Verify_Model_Customer_Attribute_Source_Affiliationtype',
+	'global'                  => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
+	'visible'                 => true,
+	'required'                => false,
+	'user_defined'            => false,
+	'default'                 => '',
+	'used_in_product_listing' => 1,
+	'is_used_for_promo_rules' => 1
+));
+
 $eavConfig = Mage::getSingleton('eav/config');
 $attribute = $eavConfig->getAttribute('customer', 'sheerid_affiliations');
 $attribute->setData('used_in_forms', array('adminhtml_customer'));
