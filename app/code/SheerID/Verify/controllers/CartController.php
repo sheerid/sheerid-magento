@@ -18,7 +18,11 @@ class SheerID_Verify_CartController extends Mage_Checkout_CartController {
 					}
 					$friendly_names[] = $this->__($type);
 				}
+				$campaign = $product->getData('sheerid_campaign');
 				$message = $this->__('This product can only be purchased by customers verified as one of: %s.', implode(', ', $friendly_names));
+				if ($campaign) {
+					$message .= '<br/><a href="javascript:sheerIdVerifyLightbox(\''. $campaign .'\', ' . $product->getId() . ')">' . $this->__('Get Verified') . '</a>';
+				}
 				Mage::getSingleton('core/session')->addError($message);
 				return false;
 			}

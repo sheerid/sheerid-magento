@@ -134,7 +134,9 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	}
 
 	public function claimAction() {
-                $requestId = $this->getRequest()->getParam("requestId");
+		$requestId = $this->getRequest()->getParam("requestId");
+		$product = $this->getRequest()->getParam("product");
+		$coupon = $this->getRequest()->getParam("coupon");
 		$helper = Mage::helper('sheerid_verify');
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		if (!$SheerID || !$requestId) {
@@ -151,7 +153,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			if ('PENDING' == $resp->status) {
 				$this->redirectToCart($this->__('Verification is still pending. Please try again later.'), 'info');
 			} else if ($resp->result) {
-				$this->redirectToCart($this->__('You have been successfully verified for this offer.'), 'success');
+				$this->redirectToCart($this->__('You have been successfully verified for this offer.'), 'success', $product, $coupon);
 			} else {
 				$this->redirectToCart($this->__('We were unable to successfully verify you for this offer.'), 'error');
 			}
@@ -162,7 +164,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		 Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB))->sendResponse();
 	}
 
-	private function redirectToCart($message="", $severity="info") {
+	private function redirectToCart($message="", $severity="info", $product=null, $coupon=null) {
 		if ($message) {
 			if ("error" == $severity) {
 				Mage::getSingleton('checkout/session')->addError($message);
@@ -173,6 +175,12 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			}
 			session_write_close();
 		}
-		$this->_redirect('checkout/cart');
+		if ($product) {
+			$this->_redirect('checkout/cart/add', array('_query' => "product=$product"));
+		} else if ($coupon) {
+			$this->_redirect('checkout/cart/couponPost', array('_query' => "coupon_code=$coupon"));
+		} else {
+			$this->_redirect('checkout/cart');
+		}
 	}
 }

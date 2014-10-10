@@ -24,9 +24,15 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			return $$('#lightbox')[0];
 		}
 
-		sheerIdVerifyLightbox = function(templateId) {
+		sheerIdVerifyLightbox = function(templateId, productId, coupon) {
 			var el = openLight();
-			el.insert('<iframe id="sheerid-iframe" src="<?php echo $SheerID->baseUrl; ?>/verify/' + templateId + '/"></iframe>');
+			var verifyUrl = '<?php echo $SheerID->baseUrl; ?>/verify/' + templateId + '/';
+			if (productId) {
+				verifyUrl += '?product=' + productId;
+			} else if (coupon) {
+				verifyUrl += '?coupon=' + coupon;
+			}
+			el.insert('<iframe id="sheerid-iframe" src="' + verifyUrl + '"></iframe>');
 		}
 
 		addSheerIDEventListeners = function() {
