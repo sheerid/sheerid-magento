@@ -156,15 +156,14 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function isEligibleForCampaign($templateId, $quote=null) {
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
-		$tmpl = $SheerID->getTemplate($templateId);
-		if (!$tmpl) {
-			return false;
-		}
-		foreach ($this->getSheeridAffiliations($quote) as $type) {
-			if (in_array($type, $tmpl->config->affiliationTypes)) {
-				return true;
+		try {
+			$tmpl = $SheerID->getTemplate($templateId);
+			foreach ($this->getSheeridAffiliations($quote) as $type) {
+				if (in_array($type, $tmpl->config->affiliationTypes)) {
+					return true;
+				}
 			}
-		}
+		} catch (Exception $e) {}
 		return false;
 	}
 
