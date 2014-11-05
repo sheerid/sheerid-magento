@@ -246,6 +246,10 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return $this->getBooleanSetting('allow_uploads');
 	}
 
+	public function getDefaultCampaignId() {
+		return $this->getSetting("default_campaign");
+	}
+
 	public function allowSendEmail() {
 		return $this->allowUploads() && $this->getBooleanSetting('send_email');
 	}

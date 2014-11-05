@@ -28,7 +28,7 @@
 							<label>Sandbox Mode?</label>
 							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>6</sort_order>
+							<sort_order>1</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
@@ -37,17 +37,27 @@
 						<access_token translate="label">
 							<label>SheerID Access Token</label>
 							<frontend_type>text</frontend_type>
-							<sort_order>1</sort_order>
+							<sort_order>2</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
-							<comment><![CDATA[The token which allows your system to access the SheerID API. Obtained from the <a href="https://www.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
+							<comment><![CDATA[The token which allows your system to access the SheerID API. Obtained from the <a href="https://services.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
 						</access_token>
+						<default_campaign translate="label">
+							<label>Default Campaign</label>
+							<frontend_type>select</frontend_type>
+							<source_model>SheerID_Verify_Model_System_Config_Source_Campaign</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[This is the campaign that will be used to verify by default. If you don't have any set up go to the <a href="https://services.sheerid.com/home/guide.html" target="_blank">Template Guide</a>.]]></comment>
+						</default_campaign>
 						<coupon_code_entry translate="label">
 							<label>Verify on Coupon Code Entry</label>
 							<frontend_type>select</frontend_type>
 							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>2</sort_order>
+							<sort_order>4</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>

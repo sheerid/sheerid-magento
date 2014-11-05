@@ -17,6 +17,10 @@ if ($this->getChooseAffiliationType() !== false) {
 
 $prompt = $this->getPrompt();
 
+$defaultTemplateId = $helper->getDefaultCampaignId();
+if ($defaultTemplateId && !$this->getTemplateId()) {
+	$this->setTemplateId($defaultTemplateId);
+}
 if ($this->getTemplateId()) {
 	$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 	$tmpl = $SheerID->getTemplate($this->getTemplateId());
