@@ -24,6 +24,16 @@
 					<show_in_website>1</show_in_website>
 					<show_in_store>1</show_in_store>
 					<fields>
+						<sandbox translate="label">
+							<label>Sandbox Mode?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.]]></comment>
+						</sandbox>
 						<access_token translate="label">
 							<label>SheerID Access Token</label>
 							<frontend_type>text</frontend_type>
@@ -43,100 +53,6 @@
 							<show_in_store>1</show_in_store>
 							<comment><![CDATA[If this setting is enabled, users inputting a coupon code will be prompted to verify if the price rule is conditional upon a SheerID-verified affiliation.]]></comment>
 						</coupon_code_entry>
-						<allow_uploads translate="label">
-							<label>Allow Uploads?</label>
-							<frontend_type>select</frontend_type>
-							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>3</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<comment><![CDATA[Allow customer to upload proof of affiliation if automated verification fails.]]></comment>
-						</allow_uploads>
-						<send_email translate="label">
-							<label>Send Email?</label>
-							<frontend_type>select</frontend_type>
-							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>4</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<depends>
-								<allow_uploads>1</allow_uploads>
-							</depends>
-							<comment><![CDATA[Should we send an email to your customer letting them know when their uploaded document has been reviewed?]]></comment>
-						</send_email>
-						<email_from_name>
-							<label>Email From Name</label>
-							<frontend_type>text</frontend_type>
-							<sort_order>5</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<depends>
-								<allow_uploads>1</allow_uploads>
-								<send_email>1</send_email>
-							</depends>
-							<comment><![CDATA[Specify a name that will be used in the From header of emails sent.]]></comment>
-						</email_from_name>
-						<sandbox translate="label">
-							<label>Sandbox Mode?</label>
-							<frontend_type>select</frontend_type>
-							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>6</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<comment><![CDATA[Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.]]></comment>
-						</sandbox>
-						<show_in_checkout translate="label">
-							<label>Verify in Checkout?</label>
-							<frontend_type>select</frontend_type>
-							<source_model>SheerID_Verify_Model_System_Config_Source_VerifyInCheckout</source_model>
-							<sort_order>10</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<comment><![CDATA[Determine whether to prompt for verification during the checkout process. If a customer has already verified, they won't be prompted to verify again regardless of this setting.]]></comment>
-						</show_in_checkout>
-						<show_in_checkout_affiliation_types translate="label">
-							<label>Affiliation Types</label>
-							<frontend_type>multiselect</frontend_type>
-							<source_model>SheerID_Verify_Model_System_Config_Source_AffiliationType</source_model>
-							<sort_order>11</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<depends>
-								<show_in_checkout>true</show_in_checkout>
-							</depends>
-							<comment><![CDATA[If Verify in Checkout? is enabled, this setting determines which affiliation types are accepted for verification in the checkout process.]]></comment>
-						</show_in_checkout_affiliation_types>
-						<show_in_checkout_choose>
-							<label>Choose Status?</label>
-							<frontend_type>select</frontend_type>
-							<source_model>SheerID_Verify_Model_System_Config_Source_Noyes</source_model>
-							<sort_order>12</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<depends>
-								<show_in_checkout>true</show_in_checkout>
-							</depends>
-							<comment><![CDATA[If Verify in Checkout? is enabled, this setting controls whether the user is first prompted to select their affiliation type.  If only one type is enabled, the user will automatically be prompted with the fields for that type.]]></comment>
-						</show_in_checkout_choose>
-						<show_in_checkout_cookie_name translate="label">
-							<label>Verify Cookie Name</label>
-							<frontend_type>text</frontend_type>
-							<sort_order>11</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<depends>
-								<show_in_checkout>cookie</show_in_checkout>
-							</depends>
-							<comment><![CDATA[If Verify in Checkout is set to Cookie-Dependent, this is the name of the cookie which can be set to toggle the verification. The value of the cookie should be set to a comma-delimited list of affiliation types which are to be verified.  View the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a> for information about affiliation types.]]></comment>
-						</show_in_checkout_cookie_name>
 					</fields>
 				</settings>
 			</groups>

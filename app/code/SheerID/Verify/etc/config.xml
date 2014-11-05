@@ -164,9 +164,8 @@
 	<default>
 		<sheerid_options>
 			<settings>
-				<show_in_checkout>false</show_in_checkout>
 				<sandbox>true</sandbox>
-				<email_from_name>SheerID Verification</email_from_name>
+				<coupon_code_entry>true</coupon_code_entry>
 			</settings>
 		</sheerid_options>
 	</default>
