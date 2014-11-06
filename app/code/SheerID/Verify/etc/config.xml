@@ -151,6 +151,13 @@
 	        </translate>
 	</frontend>
 	<adminhtml>
+		<layout>
+			<updates>
+				<verify>
+					<file>verify.xml</file>
+				</verify>
+			</updates>
+		</layout>
 		<translate>
 	            <modules>
 	                <SheerID_Verify>
