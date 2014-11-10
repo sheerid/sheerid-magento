@@ -258,6 +258,36 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return Mage::getUrl('SheerID/Verify/claim')."?requestId=$requestId";
 	}
 
+	public function getSiteUrl() {
+		return Mage::getUrl();
+	}
+
+	public function getService() {
+		return Mage::helper('sheerid_verify/rest')->getService();
+	}
+
+	public function getReward() {
+		$SheerID = $this->getService();
+		if ($SheerID) {
+			$rewards = $SheerID->getJson('/reward');
+			foreach ($rewards as $reward) {
+				if (array_key_exists('claimUrl', $reward->data)) {
+					return $reward;
+				}
+			}
+		}
+	}
+
+	public function createReward() {
+		$SheerID = $this->getService();
+		if ($SheerID) {
+			$data = array('claimUrl' => Mage::getUrl('SheerID/Verify/claim'));
+			$data['name'] = 'Magento';
+			$reward = json_decode($SheerID->post('/reward', $data));
+			return $reward;
+		}
+	}
+
 	public function getEmailNotifier() {
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		if ($SheerID) {
