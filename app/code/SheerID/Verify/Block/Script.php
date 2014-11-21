@@ -191,6 +191,13 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 				}
 			}
 
+			$$('a[data-sheerid-campaign], button[data-sheerid-campaign]').each(function(el){
+				$(el).observe('click', function(event) {
+					sheerIdVerifyLightbox(el.getAttribute('data-sheerid-campaign'));
+					return false;
+				});
+			});
+
 			<?php if ($helper->getBooleanSetting("coupon_code_entry")) { ?>
 
 			// promo code form
