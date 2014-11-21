@@ -2,12 +2,6 @@
 .block-verify .block-content {
 	padding: 6px;
 }
-.block-verify .input-box {
-	width: 100% !important;
-}
-.block-verify .form-list li.wide select, .block-verify .form-list li.wide input {
-	width: 95%;
-}
 </style>
 <div class="block block-verify">
 	<div class="block-title">
@@ -16,8 +10,7 @@
 	<div class="block-content">
 		<div id="verify-form">
 			<p><?php echo $this->getDescription(); ?></p>
-			<p><a href="javascript:sheerIdVerify();"><?php echo Mage::helper('sheerid_verify')->__("Click here to verify"); ?></a></p>
+			<p><a href="#" data-sheerid-campaign="<?php echo $this->getTemplateId(); ?>"><?php echo Mage::helper('sheerid_verify')->__("Click here to verify"); ?></a></p>
 		</div>
 	</div>
 </div>
-<?php $this->widgetJavaScript(); ?>
