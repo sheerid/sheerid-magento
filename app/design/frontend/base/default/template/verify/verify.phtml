@@ -2,57 +2,13 @@
 
 $helper = Mage::helper('sheerid_verify');
 
-$MONTHS = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-
-// defaults
-if ($this->getCollectName() !== false) {
-	$this->setCollectName(true);
-}
-if ($this->getUseAjax() !== false) {
-	$this->setUseAjax(true);
-}
-if ($this->getChooseAffiliationType() !== false) {
-	$this->setChooseAffiliationType(true);
-}
-
-$prompt = $this->getPrompt();
-
 $defaultTemplateId = $helper->getDefaultCampaignId();
 if ($defaultTemplateId && !$this->getTemplateId()) {
 	$this->setTemplateId($defaultTemplateId);
 }
-if ($this->getTemplateId()) {
-	$SheerID = Mage::helper('sheerid_verify/rest')->getService();
-	$tmpl = $SheerID->getTemplate($this->getTemplateId());
-	if ($tmpl) {
-		$this->setAffiliationTypes(implode(",", $tmpl->config->affiliationTypes));
-	}
-}
 
-if ($this->getFields()) {
-  $fields = explode(",", $this->getFields());
-} else {
-  $fields = $helper->getFields($this->getAffiliationTypes(), $this->getOrganizationId());
-}
-
-if ($this->getUseQuoteInformation()) {
-  $fields = array_diff($fields, array("FIRST_NAME", "LAST_NAME", "POSTAL_CODE", "EMAIL"));
-}
-
-$orgType = $helper->getOrganizationType(explode(',', $this->getAffiliationTypes()));
-$organization_label = $helper->getOrganizationLabel($orgType);
-
-$affiliation_types = explode(',', $this->getAffiliationTypes());
-
-// require that a choice be possible before enforcing that user makes one
-if (count($affiliation_types) < 2) {
-  $this->setChooseAffiliationType(false);
-}
-
-?>
-
-<?php if ($this->getTemplateId()) { ?>
+if ($this->getTemplateId()) { ?>
 	<iframe id="sheerid-iframe" src="<?php echo $helper->getVerifyUrl($this->getTemplateId()); ?>"></iframe>
 <?php } else { ?>
 	<h3>SheerID: Campaign Not Found</h3>
-<?php } ?>
+<?php }
