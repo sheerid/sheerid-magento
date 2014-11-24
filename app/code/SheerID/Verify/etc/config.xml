@@ -10,11 +10,6 @@
 			<sheerid>
 				<class>SheerID_Verify</class>
 			</sheerid>
-			<checkout>
-				<rewrite>
-					<type_onepage>SheerID_Verify_Model_Type_Onepage</type_onepage>
-				</rewrite>
-			</checkout>
 			<salesrule>
 				<rewrite>
 					<rule_condition_address>SheerID_Verify_Model_Rule_Condition_Verified</rule_condition_address>
@@ -46,18 +41,7 @@
 			<sheerid>
 				<class>SheerID_Verify_Block</class>
 			</sheerid>
-			<checkout>
-				<rewrite>
-					<onepage>SheerID_Verify_Block_Onepage</onepage>
-				</rewrite>
-			</checkout>
 		</blocks>
-		<rewrite>
-			<sheerid_verify_onepage>
-				<from><![CDATA[#^/checkout/onepage/#]]></from>
-				<to>/SheerID/onepage/</to>
-			</sheerid_verify_onepage>
-		</rewrite>
 		<helpers>
 			<sheerid_verify>
 				<class>SheerID_Verify_Helper</class>
