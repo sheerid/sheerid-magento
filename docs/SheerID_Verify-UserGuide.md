@@ -84,9 +84,7 @@ In order to use the SheerID Verify extension, you must first set up your SheerID
 
 Now that you have your account set up, you need to create at least one SheerID Campaign (Template) that will be used to verify users.
 
-_(Current)_ This will require that you [contact our integration team](mailto:info@sheerid.com) in order to set up a campaign that meets your needs.
-
-_(Future)_ Visit the [Template Guide](https://services-sandbox.sheerid.com/home/guide.html?platform=magento) and follow the steps to create your first campaign.
+Visit the [Template Guide](https://services-sandbox.sheerid.com/home/guide.html?platform=magento) and follow the steps to create your campaign(s). The SheerID Settings page inside the Magento Admin Panel also contains a link to the template guide.
 
 ### Magento Admin Panel Configuration
 
