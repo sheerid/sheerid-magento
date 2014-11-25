@@ -66,7 +66,7 @@
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
-							<comment><![CDATA[This is the campaign that will be used to verify by default. If you don't have any set up go to the <a href="https://services.sheerid.com/home/guide.html" target="_blank">Template Guide</a>.]]></comment>
+							<comment><![CDATA[This is the campaign that will be used to verify by default. If you don't have any set up, create one using the <a href="https://services.sheerid.com/home/guide.html?platform=magento" target="_blank">Template Guide</a>.]]></comment>
 						</default_campaign>
 						<coupon_code_entry translate="label">
 							<label>Verify on Coupon Code Entry</label>
