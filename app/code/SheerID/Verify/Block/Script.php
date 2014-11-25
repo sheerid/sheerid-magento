@@ -37,9 +37,11 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 		}
 
 		addSheerIDEventListeners = function() {
-			$$('a[data-sheerid-campaign], button[data-sheerid-campaign]').each(function(el){
+			var defaultCampaignId = '<?php echo $helper->getDefaultCampaignId(); ?>';
+			$$('a[data-sheerid="lightbox"], button[data-sheerid="lightbox"]').each(function(el){
 				$(el).observe('click', function(event) {
-					sheerIdVerifyLightbox(el.getAttribute('data-sheerid-campaign'));
+					var campaignId = el.getAttribute('data-sheerid-campaign-id') || el.getAttribute('data-sheerid-template-id') || defaultCampaignId;
+					sheerIdVerifyLightbox(campaignId);
 					return false;
 				});
 			});
