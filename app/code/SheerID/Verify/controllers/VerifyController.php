@@ -63,6 +63,15 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		}
 	}
 
+	public function testAction() {
+		$helper = Mage::helper('sheerid_verify');
+		$result = $helper->isAccessTokenValid();
+		$this->getResponse()
+			->clearHeaders()
+			->setHeader('Content-Type', 'application/json')
+			->setBody(json_encode(array("result" => $result)));
+	}
+
 	private function redirectToHome() {
 		 Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB))->sendResponse();
 	}

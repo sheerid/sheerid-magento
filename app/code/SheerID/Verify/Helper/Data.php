@@ -97,6 +97,11 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return !!$this->getSetting("access_token");
 	}
 
+	public function isAccessTokenValid() {
+		$SheerID = $this->getService();
+		return $SheerID && $SheerID->isAccessible();
+	}
+
 	public function getDefaultCampaignId() {
 		return $this->getSetting("default_campaign");
 	}
