@@ -79,7 +79,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function getVerifyUrl($templateId) {
 		$sandbox = Mage::getStoreConfig('sheerid_options/settings/sandbox') == "1";
-		$hostname = $sandbox ? 'verify-demo.sheerid.com' : 'verify.sheerid.com';
+		$hostname = $sandbox ? SHEERID_ENDPOINT_SANDBOX : SHEERID_ENDPOINT_PRODUCTION;
 		$claimUrl = $this->getSuccessUrl();
 		return "https://$hostname/verify/$templateId/?metadata[returnUrl]=$claimUrl";
 	}
