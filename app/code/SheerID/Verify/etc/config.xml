@@ -82,15 +82,6 @@
 	          </sheerid_verify_admin_order_observer>
 	        </observers>
 	      </adminhtml_block_html_before>
-	      <admin_system_config_changed_section_sheerid_options>
-	      	<observers>
-	      	  <sheerid_verify_admin_config_observer>
-	      	    <type>singleton</type>
-	      	    <class>SheerID_Verify_Model_Admin_Config_Observer</class>
-	      	    <method>on_config_change</method>
-	      	  </sheerid_verify_admin_config_observer>
-	      	</observers>
-	      </admin_system_config_changed_section_sheerid_options>
 	    </events>
 	</global>
 	<frontend>
