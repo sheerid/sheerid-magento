@@ -146,8 +146,8 @@
 	<default>
 		<sheerid_options>
 			<settings>
-				<sandbox>true</sandbox>
-				<coupon_code_entry>true</coupon_code_entry>
+				<sandbox>1</sandbox>
+				<coupon_code_entry>1</coupon_code_entry>
 			</settings>
 		</sheerid_options>
 	</default>

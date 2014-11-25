@@ -34,14 +34,29 @@
 							<show_in_store>1</show_in_store>
 							<comment><![CDATA[Sandbox Mode facilitates integration testing. For more information, please view the <a href="http://developer.sheerid.com" target="_blank">SheerID Developer Center</a>.]]></comment>
 						</sandbox>
+						<sandbox_access_token translate="label">
+							<label>SheerID Sandbox Access Token</label>
+							<frontend_type>password</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[The token which allows your system to access the SheerID Sandbox API. Obtained from the <a href="https://services-sandbox.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
+							<depends>
+								<sandbox>1</sandbox>
+							</depends>
+						</sandbox_access_token>
 						<access_token translate="label">
 							<label>SheerID Access Token</label>
-							<frontend_type>text</frontend_type>
+							<frontend_type>password</frontend_type>
 							<sort_order>2</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 							<comment><![CDATA[The token which allows your system to access the SheerID API. Obtained from the <a href="https://services.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
+							<depends>
+								<sandbox>0</sandbox>
+							</depends>
 						</access_token>
 						<default_campaign translate="label">
 							<label>Default Campaign</label>
