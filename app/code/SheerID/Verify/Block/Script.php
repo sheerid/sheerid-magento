@@ -53,7 +53,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 				if (typeof discountForm.loader == 'undefined') {
 					var buttons = discountForm.form.select('.button');
 					if (buttons.length) {
-						buttons[buttons.length-1].insert({'after':'<span id="discount-form-loading" style="display: none;"><img src="http://demo.sheerid.com/skin/frontend/default/default/images/opc-ajax-loader.gif" alt="Loading..." title="Loading..." class="v-middle"/> Loading...</span>'});
+						buttons[buttons.length-1].insert({'after':'<span id="discount-form-loading" style="display: none;">&nbsp;<img src="<?php echo Mage::getBaseUrl("skin"); ?>frontend/default/default/images/opc-ajax-loader.gif" alt="Loading..." title="Loading..." class="v-middle"/> Loading...</span>'});
 					}
 				}
 				discountForm.loader = $('discount-form-loading');
