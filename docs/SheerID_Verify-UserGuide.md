@@ -117,6 +117,8 @@ In order to prompt for verification upon entering a coupon code as described in 
 
 With this condition, the eligibility criteria (required verified affiliations) are defined by the campaign selected.
 
+If a Shopping Cart Price Rule with a coupon code has at least one SheerID Verified Affiliation Status condition, but no Campaign Eligibility condition, the store-wide default campaign will be used to verify upon entry of that coupon code, if the campaign is sufficient to verify at least one of the required affiliations.
+
 ### Products that Require Verification
 
 Within the Product Catalog, Magento administrators may configure products to require SheerID verification prior to purchase.
@@ -131,7 +133,7 @@ If at least one affiliation type is selected, verification will be required to a
 
 #### Verification Campaign
 
-If a user attempts to add this product to the cart before being verified for one of the selected types above, they will be directed to this campaign to be verified. Note that this campaign should be configured to verify the affiliation type(s) defined as "Required Affiliation Type(s)".
+If a user attempts to add this product to the cart before being verified for one of the required affiliation types above, they will be directed to this campaign to be verified. If no campaign is specified, the store-wide default campaign will be used. Note that this (or the default) campaign must be capable of verifying at least one of the affiliation(s) selected above, otherwise un-verified users will be presented with an error message when attempting to purchase, but no call to action.
 
 ### SheerID Verification Lightbox
 
