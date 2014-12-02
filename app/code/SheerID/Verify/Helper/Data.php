@@ -86,7 +86,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getVerifyUrlByName($name) {
 		$verifyUrl = $this->getService()->getVerifyUrlByName($name);
 		$claimUrl = $this->getSuccessUrl();
-		return "$verifyUrl/?metadata[returnUrl]=$claimUrl";
+		return "$verifyUrl?metadata[returnUrl]=$claimUrl";
 	}
 	
 	public function getSetting($key) {
