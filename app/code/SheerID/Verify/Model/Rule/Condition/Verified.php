@@ -43,7 +43,7 @@ class SheerID_Verify_Model_Rule_Condition_Verified extends Mage_SalesRule_Model_
     {
 		if (!$this->hasData('value_select_options')) {
 			if ('sheerid' == $this->getAttribute()) {
-				$source = new SheerID_Verify_Model_Entity_Attribute_Source_AffiliationType();
+				$source = new SheerID_Verify_Model_System_Config_Source_AffiliationType();
 				$this->setData('value_select_options', $source->getAllOptions());
 			} else if ('sheerid_campaign' == $this->getAttribute()) {
 				$source = new SheerID_Verify_Model_System_Config_Source_SheeridCampaign();
