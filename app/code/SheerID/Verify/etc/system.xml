@@ -41,7 +41,7 @@
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
-							<comment><![CDATA[The token which allows your system to access the SheerID Sandbox API. Obtained from the <a href="https://services-sandbox.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
+							<comment><![CDATA[The token that allows your system to access the SheerID Sandbox API. Obtained from the <a href="https://services-sandbox.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
 							<depends>
 								<sandbox>1</sandbox>
 							</depends>
@@ -53,7 +53,7 @@
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
-							<comment><![CDATA[The token which allows your system to access the SheerID API. Obtained from the <a href="https://services.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
+							<comment><![CDATA[The token that allows your system to access the SheerID API. Obtained from the <a href="https://services.sheerid.com/home/tokens.html" target="_blank">SheerID Control Center</a>.]]></comment>
 							<depends>
 								<sandbox>0</sandbox>
 							</depends>
