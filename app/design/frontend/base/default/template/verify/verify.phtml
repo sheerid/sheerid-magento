@@ -2,13 +2,17 @@
 
 $helper = Mage::helper('sheerid_verify');
 
-$defaultTemplateId = $helper->getDefaultCampaignId();
-if ($defaultTemplateId && !$this->getTemplateId()) {
-	$this->setTemplateId($defaultTemplateId);
+$verifyUrl = null;
+if ($this->getTemplateName()) {
+	$verifyUrl = $helper->getVerifyUrlByName($this->getTemplateName());
+} else if ($this->getTemplateId()) {
+	$verifyUrl = $helper->getVerifyUrl($this->getTemplateId());
+} else if ($helper->getDefaultCampaignId()){
+	$verifyUrl = $helper->getVerifyUrl($helper->getDefaultCampaignId());
 }
 
-if ($this->getTemplateId()) { ?>
-	<iframe id="sheerid-iframe" src="<?php echo $helper->getVerifyUrl($this->getTemplateId()); ?>"></iframe>
+if ($verifyUrl) { ?>
+	<iframe id="sheerid-iframe" src="<?php echo $verifyUrl; ?>"></iframe>
 <?php } else { ?>
 	<h3>SheerID: Campaign Not Found</h3>
 <?php }
