@@ -67,6 +67,23 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return false;
 	}
 
+	public function campaignContainsAffiliations($templateId, $affiliations, $any=true) {
+		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
+		try {
+			$tmpl = $SheerID->getTemplate($templateId);
+			$match = false;
+			foreach ($affiliations as $type) {
+				if (in_array($type, $tmpl->config->affiliationTypes)) {
+					$match = true;
+				} else if (!$any) {
+					return false;
+				}
+			}
+			return $match;
+		} catch (Exception $e) {}
+		return false;
+	}
+
 	public function getCurrentQuote($create=true) {
 		$quote = Mage::getSingleton('checkout/cart')->getQuote();
 		$session = Mage::getSingleton('checkout/session');

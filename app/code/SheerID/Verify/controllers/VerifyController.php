@@ -16,15 +16,20 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 					foreach ($conds->getConditions() as $c) {
 						$attr = $c->getAttribute();
 						if ('sheerid' == $attr) {
-							if (!array_key_exists('affiliations', $constraints)) {
-								$constraints['affiliations'] = array();
-							}
-							if (!in_array($constraints['affiliations'], $c->getValue())) {
-								$constraints['affiliations'][] = $c->getValue();
+							if (!in_array($affiliations, $c->getValue())) {
+								$affiliations[] = $c->getValue();
 							}
 						} else if ('sheerid_campaign' == $attr) {
 							$constraints['campaign'] = $c->getValue();
 						}
+					}
+					$helper = Mage::helper('sheerid_verify');
+					if (!array_key_exists('campaign', $constraints)) {
+						$constraints['campaign'] = $helper->getDefaultCampaignId();
+					}
+					// Test that campaign can verify for the required affiliations, to prevent an unnecessary verification
+					if (!$helper->campaignContainsAffiliations($constraints['campaign'], $affiliations)) {
+						$constraints['campaign'] = null;
 					}
 				}
 			}
