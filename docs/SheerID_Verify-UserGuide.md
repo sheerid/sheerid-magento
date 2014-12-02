@@ -150,6 +150,10 @@ The verification block can be added to the content of a CMS page or static block
 
     {{block type='sheerid/verify'}}
 
-To further qualify the campaign that is used by this block, specify that campaign's ID as the template_id attribute
+To further qualify the campaign that is used by this block, specify that campaign's ID as the template_id attribute:
 
     {{block type='sheerid/verify' template_id='546fbbfe0cf2995597038d67'}}
+
+Optionally, you can specify the campaign name (namespace) instead of the ID. This name is the custom name specified on the "URL Namespace" step when creating a template via the template guide:
+
+    {{block type='sheerid/verify' template_name='student-software-deal'}}
