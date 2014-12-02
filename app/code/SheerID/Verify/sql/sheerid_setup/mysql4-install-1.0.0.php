@@ -97,7 +97,7 @@ $core_setup->addAttribute('catalog_product', 'sheerid_campaign', array(
 	'frontend'                => '',
 	'input'                   => 'select',
 	'label'                   => 'Verification Campaign',
-	'note'                    => 'If a user attempts to add this product to the cart before being verified for one of the selected types above, they will be directed to this campaign to be verified. Note that this campaign should be configured to verify the affiliation(s) selected above. If no selection is made, un-verified users will be presented with an error message when attempting to purchase, but no call to action.',
+	'note'                    => 'If a user attempts to add this product to the cart before being verified for one of the required affiliation types above, they will be directed to this campaign to be verified. If no campaign is specified, the store-wide default campaign will be used. Note that this (or the default) campaign must be capable of verifying at least one of the affiliation(s) selected above, otherwise un-verified users will be presented with an error message when attempting to purchase, but no call to action.',
 	'class'                   => '',
 	'source'                  => 'SheerID_Verify_Model_System_Config_Source_OptionalSheeridCampaign',
 	'global'                  => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
