@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<SheerID_Verify>
-			<version>1.4.0</version>
+			<version>2.0.0</version>
 		</SheerID_Verify>
 	</modules>
 	<global>
@@ -10,11 +10,6 @@
 			<sheerid>
 				<class>SheerID_Verify</class>
 			</sheerid>
-			<checkout>
-				<rewrite>
-					<type_onepage>SheerID_Verify_Model_Type_Onepage</type_onepage>
-				</rewrite>
-			</checkout>
 			<salesrule>
 				<rewrite>
 					<rule_condition_address>SheerID_Verify_Model_Rule_Condition_Verified</rule_condition_address>
@@ -46,18 +41,7 @@
 			<sheerid>
 				<class>SheerID_Verify_Block</class>
 			</sheerid>
-			<checkout>
-				<rewrite>
-					<onepage>SheerID_Verify_Block_Onepage</onepage>
-				</rewrite>
-			</checkout>
 		</blocks>
-		<rewrite>
-			<sheerid_verify_onepage>
-				<from><![CDATA[#^/checkout/onepage/#]]></from>
-				<to>/SheerID/onepage/</to>
-			</sheerid_verify_onepage>
-		</rewrite>
 		<helpers>
 			<sheerid_verify>
 				<class>SheerID_Verify_Helper</class>
@@ -98,15 +82,6 @@
 	          </sheerid_verify_admin_order_observer>
 	        </observers>
 	      </adminhtml_block_html_before>
-	      <admin_system_config_changed_section_sheerid_options>
-	      	<observers>
-	      	  <sheerid_verify_admin_config_observer>
-	      	    <type>singleton</type>
-	      	    <class>SheerID_Verify_Model_Admin_Config_Observer</class>
-	      	    <method>on_config_change</method>
-	      	  </sheerid_verify_admin_config_observer>
-	      	</observers>
-	      </admin_system_config_changed_section_sheerid_options>
 	    </events>
 	</global>
 	<frontend>
@@ -151,6 +126,13 @@
 	        </translate>
 	</frontend>
 	<adminhtml>
+		<layout>
+			<updates>
+				<verify>
+					<file>verify.xml</file>
+				</verify>
+			</updates>
+		</layout>
 		<translate>
 	            <modules>
 	                <SheerID_Verify>
@@ -164,9 +146,8 @@
 	<default>
 		<sheerid_options>
 			<settings>
-				<show_in_checkout>false</show_in_checkout>
-				<sandbox>true</sandbox>
-				<email_from_name>SheerID Verification</email_from_name>
+				<sandbox>1</sandbox>
+				<coupon_code_entry>1</coupon_code_entry>
 			</settings>
 		</sheerid_options>
 	</default>

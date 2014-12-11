@@ -37,6 +37,14 @@
 				"structure": "dir",
 				"path": "frontend/base/default/template/verify"
 			}, {
+				"type": "magedesign",
+				"structure": "file",
+				"path": "adminhtml/base/default/layout/verify.xml"
+			}, {
+				"type": "magedesign",
+				"structure": "dir",
+				"path": "adminhtml/base/default/template/verify"
+			}, {
 				"type": "mageskin",
 				"structure": "dir",
 				"path": "frontend/default/default/sheerid_verify"

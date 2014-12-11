@@ -1,0 +1,20 @@
+<script type="text/javascript">
+document.observe('dom:loaded', function() {
+	var sandbox = $('sheerid_options_settings_sandbox').value == 1;
+	if (sandbox) {
+		$$('a[href^="<?php echo SHEERID_ENDPOINT_PRODUCTION; ?>"]').each(function(el) {
+			el.setAttribute('href', el.href.replace('<?php echo SHEERID_ENDPOINT_PRODUCTION; ?>', '<?php echo SHEERID_ENDPOINT_SANDBOX; ?>'));
+		});
+	}
+	var accessTokenField = $(sandbox ? 'sheerid_options_settings_sandbox_access_token' : 'sheerid_options_settings_access_token');
+	if (accessTokenField.value) {
+		new Ajax.Request('<?php echo Mage::getUrl("SheerID/verify/test"); ?>', {
+			onSuccess: function(r){
+				if (!r.responseJSON.result) {
+					accessTokenField.insert({after: '<div class="validation-advice" id="advice-required-entry-name" style="">Access token is not valid</div>'});
+				}
+			}
+		});
+	}
+});
+</script>
