@@ -99,13 +99,5 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 		}
 		addSheerIDEventListeners();
 		</script>
-
-		<?php if ($helper->getBooleanSetting("coupon_code_entry")) { ?>
-		<style type="text/css">
-		#overlay{width:100%;height:100%;background:#000; opacity:0.8; position:fixed;top:0;z-index:1000;}
-		#lightbox{width:50%;position:fixed;top:25%;left:25%;padding:2em;background-color:white;z-index:1001;text-align:left;}
-		#lightbox a.close{cursor:pointer;color:black; position:relative; display:block;float:right;}
-		</style>
-		<?php }
 	}
 }
