@@ -123,7 +123,7 @@ foreach ($targets as $target_name => $refs) {
 		ensure_dir("build/$target_base");
 		$path = $ref->path;
 		if ('dir' == $ref->structure) {
-			$cmd = "cd $src_base; /usr/bin/find $path -type f ! -path '*/.git/*'";
+			$cmd = "cd $src_base; /usr/bin/find $path -type f ! -path '*/.git*'";
 			$output = array();
 			exec("/bin/sh -c \"$cmd\"", $output);
 			$files = array_merge($files, $output);
