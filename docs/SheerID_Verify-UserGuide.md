@@ -137,14 +137,14 @@ If a user attempts to add this product to the cart before being verified for one
 
 ### SheerID Verification Lightbox
 
-This extension adds Javascript that enables the use of simple HTML to enable verification buttons or links integrated into the site wherever the site designer may desire.  Simply add an attribute (`data-sheerid-verify="lightbox"`) to an A or BUTTON tag to enable it to act as a trigger to open a modal verification lightbox.
+This extension adds Javascript that enables the use of simple HTML to enable verification buttons or links integrated into the site wherever the site designer may desire.  Simply add an attribute (`data-sheerid="lightbox"`) to an A or BUTTON tag to enable it to act as a trigger to open a modal verification lightbox.
 
-    <a href="#" data-sheerid-verify="lightbox">Students, click here to get verified</a>
+    <a href="#" data-sheerid="lightbox">Students, click here to get verified</a>
 
 By default, this will open the default campaign selected in SheerID Settings. To pop open a lightbox for a specific campaign, add another attribute, `data-sheerid-template-id="${templateId}"`
 
     <a href="#" data-sheerid-template-id="546fbbfe0cf2995597038d67"
-       data-sheerid-verify="lightbox">Military families, click here to get verified</a>
+       data-sheerid="lightbox">Military families, click here to get verified</a>
 
 ### Verify Block Configuration
 
