@@ -41,6 +41,29 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			->setBody(json_encode($constraints));
 	}
 
+	public function productAction() {
+		$productId = (int) $this->getRequest()->getParam('product');
+		$product = null;
+		if ($productId) {
+			$product = Mage::getModel('catalog/product')
+				->setStoreId(Mage::app()->getStore()->getId())
+				->load($productId);
+		}
+		$constraints = array();
+		if ($product) {
+			$helper = Mage::helper('sheerid_verify');
+			$unmet_requirements = $helper->getUnmetPurchaseRequirements($product);
+			if ($unmet_requirements && $unmet_requirements['campaign']) {
+				$constraints['campaign'] = $unmet_requirements['campaign'];
+			}
+		}
+
+		$this->getResponse()
+			->clearHeaders()
+			->setHeader('Content-Type', 'application/json')
+			->setBody(json_encode($constraints));
+	}
+
 	public function claimAction() {
 		$requestId = $this->getRequest()->getParam("requestId");
 		$product = $this->getRequest()->getParam("product");

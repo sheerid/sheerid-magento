@@ -67,6 +67,34 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 		return false;
 	}
 
+	/**
+	 * Check a product's required affiliations for purchase against verified affiliations.
+	 * If SheerID requirements for purchase are not satisfied, return an object containing details on how to proceed.
+	 * Returns false if no unmet requirements exist.
+	 **/
+	public function getUnmetPurchaseRequirements($product) {
+		$required_affiliations_str = $product->getData('sheerid_require_verification');
+		if ($required_affiliations_str) {
+			$required_affiliations = explode(',', $required_affiliations_str);
+			$requirements = array("affiliations" => $required_affiliations);
+			$my_affiliations = $this->getSheeridAffiliations();
+			foreach ($required_affiliations as $type) {
+				if (in_array($type, $my_affiliations)) {
+					return false;
+				}
+			}
+			$campaign = $product->getData('sheerid_campaign');
+			if (!$campaign) {
+				$campaign = $this->getDefaultCampaignId();
+			}
+			if ($campaign && $this->campaignContainsAffiliations($campaign, $required_affiliations)) {
+				$requirements["campaign"] = $campaign;
+			}
+			return $requirements;
+		}
+		return false;
+	}
+
 	public function campaignContainsAffiliations($templateId, $affiliations, $any=true) {
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		try {

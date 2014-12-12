@@ -16,11 +16,17 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 
 		<script type="text/javascript" src="<?php echo $SheerID->baseUrl; ?>/jsapi/SheerID.js"></script>
 		<script type="text/javascript">
+
+		var closeLight = function() {
+			$('overlay').remove();
+			$('lightbox').remove();
+		}
+
 		var openLight = function() {
 			$$('body > .wrapper')[0].insert("<div id='overlay'></div>");
 			$$('body > .wrapper')[0].insert("<div id='lightbox'></div>");
 			$$('#lightbox')[0].insert('<a class="close"><span>close</span></a>');
-			$$('#lightbox > a')[0].observe('click',function(){ $('overlay').remove(); $('lightbox').remove();});
+			$$('#lightbox > a')[0].observe('click', closeLight);
 			return $$('#lightbox')[0];
 		}
 
@@ -96,6 +102,32 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			}
 			<?php } ?>
 
+			<?php if ($helper->getBooleanSetting("add_to_cart_button")) { ?>
+
+			// add to cart form
+			if (typeof productAddToCartForm != 'undefined') {
+				var product_eligible = false;
+				Validation.add('validate-sheerid-verify-product', 'Product requires verification', function (val) {
+					var validationFailureCount = productAddToCartForm.form.select('.validation-failed').length;
+					if (!product_eligible && val && validationFailureCount == 1) {
+						new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product'); ?>?product=" + val, {
+							asynchronous: true,
+							onSuccess: function(r) {
+								var constraints = r.responseJSON;
+								if (constraints.campaign) {
+									sheerIdVerifyLightbox(constraints.campaign, val, null);
+								} else {
+									product_eligible = true;
+									productAddToCartForm.submit();
+								}
+							}
+						});
+					}
+					return product_eligible;
+				});
+				productAddToCartForm.form.elements['product'].addClassName('validate-sheerid-verify-product');
+			}
+			<?php } ?>
 		}
 		addSheerIDEventListeners();
 		</script>
