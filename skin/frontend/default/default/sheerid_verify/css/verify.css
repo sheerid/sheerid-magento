@@ -19,7 +19,6 @@
 	position: fixed;
 	top: 25%;
 	left: 25%;
-	padding: 2em;
 	background-color: white;
 	z-index: 1001;
 	text-align: left;
@@ -27,7 +26,15 @@
 #lightbox a.close {
 	cursor: pointer;
 	color: black;
-	position: relative;
+	position: absolute;
 	display: block;
 	float: right;
+	right: -14px;
+	top: -14px;
+	height: 28px;
+	width: 28px;
+	background-image: url(https://s3.amazonaws.com/com.sheerid.resources/common/images/close.png);
+}
+#lightbox a.close span {
+	display: none;
 }

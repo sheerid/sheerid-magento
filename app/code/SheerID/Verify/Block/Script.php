@@ -19,7 +19,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 		var openLight = function() {
 			$$('body > .wrapper')[0].insert("<div id='overlay'></div>");
 			$$('body > .wrapper')[0].insert("<div id='lightbox'></div>");
-			$$('#lightbox')[0].insert('<a class="close">close</a>');
+			$$('#lightbox')[0].insert('<a class="close"><span>close</span></a>');
 			$$('#lightbox > a')[0].observe('click',function(){ $('overlay').remove(); $('lightbox').remove();});
 			return $$('#lightbox')[0];
 		}
