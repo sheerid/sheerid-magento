@@ -40,6 +40,11 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 				verifyUrl += '&metadata[coupon]=' + coupon;
 			}
 			el.insert('<iframe id="sheerid-iframe" src="' + verifyUrl + '"></iframe>');
+			$('sheerid-iframe').on('load', function(){
+				if (this.contentDocument && this.contentDocument.location.href.indexOf("<?php echo Mage::getUrl('SheerID/verify/dismiss'); ?>") == 0) {
+					closeLight();
+				}
+			});
 		}
 
 		addSheerIDEventListeners = function() {

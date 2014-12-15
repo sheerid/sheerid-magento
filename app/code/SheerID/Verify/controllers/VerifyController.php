@@ -100,6 +100,13 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			->setBody(json_encode(array("result" => $result)));
 	}
 
+	public function dismissAction() {
+		$this->getResponse()
+			->clearHeaders()
+			->setHeader('Content-Type', 'text/html')
+			->setBody('<html></html>');
+	}
+
 	private function redirectToHome() {
 		 Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB))->sendResponse();
 	}
