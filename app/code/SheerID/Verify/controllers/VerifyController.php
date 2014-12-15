@@ -95,7 +95,11 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 
 			// Route the user to the appropriate location
 			if ('dismiss' == $resp->request->metadata->action) {
-				Mage::app()->getResponse()->setRedirect(Mage::getUrl('SheerID/verify/dismiss/'))->sendResponse();
+				$opts = array();
+				if ($product) {
+					$opts["_query"] = "product=$product";
+				}
+				$this->_redirect('SheerID/verify/dismiss', $opts);
 			} else if ($resp->result) {
 				$this->redirectToCart($product, $coupon);
 			} else {
@@ -114,7 +118,12 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	}
 
 	public function dismissAction() {
-		$cartUrl = Mage::getUrl('checkout/cart');
+		$productId = (int) $this->getRequest()->getParam('product');
+		if ($productId) {
+			$cartUrl = Mage::getUrl('checkout/cart/add', array('_query' => "product=$productId"));
+		} else {
+			$cartUrl = Mage::getUrl('checkout/cart');
+		}
 		$this->getResponse()
 			->clearHeaders()
 			->setHeader('Content-Type', 'text/html')
