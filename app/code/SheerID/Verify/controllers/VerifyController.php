@@ -103,10 +103,11 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	}
 
 	public function dismissAction() {
+		$cartUrl = Mage::getUrl('checkout/cart');
 		$this->getResponse()
 			->clearHeaders()
 			->setHeader('Content-Type', 'text/html')
-			->setBody('<html></html>');
+			->setBody("<html><script>if (window.top == window) { window.location = '$cartUrl'; }</script></html>");
 	}
 
 	private function redirectToHome() {
