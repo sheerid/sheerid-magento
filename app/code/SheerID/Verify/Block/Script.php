@@ -30,10 +30,13 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			return $$('#lightbox')[0];
 		}
 
-		sheerIdVerifyLightbox = function(templateId, productId, coupon) {
+		sheerIdVerifyLightbox = function(templateId, productId, coupon, complete) {
 			var el = openLight();
 			var verifyUrl = '<?php echo $SheerID->baseUrl; ?>/verify/' + templateId + '/';
 			verifyUrl += '?metadata[returnUrl]=<?php echo $helper->getSuccessUrl(); ?>';
+			if (typeof complete == 'function') {
+				verifyUrl += '&metadata[action]=dismiss';
+			}
 			if (productId) {
 				verifyUrl += '&metadata[product]=' + productId;
 			} else if (coupon) {
@@ -43,6 +46,9 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			$('sheerid-iframe').on('load', function(){
 				if (this.contentDocument && this.contentDocument.location.href.indexOf("<?php echo Mage::getUrl('SheerID/verify/dismiss'); ?>") == 0) {
 					closeLight();
+					if (typeof complete == 'function') {
+						complete();
+					}
 				}
 			});
 		}
@@ -120,7 +126,9 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 							onSuccess: function(r) {
 								var constraints = r.responseJSON;
 								if (constraints.campaign) {
-									sheerIdVerifyLightbox(constraints.campaign, val, null);
+									sheerIdVerifyLightbox(constraints.campaign, val, null, function() {
+										productAddToCartForm.submit();
+									});
 								} else {
 									product_eligible = true;
 									productAddToCartForm.submit();

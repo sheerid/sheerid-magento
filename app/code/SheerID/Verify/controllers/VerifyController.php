@@ -81,7 +81,9 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			$this->redirectToCart($this->__('This offer has already been claimed.'), 'error');
 		} else {
 			$helper->saveResponseToQuote($helper->getCurrentQuote(), $resp);
-			if ('PENDING' == $resp->status) {
+			if ('dismiss' == $resp->request->metadata->action) {
+				Mage::app()->getResponse()->setRedirect(Mage::getUrl('SheerID/verify/dismiss/'))->sendResponse();
+			} else if ('PENDING' == $resp->status) {
 				$this->redirectToCart($this->__('Verification is still pending. Please try again later.'), 'info');
 			} else if ($resp->result) {
 				$this->redirectToCart($this->__('You have been successfully verified for this offer.'), 'success', $product, $coupon);
