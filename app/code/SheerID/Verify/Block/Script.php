@@ -117,28 +117,42 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 
 			// add to cart form
 			if (typeof productAddToCartForm != 'undefined') {
+				var _submit = (function(){
+					return productAddToCartForm.submit;
+				})();
 				var product_eligible = false;
 				Validation.add('validate-sheerid-verify-product', 'Product requires verification', function (val) {
-					var validationFailureCount = productAddToCartForm.form.select('.validation-failed').length;
-					if (!product_eligible && val && validationFailureCount == 1) {
-						new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product'); ?>?product=" + val, {
-							asynchronous: true,
-							onSuccess: function(r) {
-								var constraints = r.responseJSON;
-								if (constraints.campaign) {
-									sheerIdVerifyLightbox(constraints.campaign, val, null, function() {
-										productAddToCartForm.submit();
-									});
-								} else {
-									product_eligible = true;
-									productAddToCartForm.submit();
-								}
-							}
-						});
-					}
 					return product_eligible;
 				});
 				productAddToCartForm.form.elements['product'].addClassName('validate-sheerid-verify-product');
+				productAddToCartForm.submit = function(a) {
+					if (productAddToCartForm.validator.validate()) {
+						_submit(a);
+					} else {
+						var anyOtherValidationError = false;
+						productAddToCartForm.form.select('.validation-failed').each(function(el) {
+							anyOtherValidationError = anyOtherValidationError || !el.hasClassName('validate-sheerid-verify-product');
+						});
+						if (!anyOtherValidationError) {
+							var val = productAddToCartForm.form.elements['product'].value;
+							new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product'); ?>?product=" + val, {
+								asynchronous: true,
+								onSuccess: function(r) {
+									var constraints = r.responseJSON;
+									if (constraints.campaign) {
+										sheerIdVerifyLightbox(constraints.campaign, val, null, function() {
+											product_eligible = true;
+											productAddToCartForm.submit();
+										});
+									} else {
+										product_eligible = true;
+										productAddToCartForm.submit();
+									}
+								}
+							});
+						}
+					}
+				};
 			}
 			<?php } ?>
 		}
