@@ -80,15 +80,26 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		if ($resp->request->metadata->orderId) {
 			$this->redirectToCart($this->__('This offer has already been claimed.'), 'error');
 		} else {
+			// Persist the response in the quote
 			$helper->saveResponseToQuote($helper->getCurrentQuote(), $resp);
+
+			// Construct the relevant messaging, add to session
+			if ('PENDING' == $resp->status) {
+				$this->addMessage($this->__('Verification is still pending. Please try again later.'), 'info');
+			} else if ($resp->result) {
+				$this->addMessage($this->__('You have been successfully verified for this offer.'), 'success');
+			} else {
+				$this->addMessage($this->__('We were unable to successfully verify you for this offer.'), 'error');
+			}
+			session_write_close();
+
+			// Route the user to the appropriate location
 			if ('dismiss' == $resp->request->metadata->action) {
 				Mage::app()->getResponse()->setRedirect(Mage::getUrl('SheerID/verify/dismiss/'))->sendResponse();
-			} else if ('PENDING' == $resp->status) {
-				$this->redirectToCart($this->__('Verification is still pending. Please try again later.'), 'info');
 			} else if ($resp->result) {
-				$this->redirectToCart($this->__('You have been successfully verified for this offer.'), 'success', $product, $coupon);
+				$this->redirectToCart($product, $coupon);
 			} else {
-				$this->redirectToCart($this->__('We were unable to successfully verify you for this offer.'), 'error');
+				$this->redirectToCart();
 			}
 		}
 	}
@@ -114,17 +125,20 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		 Mage::app()->getResponse()->setRedirect(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB))->sendResponse();
 	}
 
-	private function redirectToCart($message="", $severity="info", $product=null, $coupon=null) {
+	private function addMessage($message, $severity="info") {
 		if ($message) {
+			$session = Mage::getSingleton('checkout/session');
 			if ("error" == $severity) {
-				Mage::getSingleton('checkout/session')->addError($message);
+				$session->addError($message);
 			} else if ("success" == $severity) {
-				Mage::getSingleton('checkout/session')->addSuccess($message);
+				$session->addSuccess($message);
 			} else {
-				Mage::getSingleton('checkout/session')->addNotice($message);
+				$session->addNotice($message);
 			}
-			session_write_close();
 		}
+	}
+
+	private function redirectToCart($product=null, $coupon=null) {
 		if ($product) {
 			$this->_redirect('checkout/cart/add', array('_query' => "product=$product"));
 		} else if ($coupon) {
