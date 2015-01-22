@@ -94,6 +94,7 @@ The following extension settings are available in your site's Magento Admin Pane
  * **SheerID Access Token** - The token which allows your system to access the SheerID API.  Obtained from the [SheerID Control Center](https://www.sheerid.com/home/) (refer to the [SheerID Configuration > Account Set-up](#account-set-up) section above). Sandbox and production mode will each require the corresponding API Access Token to be entered separately.
  * **Default Campaign** - This is the campaign that will be used in the absence of more specific configuration when verification is required throughout the site.
  * **Verify on Coupon Code Entry** - Enabled by default, this setting allows your site to prompt for SheerID verification for Shopping Cart Price Rules that contain SheerID conditions when that rule's coupon code is being entered. Note that if this setting is disabled, these types of coupon codes can only be successfully used by users that have already been verified.
+ * **Verify on Product Page** - When enabled, users attempting to purchase a product that requires verification will be prompted to verify directly on the product page before the item can be added to the cart. Users that have already been verified will not be presented with a verification form.
 
 ### Shopping Cart Price Rules
 
