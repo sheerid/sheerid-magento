@@ -79,7 +79,7 @@ In order to use the SheerID Verify extension, you must first set up your SheerID
  1. Visit [SheerID Sandbox - Signup](https://services-sandbox.sheerid.com/home/signup.html) to create your account
  2. Once you've created your account successfully, log in.
  3. Follow the link to Settings > API Access Tokens and click "Issue New Access Token" to create your sandbox API access token (you'll need that when setting up SheerID settings in the Magento Admin Panel)
- 4. (Optional) Go back to the Control Center home page, and follow the link to Settings > Manage Users. Check the checkbox labeled "Template Admin" next to your username and then click "Update Users." This will allow you to edit the email and web templates that are created in the subsequent step. This step is optional, since the Template Guide will create reasomable default content. Note you will have to log out and log back in first before you can access the Web Templates or Verification Email Management sections.
+ 4. (Optional) Go back to the Control Center home page, and follow the link to Settings > Manage Users. Check the checkbox labeled "Template Admin" next to your username and then click "Update Users." This will allow you to edit the email and web templates that are created in the subsequent step. This step is optional, since the Template Guide will create reasonable default content. Note you will have to log out and log back in first before you can access the Web Templates or Verification Email Management sections.
 
 #### Campaign/Template Creation
 
