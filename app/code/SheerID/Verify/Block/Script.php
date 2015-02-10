@@ -30,17 +30,19 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			return $$('#lightbox')[0];
 		}
 
-		sheerIdVerifyLightbox = function(templateId, productId, coupon, complete) {
+		sheerIdVerifyLightbox = function(templateId, productFormData, coupon, complete) {
 			var el = openLight();
 			var verifyUrl = '<?php echo $SheerID->baseUrl; ?>/verify/' + templateId + '/';
 			verifyUrl += '?metadata[returnUrl]=<?php echo $helper->getSuccessUrl(); ?>';
 			if (typeof complete == 'function') {
 				verifyUrl += '&metadata[action]=dismiss';
 			}
-			if (productId) {
-				verifyUrl += '&metadata[product]=' + productId;
+			if (productFormData) {
+				verifyUrl += '&metadata[state]=' + escape(productFormData);
+				verifyUrl += '&metadata[state_type]=product';
 			} else if (coupon) {
-				verifyUrl += '&metadata[coupon]=' + coupon;
+				verifyUrl += '&metadata[state]=' + coupon;
+				verifyUrl += '&metadata[state_type]=coupon';
 			}
 			el.insert('<iframe id="sheerid-iframe" src="' + verifyUrl + '"></iframe>');
 			$('sheerid-iframe').on('load', function(){
@@ -134,13 +136,14 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 							anyOtherValidationError = anyOtherValidationError || !el.hasClassName('validate-sheerid-verify-product');
 						});
 						if (!anyOtherValidationError) {
-							var val = productAddToCartForm.form.elements['product'].value;
-							new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product'); ?>?product=" + val, {
+							var productId = productAddToCartForm.form.elements['product'].value;
+							var formData = productAddToCartForm.form.serialize();
+							new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product'); ?>?product=" + productId, {
 								asynchronous: true,
 								onSuccess: function(r) {
 									var constraints = r.responseJSON;
 									if (constraints.campaign) {
-										sheerIdVerifyLightbox(constraints.campaign, val, null, function() {
+										sheerIdVerifyLightbox(constraints.campaign, formData, null, function() {
 											product_eligible = true;
 											productAddToCartForm.submit();
 										});

@@ -66,8 +66,6 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 
 	public function claimAction() {
 		$requestId = $this->getRequest()->getParam("requestId");
-		$product = $this->getRequest()->getParam("product");
-		$coupon = $this->getRequest()->getParam("coupon");
 		$helper = Mage::helper('sheerid_verify');
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		if (!$SheerID || !$requestId) {
@@ -77,6 +75,10 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		if (!$resp) {
 			return $this->redirectToHome();
 		}
+
+		$state_type = $resp->request->metadata->state_type;
+		$state = $resp->request->metadata->state;
+
 		if ($resp->request->metadata->orderId) {
 			$this->redirectToCart($this->__('This offer has already been claimed.'), 'error');
 		} else {
@@ -96,12 +98,12 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			// Route the user to the appropriate location
 			if ('dismiss' == $resp->request->metadata->action) {
 				$opts = array();
-				if ($product) {
-					$opts["_query"] = "product=$product";
+				if ('product' == $state_type) {
+					$opts["_query"] = "state=" . urlencode($state);
 				}
 				$this->_redirect('SheerID/verify/dismiss', $opts);
 			} else if ($resp->result) {
-				$this->redirectToCart($product, $coupon);
+				$this->redirectToCart($state_type, $state);
 			} else {
 				$this->redirectToCart();
 			}
@@ -118,9 +120,9 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	}
 
 	public function dismissAction() {
-		$productId = (int) $this->getRequest()->getParam('product');
-		if ($productId) {
-			$cartUrl = Mage::getUrl('checkout/cart/add', array('_query' => "product=$productId"));
+		$state = $this->getRequest()->getParam('state');
+		if ($state) {
+			$cartUrl = Mage::getUrl('checkout/cart/add', array('_query' => $state));
 		} else {
 			$cartUrl = Mage::getUrl('checkout/cart');
 		}
@@ -147,11 +149,11 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		}
 	}
 
-	private function redirectToCart($product=null, $coupon=null) {
-		if ($product) {
-			$this->_redirect('checkout/cart/add', array('_query' => "product=$product"));
-		} else if ($coupon) {
-			$this->_redirect('checkout/cart/couponPost', array('_query' => "coupon_code=$coupon"));
+	private function redirectToCart($state_type=null, $state=null) {
+		if ($state_type == 'product' && $state) {
+			$this->_redirect('checkout/cart/add', array('_query' => $state));
+		} else if ($state_type == 'coupon' && $state) {
+			$this->_redirect('checkout/cart/couponPost', array('_query' => "coupon_code=$state"));
 		} else {
 			$this->_redirect('checkout/cart');
 		}
