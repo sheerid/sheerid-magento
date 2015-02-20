@@ -15,13 +15,13 @@
 	z-index: 1000;
 }
 #lightbox {
-	width: 50%;
 	position: fixed;
-	top: 25%;
-	left: 25%;
 	background-color: white;
 	z-index: 1001;
 	text-align: left;
+	width: 80%;
+	top: 100px;
+	left: 10%;
 }
 #lightbox a.close {
 	cursor: pointer;
@@ -37,4 +37,47 @@
 }
 #lightbox a.close span {
 	display: none;
+}
+
+/* adjust width */
+@media only screen and (min-width : 1600px) {
+	#lightbox {
+		width: 50%;
+		left: 25%;
+	}
+}
+
+@media only screen and (min-width : 1200px) {
+	#lightbox {
+		width: 70%;
+		left: 15%;
+	}
+}
+
+@media only screen and (max-width : 500px) {
+	#lightbox {
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+}
+
+/* adjust height */
+@media only screen and (max-height : 1000px) {
+	#lightbox {
+		top: 20px;
+	}
+}
+
+@media only screen and (max-height : 820px) {
+	#lightbox {
+		top: 0;
+		max-height: 100%;
+		overflow-y: auto;
+	}
+
+	#lightbox a.close {
+		right: 0;
+		top: 0;
+	}
 }
