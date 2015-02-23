@@ -66,6 +66,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 
 	public function claimAction() {
 		$requestId = $this->getRequest()->getParam("requestId");
+		$action = $this->getRequest()->getParam("action");
 		$helper = Mage::helper('sheerid_verify');
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		if (!$SheerID || !$requestId) {
@@ -98,7 +99,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			session_write_close();
 
 			// Route the user to the appropriate location
-			if ('dismiss' == $resp->request->metadata->action) {
+			if ('dismiss' == $action) {
 				$opts = array();
 				if ('product' == $state_type) {
 					$opts["_query"] = "state=" . urlencode($state) . "&state_type=${state_type}";
