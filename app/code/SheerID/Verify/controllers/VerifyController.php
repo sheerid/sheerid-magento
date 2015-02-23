@@ -66,6 +66,7 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 
 	public function claimAction() {
 		$requestId = $this->getRequest()->getParam("requestId");
+		$action = $this->getRequest()->getParam("action");
 		$helper = Mage::helper('sheerid_verify');
 		$SheerID = Mage::helper('sheerid_verify/rest')->getService();
 		if (!$SheerID || !$requestId) {
@@ -80,7 +81,9 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		$state = $resp->request->metadata->state;
 
 		if ($resp->request->metadata->orderId) {
-			$this->redirectToCart($this->__('This offer has already been claimed.'), 'error');
+			$this->addMessage($this->__('This offer has already been claimed.'), 'error');
+			session_write_close();
+			$this->_redirectUrl($this->getUrlForState());
 		} else {
 			// Persist the response in the quote
 			$helper->saveResponseToQuote($helper->getCurrentQuote(), $resp);
@@ -96,16 +99,16 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 			session_write_close();
 
 			// Route the user to the appropriate location
-			if ('dismiss' == $resp->request->metadata->action) {
+			if ('dismiss' == $action) {
 				$opts = array();
 				if ('product' == $state_type) {
-					$opts["_query"] = "state=" . urlencode($state);
+					$opts["_query"] = "state=" . urlencode($state) . "&state_type=${state_type}";
 				}
 				$this->_redirect('SheerID/verify/dismiss', $opts);
 			} else if ($resp->result) {
-				$this->redirectToCart($state_type, $state);
+				$this->_redirectUrl($this->getUrlForState($state_type, $state));
 			} else {
-				$this->redirectToCart();
+				$this->_redirectUrl($this->getUrlForState());
 			}
 		}
 	}
@@ -120,16 +123,13 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 	}
 
 	public function dismissAction() {
+		$state_type = $this->getRequest()->getParam('state_type');
 		$state = $this->getRequest()->getParam('state');
-		if ($state) {
-			$cartUrl = Mage::getUrl('checkout/cart/add', array('_query' => $state));
-		} else {
-			$cartUrl = Mage::getUrl('checkout/cart');
-		}
+		$next_url = $this->getUrlForState($state_type, $state);
 		$this->getResponse()
 			->clearHeaders()
 			->setHeader('Content-Type', 'text/html')
-			->setBody("<html><script>if (window.top == window) { window.location = '$cartUrl'; }</script></html>");
+			->setBody("<html><script>if (window.top == window) { window.location = '$next_url'; }</script></html>");
 	}
 
 	private function redirectToHome() {
@@ -149,13 +149,19 @@ class SheerID_Verify_VerifyController extends Mage_Core_Controller_Front_Action
 		}
 	}
 
-	private function redirectToCart($state_type=null, $state=null) {
-		if ($state_type == 'product' && $state) {
-			$this->_redirect('checkout/cart/add', array('_query' => $state));
+	private function getUrlForState($state_type=null, $state=null) {
+		$state_data = array();
+		if ($state) {
+			parse_str($state, $state_data);
+		}
+		if ($state_type == 'product' && array_key_exists("product", $state_data)) {
+			$product = Mage::getModel('catalog/product')->load($state_data['product']);
+			unset($state_data['product']);
+			return Mage::helper('checkout/cart')->getAddUrl($product, array("_query" => $state_data));
 		} else if ($state_type == 'coupon' && $state) {
-			$this->_redirect('checkout/cart/couponPost', array('_query' => "coupon_code=$state"));
+			return Mage::helper('checkout/cart')->getCartUrl() . "couponPost?coupon_code=$state";
 		} else {
-			$this->_redirect('checkout/cart');
+			return Mage::helper('checkout/cart')->getCartUrl();
 		}
 	}
 }
