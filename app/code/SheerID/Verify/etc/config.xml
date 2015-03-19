@@ -64,15 +64,6 @@
 	          </sheerid_verify_order_observer>
 	        </observers>
 	      </sales_order_save_commit_after>
-	      <sales_order_invoice_pay>
-	        <observers>
-	          <sheerid_verify_order_observer>
-	            <type>singleton</type>
-	            <class>SheerID_Verify_Model_Order_Observer</class>
-	            <method>on_sales_order_invoice_pay</method>
-	          </sheerid_verify_order_observer>
-	        </observers>
-	      </sales_order_invoice_pay>
 		  <adminhtml_block_html_before>
 	        <observers>
 	          <sheerid_verify_admin_order_observer>
