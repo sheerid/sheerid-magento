@@ -8,7 +8,7 @@ document.observe('dom:loaded', function() {
 	}
 	var accessTokenField = $(sandbox ? 'sheerid_options_settings_sandbox_access_token' : 'sheerid_options_settings_access_token');
 	if (accessTokenField.value) {
-		new Ajax.Request('<?php echo Mage::getUrl("SheerID/verify/test", array('_secure' => true)); ?>', {
+		new Ajax.Request('<?php echo Mage::getUrl("SheerID/verify/test"); ?>', {
 			onSuccess: function(r){
 				if (!r.responseJSON.result) {
 					accessTokenField.insert({after: '<div class="validation-advice" id="advice-required-entry-name" style="">Access token is not valid</div>'});

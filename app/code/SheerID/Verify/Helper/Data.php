@@ -157,7 +157,7 @@ class SheerID_Verify_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 	public function getSuccessUrl() {
-		return Mage::getUrl('SheerID/Verify/claim', array('_secure' => true));
+		return Mage::getUrl('SheerID/Verify/claim');
 	}
 
 	public function getService() {
