@@ -46,7 +46,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 			}
 			el.insert('<iframe id="sheerid-iframe" src="' + verifyUrl + '"></iframe>');
 			$('sheerid-iframe').on('load', function(){
-				if (this.contentDocument && this.contentDocument.location.href.indexOf("<?php echo Mage::getUrl('SheerID/verify/dismiss', array('_secure' => true)); ?>") == 0) {
+				if (this.contentDocument && this.contentDocument.location.href.indexOf("<?php echo Mage::getUrl('SheerID/verify/dismiss'); ?>") == 0) {
 					closeLight();
 					if (typeof complete == 'function') {
 						complete();
@@ -95,7 +95,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 						var val = discountForm.form.elements['coupon_code'].value;
 						if (!val) { return false; }
 						discountForm.loader.show();
-						new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/coupon', array('_secure' => true)); ?>?coupon=" + val, {
+						new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/coupon'); ?>?coupon=" + val, {
 							asynchronous: false,
 							onSuccess: function(r){
 								var constraints = r.responseJSON;
@@ -138,7 +138,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 						if (!anyOtherValidationError) {
 							var productId = productAddToCartForm.form.elements['product'].value;
 							var formData = productAddToCartForm.form.serialize();
-							new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product', array('_secure' => true)); ?>?product=" + productId, {
+							new Ajax.Request("<?php echo Mage::getUrl('SheerID/verify/product'); ?>?product=" + productId, {
 								asynchronous: true,
 								onSuccess: function(r) {
 									var constraints = r.responseJSON;
