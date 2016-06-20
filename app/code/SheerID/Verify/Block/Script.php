@@ -51,7 +51,7 @@ class SheerID_Verify_Block_Script extends Mage_Core_Block_Template
 					isComplete = this.contentDocument 
 				    	&& this.contentDocument.location.href.indexOf("<?php echo Mage::getUrl('SheerID/verify/dismiss'); ?>") == 0;
 		    	}
-		    	catch {
+		    	catch (err) {
 		    		// do nothing
 		    	}
 				if (isComplete === true) {
