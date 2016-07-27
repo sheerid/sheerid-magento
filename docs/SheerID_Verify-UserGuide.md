@@ -117,7 +117,7 @@ In order to prompt for verification upon entering a coupon code as described in 
 
  > SheerID Campaign Eligibility is [Name of Campaign]
 
-With this condition, the eligibility criteria (required verified affiliations) are defined by the campaign selected.
+With this condition, the eligibility criteria (required verified affiliations) are defined by the campaign selected. Use of this condition requires also at least one SheerID Verified Affiliation Status condition for this rule, which must match the affiliations verifiable by this campaign.
 
 If a Shopping Cart Price Rule with a coupon code has at least one SheerID Verified Affiliation Status condition, but no Campaign Eligibility condition, the store-wide default campaign will be used to verify upon entry of that coupon code, if the campaign is sufficient to verify at least one of the required affiliations.
 
