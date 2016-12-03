@@ -47,7 +47,7 @@
 			}, {
 				"type": "mageskin",
 				"structure": "dir",
-				"path": "frontend/default/default/sheerid_verify"
+				"path": "frontend/base/default/sheerid_verify"
 			}]
 		}
 	}
