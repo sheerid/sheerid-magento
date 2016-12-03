@@ -1,0 +1,19 @@
+# Building/Installing From Source
+
+## Build extension package
+
+Within the root of the project, you can run:
+
+    bin/package.php composer.json
+
+This results in a tarball being created within `target/` named `SheerID_Verify-${version}.tgz`
+
+## Install from command line
+
+Within `$MAGENTO_HOME` (eg: `/var/www/magento`) on your magento instance, copy the built tarball and run the following to install from your build:
+
+    ./mage install SheerID_Verify-${version}.tgz
+
+If the extension has already been installed (for example from community Magento Connect channel), you can uninstall with the following command:
+
+    ./mage uninstall community SheerID_Verify
