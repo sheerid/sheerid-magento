@@ -32,6 +32,12 @@ class SheerID_Verify_CartController extends Mage_Checkout_CartController {
 			}
 		}
 		return $product;
+    }    
+	
+    public function addAction() {
+    	$request = $this->getRequest();
+        $formKey = Mage::getSingleton('core/session')->getFormKey();
+        $request->setParam('form_key', $formKey);
+        return parent::addAction();
     }
-
 }
